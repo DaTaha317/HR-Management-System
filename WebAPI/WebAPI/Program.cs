@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using WebAPI.Interfaces;
 using WebAPI.Models;
+using WebAPI.Repositories;
 
 namespace WebAPI
 {
@@ -19,6 +21,9 @@ namespace WebAPI
                  options.UseLazyLoadingProxies()
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
              );
+
+            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
