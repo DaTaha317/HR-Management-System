@@ -7,13 +7,10 @@ namespace WebAPI.Models
 {
     public class HRDBContext : IdentityDbContext<ApplicationUser>
     {
-        public HRDBContext()
-        {
-            
-        }
-        public HRDBContext(DbContextOptions options) : base(options)
-        { 
-        }
+        public HRDBContext() { }
+
+        public HRDBContext(DbContextOptions options) : base(options) { }
+
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<Attendence> Attendences { get; set; }
         public virtual DbSet<Department> Departments { get; set; }

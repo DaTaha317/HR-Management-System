@@ -9,7 +9,9 @@ namespace WebAPI.Models
         public DateTime AttendDateTime { get; set; }
         public TimeOnly Arrival { get; set; }
         public TimeOnly Departure { get; set; }
-        public Employee Employee { get; set; }
+
+        // Navigation Properties
+        public virtual Employee Employee { get; set; }
 
     }
 }
