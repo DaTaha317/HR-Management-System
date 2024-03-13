@@ -1,6 +1,8 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using WebAPI.Models;
 
 namespace WebAPI
 {
@@ -13,6 +15,10 @@ namespace WebAPI
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<HRDBContext>(options =>
+                 options.UseLazyLoadingProxies()
+                 .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
+             );
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -39,6 +45,7 @@ namespace WebAPI
                     {securityScheme, new string[] { }}
                 });
             });
+
 
             var app = builder.Build();
 
