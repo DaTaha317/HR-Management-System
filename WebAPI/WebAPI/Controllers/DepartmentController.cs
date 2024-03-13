@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.DTOs;
+using WebAPI.DTOs.Department;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 

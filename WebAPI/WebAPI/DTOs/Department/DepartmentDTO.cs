@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.DTOs
+namespace WebAPI.DTOs.Department
 {
     public class DepartmentDTO
     {
