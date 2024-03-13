@@ -21,7 +21,7 @@ namespace WebAPI.Models
         {
             // composite primary key
             modelBuilder.Entity<Attendence>()
-                .HasKey(k => new { k.EmpId, k.AttendDateTime });
+                .HasKey(k => new { k.EmpId, k.Day });
 
             modelBuilder.Entity<Department>().HasIndex(c => c.Name).IsUnique();
 
