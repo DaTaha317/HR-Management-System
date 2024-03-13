@@ -23,6 +23,7 @@ namespace WebAPI
              );
 
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+            builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
             builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 
 
