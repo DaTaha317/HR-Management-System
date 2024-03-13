@@ -2,7 +2,7 @@
 
 namespace WebAPI.Interfaces
 {
-    public interface IDaysOff
+    public interface IDaysOffRepo
     {
         public List<DaysOff> GetAll();
         public DaysOff GetByDay(DateOnly day);

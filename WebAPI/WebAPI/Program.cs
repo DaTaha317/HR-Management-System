@@ -23,6 +23,7 @@ namespace WebAPI
              );
 
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+            builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
