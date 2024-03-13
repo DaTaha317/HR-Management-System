@@ -6,7 +6,7 @@ namespace WebAPI.Models
     {
         [ForeignKey("Employee")]
         public int EmpId { get; set; }
-        public DateTime AttendDateTime { get; set; }
+        public DateOnly Day { get; set; }
         public TimeOnly Arrival { get; set; }
         public TimeOnly Departure { get; set; }
 
