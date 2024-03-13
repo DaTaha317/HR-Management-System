@@ -14,14 +14,17 @@ namespace WebAPI.Models
         public string Nationality { get; set; }
         public DateOnly BirthDate { get; set; }
         public DateOnly ContractDate { get; set; }
+
+        [Column(TypeName = "money")]
         public decimal BaseSalary { get; set; }
         public TimeOnly Arrival { get; set; }
         public TimeOnly Departure { get; set; }
 
         [ForeignKey("Department")]
-        public int DeptId { get; set; }
+        public int? DeptId { get; set; }
 
-        public Department Department { get; set; }
+        // Navigation Properties
+        public  virtual Department Department { get; set; }
 
     }
 }
