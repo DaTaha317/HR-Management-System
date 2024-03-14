@@ -25,6 +25,7 @@ namespace WebAPI
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
              );
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 4;
@@ -63,6 +64,11 @@ namespace WebAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
             }) ;
+
+            builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
+            builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            builder.Services.AddScoped<IAttendence, AttendanceRepo>();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
