@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
@@ -8,6 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DepartmentController : ControllerBase
     {
         private IDepartmentRepo departmentRepo;
@@ -23,7 +25,7 @@ namespace WebAPI.Controllers
             List<Department> departments = departmentRepo.GetAll();
             if (departments.Count == 0)
             {
-                return NotFound();
+                return Unauthorized();
             }
 
             List<DepartmentDTO> departmentDTOs = new List<DepartmentDTO>();
