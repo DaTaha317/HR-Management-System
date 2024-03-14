@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
             List<Department> departments = departmentRepo.GetAll();
             if (departments.Count == 0)
             {
-                return NotFound();
+                return Unauthorized();
             }
 
             List<DepartmentDTO> departmentDTOs = new List<DepartmentDTO>();

@@ -17,6 +17,24 @@ namespace WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            
+            builder.Services.AddControllers();
+
+            builder.Services.AddDbContext<HRDBContext>(options =>
+                 options.UseLazyLoadingProxies()
+                 .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
+             );
+            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<HRDBContext>();
+
             // Add services to the container.
             // to use JWT token to check authentication => [Authorize]
             builder.Services.AddAuthentication(options =>
@@ -45,22 +63,6 @@ namespace WebAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
             }) ;
-            builder.Services.AddControllers();
-
-            builder.Services.AddDbContext<HRDBContext>(options =>
-                 options.UseLazyLoadingProxies()
-                 .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
-             );
-            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-                {
-                    options.Password.RequiredLength = 4;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                })
-                .AddEntityFrameworkStores<HRDBContext>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
