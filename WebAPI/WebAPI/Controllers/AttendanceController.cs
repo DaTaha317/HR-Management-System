@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAttendance(AttendanceDto attendanceDto)
+        public IActionResult AddAttendance([FromBody]AttendanceDto attendanceDto)
         {
             if (attendanceDto == null)
             {
@@ -66,8 +66,8 @@ namespace WebAPI.Controllers
             return Ok(attendanceDto);
         }
 
-        [HttpGet("GetDay")]
-        public IActionResult GetDayByEmpId(int empId, DateOnly day)
+        [HttpGet("GetDay/{empId}/{day}")]
+        public IActionResult GetDayByEmpId([FromRoute] int empId, [FromRoute] DateOnly day)
         {
             Attendence? attendence = _attendence.GetDayByEmpId(empId, day);
             if (attendence == null)
@@ -77,8 +77,8 @@ namespace WebAPI.Controllers
             return Ok(attendence);
         }
 
-        [HttpGet("GetByPeriod")]
-        public IActionResult GetByPeriod(DateOnly startDate, DateOnly endDate)
+        [HttpGet("GetByPeriod/{startDate}/{endDate}")]
+        public IActionResult GetByPeriod([FromRoute] DateOnly startDate, [FromRoute] DateOnly endDate)
         {
             List<Attendence>? attendences = _attendence.GetByPeriod(startDate, endDate);
 
@@ -90,8 +90,8 @@ namespace WebAPI.Controllers
             return Ok(attendences);
         }
 
-        [HttpDelete]
-        public IActionResult DeleteAttendance(int empId, DateOnly date)
+        [HttpDelete("{empId}/{date}")]
+        public IActionResult DeleteAttendance([FromRoute]int empId, [FromRoute] DateOnly date)
         {
 
             if (_attendence.GetDayByEmpId(empId, date) == null)
@@ -105,8 +105,8 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public IActionResult UpdateAttendance(int empId, DateOnly date, AttendanceDto attendanceDto)
+        [HttpPut("{empId}/{date}")]
+        public IActionResult UpdateAttendance([FromRoute] int empId, [FromRoute] DateOnly date, [FromBody] AttendanceDto attendanceDto)
         {
             if(attendanceDto == null)
             {
