@@ -71,8 +71,8 @@ namespace WebAPI
                 };
             });
 
-            builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
-            builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            builder.Services.AddScoped<IDaysOff, DaysOffRepo>();
+            builder.Services.AddScoped<IEmployee, EmployeeRepo>();
             builder.Services.AddScoped<IAttendence, AttendanceRepo>();
 
 

@@ -303,6 +303,7 @@ namespace WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DeductionSettings");
+                });
 
             modelBuilder.Entity("WebAPI.Models.DaysOff", b =>
                 {

@@ -3,7 +3,7 @@ using WebAPI.Models;
 
 namespace WebAPI.Repositories
 {
-	public class DaysOffRepo : IDaysOffRepo
+	public class DaysOffRepo : IDaysOff
 	{
 		private HRDBContext context;
 
