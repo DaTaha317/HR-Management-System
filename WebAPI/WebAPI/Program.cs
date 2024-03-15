@@ -22,7 +22,11 @@ namespace WebAPI
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
              );
 
-            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+            builder.Services.AddScoped<IDepartment, DepartmentRepo>();
+            builder.Services.AddScoped<IOrganization, OrganizationRepo>();
+            builder.Services.AddScoped<ICommission, CommissionRepo>();
+            builder.Services.AddScoped<IDeduction, DeductionRepo>();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
