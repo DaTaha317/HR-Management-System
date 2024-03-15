@@ -11,8 +11,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private IEmployee employeeRepo;
-        public EmployeeController(IEmployee employeeRepo)
+        private IEmployeeRepo employeeRepo;
+        public EmployeeController(IEmployeeRepo employeeRepo)
         {
             this.employeeRepo = employeeRepo;
         }
