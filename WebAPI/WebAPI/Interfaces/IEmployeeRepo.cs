@@ -2,7 +2,7 @@
 
 namespace WebAPI.Interfaces
 {
-    public interface IEmployee
+    public interface IEmployeeRepo
     {
         public List<Employee> GetAll();
         public Employee GetById(int id);
