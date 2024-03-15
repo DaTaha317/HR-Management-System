@@ -5,13 +5,10 @@ import { AccountService } from './services/account.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
-  constructor(private accountService: AccountService) {
-
-  }
+  constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
     this.setCurrentUser();
@@ -23,6 +20,4 @@ export class AppComponent implements OnInit {
     const user: IUser = JSON.parse(userString);
     this.accountService.setCurrentUser(user);
   }
-
-
 }
