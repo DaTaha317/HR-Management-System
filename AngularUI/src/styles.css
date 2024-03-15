@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --light: white;
+  --dark: #155a7b;
+  --medium: #a8d7ed;
+}
+
+.txtMain {
+  color: var(--light);
+}
+
+.txtSub {
+  color: var(--dark);
+}
+
+.bgMain {
+  background-color: var(--dark);
+}
+
+.bgSub {
+  background-color: var(--medium);
+}
