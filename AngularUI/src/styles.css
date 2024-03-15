@@ -6,17 +6,17 @@
 }
 
 .txtMain {
-  color: var(--light);
+  color: var(--light) !important;
 }
 
 .txtSub {
-  color: var(--dark);
+  color: var(--dark) !important;
 }
 
 .bgMain {
-  background-color: var(--dark);
+  background-color: var(--dark) !important;
 }
 
 .bgSub {
-  background-color: var(--medium);
+  background-color: var(--medium) !important;
 }

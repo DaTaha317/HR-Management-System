@@ -4,12 +4,12 @@ import { LandingComponent } from './components/landing/landing.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent },
-  { path: 'login', component: SignInComponent }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: SignInComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

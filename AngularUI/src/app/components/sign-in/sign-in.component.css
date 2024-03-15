@@ -55,3 +55,7 @@ p.alert {
   top: 60%;
   cursor: pointer;
 }
+
+img {
+  height: 10rem;
+}

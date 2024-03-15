@@ -1,17 +1,17 @@
-<div class="bg-dark">
-  <div class="container">
-    <header class="bd-header bg-dark py-3 d-flex align-items-stretch border-bottom border-dark">
-      <div class="container-fluid d-flex align-items-center justify-content-between">
-        <p class="text-white m-0">HR - based system</p>
-        <p class="text-white bg-dark" style="cursor: pointer;" *ngIf="accountService.currentUser$ | async"
-          (click)="logout()">
-          Logout
-        </p>
-        <p class="text-white bg-dark m-0" style="cursor: pointer;" *ngIf="!(accountService.currentUser$ | async)"
-          (click)="routeToLogin()">
-          Login
-        </p>
-      </div>
-    </header>
-  </div>
+<div class="container-fluid p-0">
+  <header
+    class="bd-header bgMain py-3 px-5 d-flex align-items-stretch border-bottom border-dark"
+  >
+    <div
+      class="container-fluid txtMain d-flex align-items-center justify-content-between"
+    >
+      <p
+        style="cursor: pointer"
+        *ngIf="accountService.currentUser$ | async"
+        (click)="logout()"
+      >
+        Logout
+      </p>
+    </div>
+  </header>
 </div>
