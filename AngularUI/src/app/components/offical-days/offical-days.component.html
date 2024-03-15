@@ -1,0 +1,31 @@
+<h1 class="text-center">Add DayOff Days</h1>
+<hr>
+<div class="container">
+    <form class="my-5" (submit)="onSubmit()">
+      <label for="Name">name</label>
+      <input id="Name" type="text" placeholder="name" class="form-control m-2" [(ngModel)]="formData.name">
+      <label for="date">date</label>
+      <input type="date" name="date" id="date" placeholder="date" class="form-control m-2" [(ngModel)]="formData.date">
+      <input type="submit" value="add date" class="btn btn-primary m-3">
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">name</th>
+          <th scope="col">date</th>
+          <th scope="col">operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of daysOffList; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.date }}</td>
+          <td>
+            <a href="#" (click)="deleteDayOff(item)">dalete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
