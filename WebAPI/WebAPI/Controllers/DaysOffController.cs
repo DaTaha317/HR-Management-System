@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class DaysOffController : ControllerBase
     {
-        private IDaysOff daysOffRepo;
+        private IDaysOffRepo daysOffRepo;
 
-        public DaysOffController(IDaysOff daysOffRepo)
+        public DaysOffController(IDaysOffRepo daysOffRepo)
         {
             this.daysOffRepo = daysOffRepo;
         }
