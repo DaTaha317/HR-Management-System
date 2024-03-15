@@ -18,6 +18,5 @@ namespace WebAPI.DTOs
         public TimeOnly Arrival { get; set; }
         public TimeOnly Departure { get; set; }
         public string DepartmentName { get; set; }
-        public int? deptid { get; set; }
     }
 }
