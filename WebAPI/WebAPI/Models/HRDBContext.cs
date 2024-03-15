@@ -23,7 +23,6 @@ namespace WebAPI.Models
         public virtual DbSet<OrganizationSettings> OrganizationSettings { get; set; }
 
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // composite primary key

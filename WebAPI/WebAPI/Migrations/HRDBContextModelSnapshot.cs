@@ -280,6 +280,7 @@ namespace WebAPI.Migrations
                     b.HasKey("Date");
 
                     b.ToTable("DaysOffs");
+
                 });
 
             modelBuilder.Entity("WebAPI.Models.DeductionSettings", b =>
@@ -302,6 +303,7 @@ namespace WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DeductionSettings");
+
                 });
 
             modelBuilder.Entity("WebAPI.Models.Department", b =>
@@ -375,6 +377,7 @@ namespace WebAPI.Migrations
 
                     b.ToTable("Employees");
                 });
+
 
             modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>
                 {
@@ -468,25 +471,6 @@ namespace WebAPI.Migrations
                         .HasForeignKey("DeptId");
 
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>
-                {
-                    b.HasOne("WebAPI.Models.CommissionSettings", "Commission")
-                        .WithMany()
-                        .HasForeignKey("CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebAPI.Models.DeductionSettings", "Deduction")
-                        .WithMany()
-                        .HasForeignKey("DeductionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
-
-                    b.Navigation("Deduction");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Department", b =>
