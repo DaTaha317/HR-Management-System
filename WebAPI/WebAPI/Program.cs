@@ -24,13 +24,7 @@ namespace WebAPI
                  options.UseLazyLoadingProxies()
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
              );
-
-            builder.Services.AddScoped<IDepartment, DepartmentRepo>();
-            builder.Services.AddScoped<IOrganization, OrganizationRepo>();
-            builder.Services.AddScoped<ICommission, CommissionRepo>();
-            builder.Services.AddScoped<IDeduction, DeductionRepo>();
-
-
+            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {

@@ -2,7 +2,7 @@
 
 namespace WebAPI.Interfaces
 {
-    public interface IDepartment
+    public interface IDepartmentRepo
     {
         public List<Department> GetAll();
     }

@@ -12,9 +12,9 @@ namespace WebAPI.Controllers
     [Authorize]
     public class DepartmentController : ControllerBase
     {
-        private IDepartment departmentRepo;
+        private IDepartmentRepo departmentRepo;
 
-        public DepartmentController(IDepartment departmentRepo)
+        public DepartmentController(IDepartmentRepo departmentRepo)
         {
             this.departmentRepo = departmentRepo;
         }

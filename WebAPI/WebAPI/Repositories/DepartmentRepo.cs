@@ -3,7 +3,7 @@ using WebAPI.Models;
 
 namespace WebAPI.Repositories
 {
-    public class DepartmentRepo : IDepartment
+    public class DepartmentRepo : IDepartmentRepo
     {
         private HRDBContext dBContext;
 
