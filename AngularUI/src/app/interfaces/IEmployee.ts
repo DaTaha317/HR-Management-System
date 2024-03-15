@@ -1,17 +1,17 @@
 import { IDepartment } from './IDepartment';
 
 export interface IEmployee {
-  ssn: number;
-  fullName: string;
-  address: string;
-  phoneNumber: string;
-  gender: Gender;
-  nationality: string;
-  birthDate: Date;
-  contractDate: Date;
-  baseSalary: number;
-  arrival: Date;
-  departure: Date;
+  SSN?: number;
+  FullName: string;
+  Address: string;
+  PhoneNumber: string;
+  Gender: Gender;
+  Nationality: string;
+  BirthDate: Date;
+  ContractDate: Date;
+  BaseSalary: number;
+  Arrival: Date;
+  Departure: Date;
   deptId?: number;
   department?: IDepartment; // Navigation property
 }

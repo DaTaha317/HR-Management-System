@@ -1,0 +1,66 @@
+<form [formGroup]="EmployeeForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-group">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" formControlName="fullName" placeholder="Enter full name">
+  </div>
+
+  <div class="form-group">
+      <label for="address">Address:</label>
+      <input type="text" id="address" formControlName="address" placeholder="Enter address">
+  </div>
+
+  <div class="form-group">
+      <label for="phoneNumber">Phone Number:</label>
+      <input type="tel" id="phoneNumber" formControlName="phoneNumber" placeholder="Enter phone number">
+  </div>
+
+  <div class="form-group">
+      <label for="gender">Gender:</label>
+      <select id="gender" formControlName="getgender">
+          <option value="" disabled selected>Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+      </select>
+      <input type="hidden" formControlName="gender">
+  </div>
+
+  <div class="form-group">
+      <label for="nationality">Nationality:</label>
+      <input type="text" id="nationality" formControlName="nationality" placeholder="Enter nationality">
+  </div>
+
+  <div class="form-group">
+      <label for="birthDate">Birth Date:</label>
+      <input type="date" id="birthDate" formControlName="birthDate">
+  </div>
+
+  <div class="form-group">
+      <label for="contractDate">Contract Date:</label>
+      <input type="date" id="contractDate" formControlName="contractDate">
+  </div>
+
+  <div class="form-group">
+      <label for="baseSalary">Base Salary:</label>
+      <input type="number" id="baseSalary" formControlName="baseSalary" placeholder="Enter base salary">
+  </div>
+
+  <div class="form-group">
+      <label for="arrival">Arrival Time:</label>
+      <input type="time" id="arrival" formControlName="arrival">
+  </div>
+
+  <div class="form-group">
+      <label for="departure">Departure Time:</label>
+      <input type="time" id="departure" formControlName="departure">
+  </div>
+
+  <div class="form-group">
+      <label for="department">Department:</label>
+      <select formControlName="deptId">
+        <option value="" disabled selected>Select Department</option>
+        <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+      </select>      
+  </div>
+
+  <button type="submit" [disabled]="!EmployeeForm.valid">Add Employee</button>
+</form>
