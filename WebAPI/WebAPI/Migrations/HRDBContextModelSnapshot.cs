@@ -268,16 +268,6 @@ namespace WebAPI.Migrations
                     b.ToTable("CommissionSettings");
                 });
 
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Date");
-
-                    b.ToTable("OfficialDaysOffs");
-                });
-
             modelBuilder.Entity("WebAPI.Models.DeductionSettings", b =>
                 {
                     b.Property<int>("Id")
