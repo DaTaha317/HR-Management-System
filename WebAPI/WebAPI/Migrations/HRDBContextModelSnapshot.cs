@@ -268,6 +268,20 @@ namespace WebAPI.Migrations
                     b.ToTable("CommissionSettings");
                 });
 
+            modelBuilder.Entity("WebAPI.Models.DaysOff", b =>
+                {
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Date");
+
+                    b.ToTable("OfficialDaysOffs");
+                });
+
             modelBuilder.Entity("WebAPI.Models.DeductionSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -360,20 +374,6 @@ namespace WebAPI.Migrations
                     b.HasIndex("DeptId");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.OfficialDaysOff", b =>
-                {
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Date");
-
-                    b.ToTable("OfficialDaysOffs");
                 });
 
             modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>

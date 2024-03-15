@@ -2,7 +2,7 @@
 
 namespace WebAPI.Models
 {
-    public class OfficialDaysOff
+    public class DaysOff
     {
         [Key]
         public DateOnly Date { get; set; }

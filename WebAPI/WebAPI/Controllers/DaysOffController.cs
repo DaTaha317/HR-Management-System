@@ -5,9 +5,9 @@ namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class OfficailDaysOffController : ControllerBase
+	public class DaysOffController : ControllerBase
 	{
-        public OfficailDaysOffController()
+        public DaysOffController()
         {
             
         }

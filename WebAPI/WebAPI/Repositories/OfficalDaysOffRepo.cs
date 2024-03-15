@@ -3,7 +3,7 @@ using WebAPI.Models;
 
 namespace WebAPI.Repositories
 {
-	public class OfficalDaysOffRepo : IOfficialDaysOff
+	public class OfficalDaysOffRepo : IDaysOff
 	{
 		private HRDBContext context;
 
@@ -11,7 +11,7 @@ namespace WebAPI.Repositories
         {
             this.context = context;
         }
-        public void Add(OfficialDaysOff dayOff)
+        public void Add(DaysOff dayOff)
 		{
 			context.OfficialDaysOffs.Add(dayOff);
 			
@@ -24,12 +24,12 @@ namespace WebAPI.Repositories
 			context.Remove(GetByDay(day));
 		}
 
-		public List<OfficialDaysOff> GetAll()
+		public List<DaysOff> GetAll()
 		{
 		return context.OfficialDaysOffs.ToList();
 		}
 
-		public OfficialDaysOff GetByDay(DateOnly day)
+		public DaysOff GetByDay(DateOnly day)
 		{
 			return context.OfficialDaysOffs.SingleOrDefault(i => i.Date == day);
 		}
@@ -39,7 +39,7 @@ namespace WebAPI.Repositories
 			context.SaveChanges();
 		}
 
-		public void Update(DateOnly day, OfficialDaysOff dayOff)
+		public void Update(DateOnly day, DaysOff dayOff)
 		{
 			if(GetByDay(day) != null)
 			{
