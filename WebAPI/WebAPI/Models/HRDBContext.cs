@@ -15,7 +15,7 @@ namespace WebAPI.Models
         public virtual DbSet<Attendence> Attendences { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<OfficialDaysOff> OfficialDaysOffs { get; set; }
+        public virtual DbSet<DaysOff> DaysOffs { get; set; }
 
         public virtual DbSet<OrganizationSettings> OrganizationSettings { get; set; }
 
