@@ -12,7 +12,7 @@ using WebAPI.Models;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(HRDBContext))]
-    [Migration("20240313120901_v1")]
+    [Migration("20240315135614_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -235,8 +235,8 @@ namespace WebAPI.Migrations
                     b.Property<int>("EmpId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("AttendDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Day")
+                        .HasColumnType("date");
 
                     b.Property<TimeOnly>("Arrival")
                         .HasColumnType("time");
@@ -244,9 +244,23 @@ namespace WebAPI.Migrations
                     b.Property<TimeOnly>("Departure")
                         .HasColumnType("time");
 
-                    b.HasKey("EmpId", "AttendDateTime");
+                    b.HasKey("EmpId", "Day");
 
                     b.ToTable("Attendences");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.DaysOff", b =>
+                {
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Date");
+
+                    b.ToTable("DaysOffs");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Department", b =>
@@ -319,20 +333,6 @@ namespace WebAPI.Migrations
                     b.HasIndex("DeptId");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.OfficialDaysOff", b =>
-                {
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Date");
-
-                    b.ToTable("OfficialDaysOffs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
