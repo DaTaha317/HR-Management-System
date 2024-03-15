@@ -246,49 +246,6 @@ namespace WebAPI.Migrations
                     b.ToTable("Attendences");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.CommissionSettings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
-
-                    b.Property<int>("type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CommissionSettings");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.DeductionSettings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
-
-                    b.Property<int>("type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeductionSettings");
-
             modelBuilder.Entity("WebAPI.Models.DaysOff", b =>
                 {
                     b.Property<DateOnly>("Date")
@@ -373,30 +330,6 @@ namespace WebAPI.Migrations
                     b.HasIndex("DeptId");
 
                     b.ToTable("Employees");
-                });
-
-
-            modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CommissionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DeductionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionId");
-
-                    b.HasIndex("DeductionId");
-
-                    b.ToTable("OrganizationSettings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -52,6 +52,18 @@ namespace WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DaysOffs",
+                columns: table => new
+                {
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DaysOffs", x => x.Date);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
@@ -62,18 +74,6 @@ namespace WebAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OfficialDaysOffs",
-                columns: table => new
-                {
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OfficialDaysOffs", x => x.Date);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,13 +215,13 @@ namespace WebAPI.Migrations
                 columns: table => new
                 {
                     EmpId = table.Column<int>(type: "int", nullable: false),
-                    AttendDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Day = table.Column<DateOnly>(type: "date", nullable: false),
                     Arrival = table.Column<TimeOnly>(type: "time", nullable: false),
                     Departure = table.Column<TimeOnly>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attendences", x => new { x.EmpId, x.AttendDateTime });
+                    table.PrimaryKey("PK_Attendences", x => new { x.EmpId, x.Day });
                     table.ForeignKey(
                         name: "FK_Attendences_Employees_EmpId",
                         column: x => x.EmpId,
@@ -303,7 +303,7 @@ namespace WebAPI.Migrations
                 name: "Attendences");
 
             migrationBuilder.DropTable(
-                name: "OfficialDaysOffs");
+                name: "DaysOffs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
