@@ -29,6 +29,9 @@ namespace WebAPI
             builder.Services.AddScoped<IOrganization, OrganizationRepo>();
             builder.Services.AddScoped<ICommission, CommissionRepo>();
             builder.Services.AddScoped<IDeduction, DeductionRepo>();
+            builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
+            builder.Services.AddScoped<IEmployee, EmployeeRepo>();
+            builder.Services.AddScoped<IAttendence, AttendanceRepo>();
 
 
 
@@ -70,10 +73,6 @@ namespace WebAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
                 };
             });
-
-            builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
-            builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
-            builder.Services.AddScoped<IAttendence, AttendanceRepo>();
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
