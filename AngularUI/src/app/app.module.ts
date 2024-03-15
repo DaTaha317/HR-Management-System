@@ -10,11 +10,27 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { NewAdminComponent } from './components/new-admin/new-admin.component';
+import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent, NavbarComponent, LandingComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    SignInComponent,
+    NavbarComponent,
+    LandingComponent,
+    NewAdminComponent,
+    AttendanceReportComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
