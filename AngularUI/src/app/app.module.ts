@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
+import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AttendanceReportComponent } from './components/attendance-report/attend
     LandingComponent,
     NewAdminComponent,
     AttendanceReportComponent,
+    SalaryReportComponent,
   ],
   imports: [
     BrowserModule,
