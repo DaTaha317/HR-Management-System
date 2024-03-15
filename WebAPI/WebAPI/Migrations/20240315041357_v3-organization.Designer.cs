@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Models;
 
@@ -11,9 +12,11 @@ using WebAPI.Models;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(HRDBContext))]
-    partial class HRDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240315041357_v3-organization")]
+    partial class v3organization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,7 +249,6 @@ namespace WebAPI.Migrations
                     b.ToTable("Attendences");
                 });
 
-
             modelBuilder.Entity("WebAPI.Models.CommissionSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -289,19 +291,6 @@ namespace WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DeductionSettings");
-
-            modelBuilder.Entity("WebAPI.Models.DaysOff", b =>
-                {
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Date");
-
-                    b.ToTable("DaysOffs");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Department", b =>
@@ -376,6 +365,19 @@ namespace WebAPI.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("WebAPI.Models.OfficialDaysOff", b =>
+                {
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Date");
+
+                    b.ToTable("OfficialDaysOffs");
+                });
 
             modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>
                 {
