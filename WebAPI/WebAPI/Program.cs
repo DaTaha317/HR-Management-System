@@ -71,6 +71,7 @@ namespace WebAPI
             builder.Services.AddScoped<IOrganization, OrganizationRepo>();
             builder.Services.AddScoped<ICommission, CommissionRepo>();
             builder.Services.AddScoped<IDeduction, DeductionRepo>();
+            builder.Services.AddScoped<IWeeklyDaysOff, WeeklyDaysOffRepo>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

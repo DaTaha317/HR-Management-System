@@ -86,7 +86,38 @@ namespace WebAPI.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Get()
+        {
+            if (organizationRepo.Get() == null)
+            {
+                return NoContent();
+            }
+
+            CommissionSettings commission = commissionRepo.Get();
+            DeductionSettings deduction = deductionRepo.Get();
+            SettingsRequest settingsRequest = new SettingsRequest()
+            {
+                CommissionDTO = new CommissionDTO()
+                {
+                    type = commission.type,
+                    Hours = commission.Hours,
+                    Amount = commission.Amount
+                },
+                DeductionDTO = new DeductionDTO()
+                {
+                    type = deduction.type,
+                    Hours = deduction.Hours,
+                    Amount = deduction.Amount
+                }
+            };
+
+            return Ok(settingsRequest);
+        }
+
+
     }
+
 
     // client should send request like this
     //  {

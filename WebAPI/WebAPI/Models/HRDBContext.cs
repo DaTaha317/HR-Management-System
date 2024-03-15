@@ -23,7 +23,7 @@ namespace WebAPI.Models
         public virtual DbSet<CommissionSettings> CommissionSettings { get; set; }
 
         public virtual DbSet<DeductionSettings> DeductionSettings { get; set; }
-
+        public virtual DbSet<WeeklyDaysOff> WeeklyDaysOffs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
