@@ -18,12 +18,11 @@ namespace WebAPI.Models
 
         public virtual DbSet<DaysOff> DaysOffs { get; set; }
 
-
+        public virtual DbSet<CommissionSettings> CommissionSettings { get; set; }   
+        public virtual DbSet<DeductionSettings> DeductionSettings { get; set; }
         public virtual DbSet<OrganizationSettings> OrganizationSettings { get; set; }
 
-        public virtual DbSet<CommissionSettings> CommissionSettings { get; set; }
 
-        public virtual DbSet<DeductionSettings> DeductionSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

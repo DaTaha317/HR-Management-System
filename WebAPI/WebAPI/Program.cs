@@ -25,6 +25,13 @@ namespace WebAPI
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
              );
 
+            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+            builder.Services.AddScoped<IOrganization, OrganizationRepo>();
+            builder.Services.AddScoped<ICommission, CommissionRepo>();
+            builder.Services.AddScoped<IDeduction, DeductionRepo>();
+
+
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 4;
@@ -66,8 +73,9 @@ namespace WebAPI
 
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
             builder.Services.AddScoped<IDaysOff, DaysOffRepo>();
-            builder.Services.AddScoped<IEmployee, EmployeeRepo>();
+            builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             builder.Services.AddScoped<IAttendence, AttendanceRepo>();
+            
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
