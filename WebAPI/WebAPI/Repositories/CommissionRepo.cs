@@ -16,6 +16,11 @@ namespace WebAPI.Repositories
             context.CommissionSettings.Add(commission);
         }
 
+        public CommissionSettings? Get()
+        {
+            return context.CommissionSettings.FirstOrDefault();
+        }
+
         public void Save()
         {
             context.SaveChanges();

@@ -15,6 +15,11 @@ namespace WebAPI.Repositories
             context.DeductionSettings.Add(deduction);
         }
 
+        public DeductionSettings? Get()
+        {
+            return context.DeductionSettings.FirstOrDefault();
+        }
+
         public void Save()
         {
             context.SaveChanges();

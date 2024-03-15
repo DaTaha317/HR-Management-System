@@ -8,6 +8,8 @@ namespace WebAPI.Interfaces
 
         public void Update(CommissionSettings commission);
 
+        public CommissionSettings? Get();
+
         public void Save();
     }
 }

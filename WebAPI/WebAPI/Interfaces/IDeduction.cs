@@ -8,6 +8,7 @@ namespace WebAPI.Interfaces
 
         public void Update(DeductionSettings deduction);
 
+        public DeductionSettings? Get();
         public void Save();
     }
 }

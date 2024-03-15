@@ -15,6 +15,11 @@ namespace WebAPI.Repositories
             context.OrganizationSettings.Add(organization);
         }
 
+        public OrganizationSettings Get()
+        {
+            return context.OrganizationSettings.FirstOrDefault();
+        }
+
         public void Save()
         {
             context.SaveChanges();
