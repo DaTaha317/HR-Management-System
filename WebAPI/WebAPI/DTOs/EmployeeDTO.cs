@@ -17,6 +17,6 @@ namespace WebAPI.DTOs
         public decimal BaseSalary { get; set; }
         public TimeOnly Arrival { get; set; }
         public TimeOnly Departure { get; set; }
-        public string DepartmentName { get; set; }
+        public string departmentName { get; set; }
     }
 }
