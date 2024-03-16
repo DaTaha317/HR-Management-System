@@ -1,7 +1,6 @@
 // Importing Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +16,7 @@ import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
-import { AddEmployeeComponent } from './Components/add-employee/add-employee.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,7 @@ import { AddEmployeeComponent } from './Components/add-employee/add-employee.com
     AttendanceReportComponent,
     SalaryReportComponent,
     OfficalDaysComponent,
-    AddEmployeeComponent
+    AddEmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,8 +40,8 @@ import { AddEmployeeComponent } from './Components/add-employee/add-employee.com
     NgxPaginationModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
