@@ -19,4 +19,10 @@ export class EmpServicesService {
   deleteEmployee(id: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/employee/${id}`);
   }
+  getById(id:number):Observable<IEmployee>{
+    return this.http.get<IEmployee>(`${this.baseUrl}/employee/${id}`);
+  }
+  updateEmployee(id:number,employeeData:IEmployee):Observable<IEmployee>{
+    return this.http.put<IEmployee>(`${this.baseUrl}/employee/${id}`,employeeData);
+  }
 }
