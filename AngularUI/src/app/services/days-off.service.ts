@@ -14,7 +14,7 @@ export class DaysOffService {
 
   addDayOff(dayOff:any): Observable<any> {
     console.log("add seveise work")
-    return this.http.post<any>(`${this.apiUrl}/api/DaysOff/Create`, dayOff);
+    return this.http.post<any>(`${this.apiUrl}/api/DaysOff`, dayOff);
     
   }
 
@@ -24,6 +24,11 @@ export class DaysOffService {
   }
 
   deleteDayOff(day: Date): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/api/DaysOff/delete/${day}`);
+    return this.http.delete<any>(`${this.apiUrl}/api/DaysOff/${day}`);
+  }
+  updateDayOff(dayOff: any): Observable<any> {
+    console.log("update seveise work")
+    return this.http.put<any>(`${this.apiUrl}/api/DaysOff/${dayOff.date}`, dayOff);
   }
 }
+
