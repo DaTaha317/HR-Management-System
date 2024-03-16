@@ -17,6 +17,7 @@ import { AttendanceReportComponent } from './components/attendance-report/attend
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
+import { DisplayEmployeeComponent } from './Components/display-employee/display-employee.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AddEmployeeComponent } from './components/add-employee/add-employee.com
     SalaryReportComponent,
     OfficalDaysComponent,
     AddEmployeeComponent,
+    DisplayEmployeeComponent,
   ],
   imports: [
     BrowserModule,

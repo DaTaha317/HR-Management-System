@@ -2,18 +2,19 @@ import { Time } from '@angular/common';
 import { IDepartment } from './IDepartment';
 
 export interface IEmployee {
-  SSN?: number;
-  FullName: string;
-  Address: string;
-  PhoneNumber: string;
-  Gender: number;
-  Nationality: string;
-  BirthDate: Date;
-  ContractDate: Date;
-  BaseSalary: number;
-  Arrival: Time;
-  Departure:Time;
+  id: number;
+  fullName: string;
+  address: string;
+  phoneNumber: string;
+  gender: number;
+  nationality: string;
+  birthDate: Date;
+  contractDate: Date;
+  baseSalary: number;
+  arrival: Time;
+  departure:Time;
   deptId?: number;
+  departmentName:string;
 }
 
 export enum Gender {
