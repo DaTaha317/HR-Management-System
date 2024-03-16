@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { IDepartment } from '../interfaces/IDepartment';
+import { BehaviorSubject, map } from 'rxjs';
 import { IUser } from '../interfaces/IUser';
 import { environment } from 'src/environments/environment';
 
@@ -14,7 +13,7 @@ export class AccountService {
 
   baseURL = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(email: string, password: string) {
     return this.http

@@ -1,17 +1,6 @@
 <div class="container-fluid p-0">
-  <header
-    class="bd-header bgMain py-3 px-5 d-flex align-items-stretch border-bottom border-dark"
-  >
-    <div
-      class="container-fluid txtMain d-flex align-items-center justify-content-between"
-    >
-      <p
-        style="cursor: pointer"
-        *ngIf="accountService.currentUser$ | async"
-        (click)="logout()"
-      >
-        Logout
-      </p>
-    </div>
-  </header>
-</div>
+  <header class="bd-header bgMain px-5 d-flex align-items-stretch border-bottom border-dark">
+    <nav class="navbar navbar-expand-lg w-100 text-white">
+      <a class="navbar-brand text-white" href="#">Pioneers</a>
+      <a *ngIf="accountService.currentUser$ | async" (click)="logout()" style="cursor: pointer;">Logout</a>
+    </nav>
