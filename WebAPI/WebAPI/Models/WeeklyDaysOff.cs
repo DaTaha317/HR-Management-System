@@ -5,7 +5,7 @@ namespace WebAPI.Models
     {
         public int Id { get; set; }
 
-        public List<DaysName> Days { get; set; }
+        public List<DaysName> Days { get; set; } = new List<DaysName>();
 
     }
 }

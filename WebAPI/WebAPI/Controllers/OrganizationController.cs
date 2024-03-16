@@ -44,8 +44,6 @@ namespace WebAPI.Controllers
                     Hours = commissionDTO.Hours,
                     Amount = commissionDTO.Amount
                 };
-                commissionRepo.Add(commission);
-                commissionRepo.Save();
 
                 DeductionSettings deduction = new DeductionSettings()
                 {
@@ -53,40 +51,41 @@ namespace WebAPI.Controllers
                     Hours = deductionDTO.Hours,
                     Amount = deductionDTO.Amount
                 };
-                deductionRepo.Add(deduction);
-                deductionRepo.Save();
 
                 WeeklyDaysOff newDaysOff = new WeeklyDaysOff();
                 foreach(var day in organization.WeeklyDaysDTO.days)
                 {
                     newDaysOff.Days.Add((DaysName)day);
                 }
+                commissionRepo.Add(commission);
+                commissionRepo.Save();
 
+                deductionRepo.Add(deduction);
+                deductionRepo.Save();
                 weeklyDaysOffRepo.Add(newDaysOff);
                 weeklyDaysOffRepo.Save();
 
-                return Ok();
             }
 
             // updating only when not null
             oldCommision.type = (Unit)commissionDTO.type;
             oldCommision.Hours = commissionDTO.Hours;
             oldCommision.Amount = commissionDTO.Amount;
-            commissionRepo.Update(oldCommision);
-            commissionRepo.Save();
 
 
             oldDeduction.type = (Unit)deductionDTO.type;
             oldDeduction.Hours = deductionDTO.Hours;
             oldDeduction.Amount = deductionDTO.Amount;
-            deductionRepo.Update(oldDeduction);
-            deductionRepo.Save();
 
             oldDaysOff.Days.Clear();
             foreach(var day in organization.WeeklyDaysDTO.days)
             {
                 oldDaysOff.Days.Add((DaysName)day);
             }
+            commissionRepo.Update(oldCommision);
+            commissionRepo.Save();
+            deductionRepo.Update(oldDeduction);
+            deductionRepo.Save();
             weeklyDaysOffRepo.Update(oldDaysOff);
             weeklyDaysOffRepo.Save();
 
