@@ -17,6 +17,9 @@ export class SignInComponent {
 
   signInForm: FormGroup = new FormGroup({});
 
+  formError: boolean = false;
+  fillForm: boolean = false;
+
   constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
@@ -34,11 +37,18 @@ export class SignInComponent {
   login() {
     let email = this.signInForm.value['email'];
     let password = this.signInForm.value['password'];
-
-    this.accountService.login(email, password).subscribe(
-      d => {
-        this.router.navigate(['/']);
+    if (email === '' || password === '') {
+      return;
+    }
+    this.accountService.login(email, password).subscribe({
+      next: () => {
+        console.log("yes");
+        this.router.navigate(['/admin/add']);
+      },
+      error: () => {
+        this.formError = true;
       }
+    }
     )
 
   }
