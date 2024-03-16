@@ -14,6 +14,8 @@ import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
+import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     NewAdminComponent,
     AttendanceReportComponent,
     SalaryReportComponent,
+    OfficalDaysComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPaginationModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
