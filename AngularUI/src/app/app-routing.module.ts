@@ -6,6 +6,7 @@ import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'admin/add', component: NewAdminComponent },
   { path: 'attendance/report', component: AttendanceReportComponent },
   { path: 'salary/report', component: SalaryReportComponent },
-  { path: 'daysoff', component: OfficalDaysComponent }
+  { path: 'daysoff', component: OfficalDaysComponent },
+  { path: 'employee/add', component: AddEmployeeComponent },
 ];
 
 @NgModule({
