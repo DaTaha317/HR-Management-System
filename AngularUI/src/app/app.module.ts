@@ -1,9 +1,12 @@
 // Importing Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 
 // Importing Components
 import { AppComponent } from './app.component';
@@ -13,9 +16,8 @@ import { LandingComponent } from './components/landing/landing.component';
 import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
-import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { AddEmployeeComponent } from './Components/add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AttendanceReportComponent,
     SalaryReportComponent,
     OfficalDaysComponent,
+    AddEmployeeComponent
   ],
   imports: [
     BrowserModule,
