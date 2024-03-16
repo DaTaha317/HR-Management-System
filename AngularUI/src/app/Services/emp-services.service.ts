@@ -8,9 +8,9 @@ import { IEmployee } from '../interfaces/IEmployee';
 export class EmpServicesService {
   private apiUrl = 'https://localhost:7266/api/employee';
   constructor(private http:HttpClient) { }
-  addEmployee(employeeDTO: any): Observable<any> {
-    console.log(employeeDTO);
-    return this.http.post<any>(this.apiUrl, employeeDTO);
+  addEmployee(employee: IEmployee): Observable<IEmployee> {
+    console.log(employee);
+    return this.http.post<any>(this.apiUrl, employee);
   }
   apiCall(){
     return this.http.get(this.apiUrl);

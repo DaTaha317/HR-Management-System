@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { IDepartment } from './IDepartment';
 
 export interface IEmployee {
@@ -5,15 +6,14 @@ export interface IEmployee {
   FullName: string;
   Address: string;
   PhoneNumber: string;
-  Gender: Gender;
+  Gender: number;
   Nationality: string;
   BirthDate: Date;
   ContractDate: Date;
   BaseSalary: number;
-  Arrival: Date;
-  Departure: Date;
+  Arrival: Time;
+  Departure:Time;
   deptId?: number;
-  department?: IDepartment; // Navigation property
 }
 
 export enum Gender {

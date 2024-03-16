@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class DeptServicesService {
   constructor(private http:HttpClient) { }
-  apiCall(){
-    return this.http.get("https://localhost:7266/api/department");
+  apiCall():Observable<IDepartment[]>{
+    return this.http.get<IDepartment[]>("https://localhost:7266/api/department");
   }
   
 }
