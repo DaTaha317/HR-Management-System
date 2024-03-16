@@ -14,6 +14,7 @@ import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { OfficalDaysComponent } from './components/offical-days/offical-days.com
     NewAdminComponent,
     AttendanceReportComponent,
     SalaryReportComponent,
-    OfficalDaysComponent
+    OfficalDaysComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +34,7 @@ import { OfficalDaysComponent } from './components/offical-days/offical-days.com
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
