@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IDepartment } from '../interfaces/IDepartment';
 import { Observable } from 'rxjs/internal/Observable';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DeptServicesService {
-  constructor(private http:HttpClient) { }
-  apiCall():Observable<IDepartment[]>{
-    return this.http.get<IDepartment[]>("https://localhost:7266/api/department");
+  baseUrl = environment.baseUrl;
+  constructor(private http: HttpClient) {}
+  getDepartments(): Observable<IDepartment[]> {
+    return this.http.get<IDepartment[]>(`${this.baseUrl}/department`);
   }
-  
 }

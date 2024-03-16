@@ -23,9 +23,6 @@ export class DaysOffService {
     return this.http.delete<any>(`${this.apiUrl}/DaysOff/${day}`);
   }
   updateDayOff(dayOff: any): Observable<any> {
-    return this.http.put<any>(
-      `${this.apiUrl}/api/DaysOff/${dayOff.date}`,
-      dayOff
-    );
+    return this.http.put<any>(`${this.apiUrl}/DaysOff/${dayOff.date}`, dayOff);
   }
 }
