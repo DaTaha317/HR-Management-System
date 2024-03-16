@@ -10,7 +10,7 @@ namespace WebAPI.DTOs
         public string FullName { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
-        public Gender Gender { get; set; }
+        public int Gender { get; set; }
         public string Nationality { get; set; }
         public DateOnly BirthDate { get; set; }
         public DateOnly ContractDate { get; set; }

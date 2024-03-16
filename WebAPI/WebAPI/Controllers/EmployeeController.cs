@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
                     Address = employee.Address,
                     Arrival = employee.Arrival,
                     Departure = employee.Departure,
-                    Gender = employee.Gender,
+                    Gender = (int) employee.Gender,
                     PhoneNumber = employee.PhoneNumber,
                     BaseSalary = employee.BaseSalary,
                     BirthDate=employee.BirthDate,
@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
                 Address = employee.Address,
                 Arrival = employee.Arrival,
                 Departure = employee.Departure,
-                Gender = employee.Gender,
+                Gender = (int)employee.Gender,
                 PhoneNumber = employee.PhoneNumber,
                 BaseSalary = employee.BaseSalary,
                 departmentName = employee.Department != null ? employee.Department.Name : null
@@ -90,7 +90,7 @@ namespace WebAPI.Controllers
                 Address = employeeDTO.Address,
                 Arrival = employeeDTO.Arrival,
                 Departure = employeeDTO.Departure,
-                Gender = employeeDTO.Gender,
+                Gender = (Gender)employeeDTO.Gender,
                 PhoneNumber = employeeDTO.PhoneNumber,
                 BaseSalary = employeeDTO.BaseSalary,
                 BirthDate = employeeDTO.BirthDate,
@@ -119,7 +119,7 @@ namespace WebAPI.Controllers
             existingEmployee.Address = employeeDTO.Address;
             existingEmployee.Arrival = employeeDTO.Arrival;
             existingEmployee.Departure = employeeDTO.Departure;
-            existingEmployee.Gender = employeeDTO.Gender;
+            existingEmployee.Gender = (Gender)employeeDTO.Gender;
             existingEmployee.PhoneNumber = employeeDTO.PhoneNumber;
             existingEmployee.BaseSalary = employeeDTO.BaseSalary;
             existingEmployee.BirthDate = employeeDTO.BirthDate;
