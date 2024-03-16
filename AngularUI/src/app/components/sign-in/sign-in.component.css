@@ -1,0 +1,61 @@
+button {
+  padding: 5px 25px;
+}
+
+@media (max-width: 576px) {
+  form {
+    max-width: 85%;
+  }
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.invalid-message {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+  /*box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25)*/
+}
+
+input.ng-invalid.ng-untouched:focus,
+input.ng-invalid.ng-touched:focus,
+.form-error {
+  box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
+  border: 1px solid red;
+}
+
+input.ng-invalid.ng-untouched:focus {
+  box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
+}
+
+input.ng-valid.ng-touched {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
+
+/*when focus all red*/
+/**/
+
+p.alert {
+  font-size: 15px;
+  padding: 5px 5px;
+  margin-top: 2px;
+}
+
+.input-box fa-icon {
+  position: absolute;
+  right: 18px;
+  top: 60%;
+  cursor: pointer;
+}
+
+img {
+  height: 10rem;
+}

@@ -17,14 +17,13 @@ namespace WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
+
             builder.Services.AddControllers();
 
             builder.Services.AddDbContext<HRDBContext>(options =>
                  options.UseLazyLoadingProxies()
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
              );
-            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
@@ -48,7 +47,7 @@ namespace WebAPI
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
             })
-             // to not allow any other audiance or issuer to access jwt token
+            // to not allow any other audiance or issuer to access jwt token
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
@@ -62,13 +61,16 @@ namespace WebAPI
                     ValidateAudience = true,
                     ValidAudience = builder.Configuration["JWT:ValidAudiance"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-            };
-            }) ;
+                };
+            });
 
+            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
             builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
             builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             builder.Services.AddScoped<IAttendence, AttendanceRepo>();
-
+            builder.Services.AddScoped<IOrganization, OrganizationRepo>();
+            builder.Services.AddScoped<ICommission, CommissionRepo>();
+            builder.Services.AddScoped<IDeduction, DeductionRepo>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -99,6 +101,8 @@ namespace WebAPI
 
 
             var app = builder.Build();
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
