@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
 using WebAPI.Models;
-using WebAPI.Repositories;
 
 namespace WebAPI.Controllers
 {
@@ -12,11 +10,13 @@ namespace WebAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private IEmployeeRepo employeeRepo;
-        public EmployeeController(IEmployeeRepo employeeRepo)
+        private IDepartmentRepo departmentRepo;
+        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo)
         {
             this.employeeRepo = employeeRepo;
+            this.departmentRepo = departmentRepo;
         }
-
+        #region getall
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            List<EmployeeDTO>employeeDTOs=new List<EmployeeDTO>();
+            List<EmployeeDTO> employeeDTOs = new List<EmployeeDTO>();
             foreach (Employee employee in employees)
             {
                 EmployeeDTO employeesDTO = new EmployeeDTO()
@@ -38,17 +38,22 @@ namespace WebAPI.Controllers
                     Gender = employee.Gender,
                     PhoneNumber = employee.PhoneNumber,
                     BaseSalary = employee.BaseSalary,
-                    DepartmentName = employee.Department.Name
+                    BirthDate=employee.BirthDate,
+                    ContractDate=employee.ContractDate,
+                    Nationality=employee.Nationality,
+                    departmentName = employee.Department != null ? employee.Department.Name : null
                 };
                 employeeDTOs.Add(employeesDTO);
             }
             return Ok(employeeDTOs);
         }
+        #endregion
+        #region get
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Employee employee = employeeRepo.GetById(id);
-            if(employee == null)
+            if (employee == null)
             {
                 return NotFound();
             }
@@ -62,10 +67,11 @@ namespace WebAPI.Controllers
                 Gender = employee.Gender,
                 PhoneNumber = employee.PhoneNumber,
                 BaseSalary = employee.BaseSalary,
-                DepartmentName = employee.Department.Name
+                departmentName = employee.Department != null ? employee.Department.Name : null
             };
             return Ok(employeeDTO);
         }
+        #endregion
         [HttpPost]
         public IActionResult Add(EmployeeDTO employeeDTO)
         {
@@ -73,7 +79,11 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-          
+            Department department = departmentRepo.GetByName(employeeDTO.departmentName);
+            if (department == null)
+            {
+                return NotFound("Department not found");
+            }
             Employee employee = new Employee
             {
                 FullName = employeeDTO.FullName,
@@ -83,14 +93,58 @@ namespace WebAPI.Controllers
                 Gender = employeeDTO.Gender,
                 PhoneNumber = employeeDTO.PhoneNumber,
                 BaseSalary = employeeDTO.BaseSalary,
-                BirthDate=employeeDTO.BirthDate,
-                ContractDate=employeeDTO.ContractDate,
-                Nationality=employeeDTO.Nationality,
-                DeptId=employeeDTO.deptid,
+                BirthDate = employeeDTO.BirthDate,
+                ContractDate = employeeDTO.ContractDate,
+                Nationality = employeeDTO.Nationality,
+                DeptId = department.Id,
             };
             employeeRepo.Add(employee);
             employeeRepo.Save();
-            return CreatedAtAction(nameof(GetById), new { id = employee.SSN }, employee);
+            return CreatedAtAction("GetById", new { id = employee.SSN }, employeeDTO);
         }
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, EmployeeDTO employeeDTO)
+        {
+            Employee existingEmployee = employeeRepo.GetById(id);
+            if (existingEmployee == null)
+            {
+                return NotFound();
+            }
+            Department department = departmentRepo.GetByName(employeeDTO.departmentName);
+            if (department == null)
+            {
+                return NotFound("Department not found");
+            }
+            existingEmployee.FullName = employeeDTO.FullName;
+            existingEmployee.Address = employeeDTO.Address;
+            existingEmployee.Arrival = employeeDTO.Arrival;
+            existingEmployee.Departure = employeeDTO.Departure;
+            existingEmployee.Gender = employeeDTO.Gender;
+            existingEmployee.PhoneNumber = employeeDTO.PhoneNumber;
+            existingEmployee.BaseSalary = employeeDTO.BaseSalary;
+            existingEmployee.BirthDate = employeeDTO.BirthDate;
+            existingEmployee.ContractDate = employeeDTO.ContractDate;
+            existingEmployee.Nationality = employeeDTO.Nationality;
+            existingEmployee.DeptId = department.Id;
+
+            employeeRepo.Update(id, existingEmployee);
+            employeeRepo.Save();
+            return Ok();
+        }
+        #region delete
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Employee employee = employeeRepo.GetById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            employeeRepo.Delete(id);
+            employeeRepo.Save();
+
+            return NoContent();
+        }
+        #endregion
     }
 }
