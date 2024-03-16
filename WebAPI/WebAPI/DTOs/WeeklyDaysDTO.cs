@@ -5,6 +5,6 @@ namespace WebAPI.DTOs
     public class WeeklyDaysDTO
     {
 
-        public List<DaysName> days {  get; set; }
+        public List<int> days {  get; set; }
     }
 }

@@ -10,9 +10,10 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { OrganizationSettingsComponent } from './components/organization-settings/organization-settings.component';
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent, NavbarComponent, LandingComponent],
+  declarations: [AppComponent, SignInComponent, NavbarComponent, LandingComponent, OrganizationSettingsComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
