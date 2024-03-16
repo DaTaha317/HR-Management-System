@@ -1,0 +1,116 @@
+<div class="container">
+  <h1 class="text-center mt-3 txtSub">Official Holidays</h1>
+  <hr />
+  <div class="row">
+    <!-- Input Fields Column -->
+    <div class="col-lg-4 px-4">
+      <form class="my-5" (submit)="onAddSubmit()">
+        <label for="Name">Name</label>
+        <input
+          id="Name"
+          name="name"
+          type="text"
+          placeholder="name"
+          class="form-control m-2"
+          [(ngModel)]="formDataAdd.name"
+        />
+        <label for="date">Date</label>
+        <input
+          type="date"
+          name="date"
+          id="date"
+          placeholder="date"
+          class="form-control m-2"
+          [(ngModel)]="formDataAdd.date"
+        />
+        <input type="submit" value="Add" class="btn bgMain txtMain m-3" />
+      </form>
+    </div>
+    <!-- Table Column -->
+    <div class="col-lg-8">
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Handles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let item of daysOffList
+                | paginate
+                  : {
+                      itemsPerPage: 8,
+                      currentPage: page,
+                      totalItems: totalLength
+                    };
+              let i = index
+            "
+          >
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.date }}</td>
+            <td>
+              <div
+                class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
+              >
+                <a class="btn bgMain txtMain" (click)="showUpdateForm(item)"
+                  ><i class="fa-solid fa-pen"></i
+                ></a>
+                <a class="btn btn-danger" (click)="deleteDayOff(item.date)"
+                  ><i class="fa-solid fa-trash"></i
+                ></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="row mt-3 justify-content-end">
+    <div class="col-lg-6">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<!-- Popup form for update -->
+<div id="popupForm" class="popupForm">
+  <form (submit)="onUpdateSubmit()">
+    <label for="updateName">Name</label>
+    <input
+      id="updateName"
+      type="text"
+      [(ngModel)]="formDataUpdate.name"
+      name="name"
+      required
+    />
+    <label for="updateDate">Date</label>
+    <input
+      id="updateDate"
+      type="date"
+      [(ngModel)]="formDataUpdate.date"
+      name="date"
+      readonly
+    />
+    <div class="row">
+      <div class="col-lg-6 mb-3 mb-lg-0">
+        <button type="submit" class="btn btn-primary w-100">Confirm</button>
+      </div>
+      <div class="col-lg-6">
+        <button
+          type="button"
+          (click)="closeForm()"
+          class="btn btn-danger w-100"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

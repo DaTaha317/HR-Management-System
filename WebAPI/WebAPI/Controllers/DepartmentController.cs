@@ -42,5 +42,22 @@ namespace WebAPI.Controllers
 
             return Ok(departmentDTOs);
         }
+        [HttpGet("{name}")]
+        public IActionResult GetByName(string name)
+        {
+            Department department = departmentRepo.GetByName(name);
+            if (department == null)
+            {
+                return NotFound();
+            }
+
+            DepartmentDTO departmentDTO = new DepartmentDTO()
+            {
+                Id = department.Id,
+                Name = department.Name
+            };
+
+            return Ok(departmentDTO);
+        }
     }
 }

@@ -1,0 +1,151 @@
+<div class="container my-5">
+  <form #f="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="row">
+      <!-- Work Info -->
+      <div class="col-lg-6">
+        <h2 class="txtSub">Work Info</h2>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            [(ngModel)]="employeeDTO.address"
+            class="form-control"
+            placeholder="Enter address"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number:</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            [(ngModel)]="employeeDTO.phoneNumber"
+            class="form-control"
+            placeholder="Enter phone number"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="arrival">Clock In:</label>
+          <input
+            type="time"
+            id="arrival"
+            name="arrival"
+            [(ngModel)]="employeeDTO.arrival"
+            class="form-control"
+            placeholder="HH:mm"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="departure">Clock Out:</label>
+          <input
+            type="time"
+            id="departure"
+            name="departure"
+            [(ngModel)]="employeeDTO.departure"
+            class="form-control"
+            placeholder="HH:mm"
+          />
+        </div>
+        <!-- Department Select -->
+        <div class="form-group">
+          <label for="department">Department:</label>
+          <select
+            id="department"
+            name="department"
+            [(ngModel)]="selectedDepartment"
+            class="form-control"
+          >
+            <option value="" disabled selected>Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept.name">
+              {{ dept.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="col-lg-6">
+        <h2 class="txtSub">Personal Info</h2>
+        <div class="form-group">
+          <label for="fullName">Full Name:</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            [(ngModel)]="employeeDTO.fullName"
+            class="form-control"
+            placeholder="Enter full name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select
+            id="gender"
+            name="gender"
+            [(ngModel)]="employeeDTO.gender"
+            class="form-control"
+          >
+            <option value="" disabled selected>Select Gender</option>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="nationality">Nationality:</label>
+          <input
+            type="text"
+            id="nationality"
+            name="nationality"
+            [(ngModel)]="employeeDTO.nationality"
+            class="form-control"
+            placeholder="Enter nationality"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="birthDate">Birth Date:</label>
+          <input
+            type="date"
+            id="birthDate"
+            name="birthDate"
+            [(ngModel)]="employeeDTO.birthDate"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="contractDate">Contract Date:</label>
+          <input
+            type="date"
+            id="contractDate"
+            name="contractDate"
+            [(ngModel)]="employeeDTO.contractDate"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="baseSalary">Base Salary:</label>
+          <input
+            type="number"
+            id="baseSalary"
+            name="baseSalary"
+            [(ngModel)]="employeeDTO.baseSalary"
+            class="form-control"
+            placeholder="Enter base salary"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn bgMain txtMain">Add</button>
+  </form>
+</div>

@@ -15,10 +15,11 @@ export class NavbarComponent {
 
   logout() {
     this.accountService.logout();
+    this.routeToLogin();
   }
 
   routeToLogin() {
-    this.router.navigate(['login']);
+    this.router.navigate(['/']);
   }
 
 }

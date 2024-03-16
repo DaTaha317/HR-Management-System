@@ -15,5 +15,9 @@ namespace WebAPI.Repositories
         {
             return dBContext.Departments.ToList();
         }
+        public Department GetByName(string name)
+        {
+            return dBContext.Departments.SingleOrDefault(d => d.Name == name);
+        }
     }
 }

@@ -1,23 +1,31 @@
-<div class="signIn-pg">
-  <div class="container d-flex justify-content-center align-items-center">
-    <div class="w-50 mt-5">
-      <form [formGroup]="signInForm" (ngSubmit)="login()" autocomplete="off">
-        <h2 class="text-center text-primary text-black">Login</h2>
-        <hr>
-        <div class="mb-3">
-          <input type="text" class="form-control" formControlName="email" placeholder="email">
-        </div>
-
-        <div class="mb-3">
-          <input type="password" class="form-control" formControlName="password" placeholder="Password">
-        </div>
+<div class="signIn-pg my-5">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6">
         <div class="text-center">
-          <button class="btn btn-success me-2 bg-dark" type="submit">Login</button>
+          <img src="assets/logo.png" alt="" class="img-fluid" />
         </div>
-      </form>
-
-      <!-- <p>{{signInForm.value | json}}</p>
-      <p>{{signInForm.status | json}}</p> -->
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <form [formGroup]="signInForm" (ngSubmit)="login()" autocomplete="off">
+              <h2 class="text-center txtSub">Pioneers</h2>
+              <hr />
+              <div class="mb-3">
+                <input type="text" class="form-control" formControlName="email" placeholder="Email" />
+              </div>
+              <div class="mb-3">
+                <input type="password" class="form-control" formControlName="password" placeholder="Password" />
+              </div>
+              <label class="invalid-feedback d-block mt-0 mb-2 ms-1" *ngIf="formError">Wrong email or password</label>
+              <div class="text-center">
+                <button class="btn me-2 bgMain txtMain" type="submit">
+                  Sign in
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
