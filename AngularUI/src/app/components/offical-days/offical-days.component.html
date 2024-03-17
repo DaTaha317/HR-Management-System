@@ -1,6 +1,4 @@
-<div class="container">
-  <h1 class="text-center mt-3 txtSub">Official Holidays</h1>
-  <hr />
+<div class="container my-5">
   <div class="row">
     <!-- Input Fields Column -->
     <div class="col-lg-4 px-4">
@@ -28,13 +26,18 @@
     </div>
     <!-- Table Column -->
     <div class="col-lg-8">
-      <div class="mb-3">
-        <input
-          type="search"
-          [(ngModel)]="searchText"
-          class="form-control"
-          placeholder="Search"
-        />
+      <div class="d-flex justify-content-end align-items-center mb-4">
+        <div class="d-flex align-items-center">
+          <input
+            type="text"
+            class="form-control me-2"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button type="button" class="btn bgMain txtMain">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
       </div>
       <table class="table">
         <thead>
@@ -52,7 +55,7 @@
                 | filter : searchText
                 | paginate
                   : {
-                      itemsPerPage: 8,
+                      itemsPerPage: 7,
                       currentPage: page,
                       totalItems: totalLength
                     };

@@ -20,3 +20,13 @@
 .bgSub {
   background-color: var(--medium) !important;
 }
+
+thead th {
+  background-color: var(--dark) !important;
+  color: var(--light) !important;
+}
+
+tr:hover td,
+tr:hover th {
+  background-color: var(--medium);
+}

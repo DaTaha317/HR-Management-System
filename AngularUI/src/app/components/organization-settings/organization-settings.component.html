@@ -1,9 +1,13 @@
-<div>
-
-  <form (submit)="onSubmit()" >
+<div class="container mt-5">
+  <form (submit)="onSubmit()">
     <div class="form-group">
-      <label for="commissionType">Commission Type</label>
-      <select class="form-select" aria-label="Default select example" [(ngModel)]="settings.commissionDTO.type" [ngModelOptions]="{ standalone: true }">
+      <label for="commissionType">Overtime Type</label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        [(ngModel)]="settings.commissionDTO.type"
+        [ngModelOptions]="{ standalone: true }"
+      >
         <option disabled>Select an option</option>
         <option [value]="0">Hours</option>
         <option [value]="1">Money</option>
@@ -11,16 +15,33 @@
       <!-- <input type="text" class="form-control" id="commissionType" name="commissionType" > -->
     </div>
     <div class="form-group">
-      <label for="commissionHours">Commission Hours</label>
-      <input type="number" class="form-control" id="commissionHours" name="commissionHours" [(ngModel)]="settings.commissionDTO.hours">
+      <label for="commissionHours">Overtime Hours</label>
+      <input
+        type="number"
+        class="form-control"
+        id="commissionHours"
+        name="commissionHours"
+        [(ngModel)]="settings.commissionDTO.hours"
+      />
     </div>
     <div class="form-group">
-      <label for="commissionAmount">Commission Amount</label>
-      <input type="number" class="form-control" id="commissionAmount" name="commissionAmount" [(ngModel)]="settings.commissionDTO.amount">
+      <label for="commissionAmount">Overtime Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="commissionAmount"
+        name="commissionAmount"
+        [(ngModel)]="settings.commissionDTO.amount"
+      />
     </div>
     <div class="form-group">
       <label for="deductionType">Deduction Type</label>
-      <select class="form-select" aria-label="Default select example" [(ngModel)]="settings.deductionDTO.type" [ngModelOptions]="{ standalone: true }">
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        [(ngModel)]="settings.deductionDTO.type"
+        [ngModelOptions]="{ standalone: true }"
+      >
         <option disabled>Select an option</option>
         <option [value]="0">Hours</option>
         <option [value]="1">Money</option>
@@ -28,17 +49,29 @@
     </div>
     <div class="form-group">
       <label for="deductionHours">Deduction Hours</label>
-      <input type="number" class="form-control" id="deductionHours" name="deductionHours" [(ngModel)]="settings.deductionDTO.hours">
+      <input
+        type="number"
+        class="form-control"
+        id="deductionHours"
+        name="deductionHours"
+        [(ngModel)]="settings.deductionDTO.hours"
+      />
     </div>
     <div class="form-group">
       <label for="deductionAmount">Deduction Amount</label>
-      <input type="number" class="form-control" id="deductionAmount" name="deductionAmount" [(ngModel)]="settings.deductionDTO.amount">
+      <input
+        type="number"
+        class="form-control"
+        id="deductionAmount"
+        name="deductionAmount"
+        [(ngModel)]="settings.deductionDTO.amount"
+      />
     </div>
     <!-- <div class="form-group" *ngIf="settings.weeklyDaysOffDTO"> -->
-      <!-- <div class="form-group" >
+    <!-- <div class="form-group" >
       <label>Weekly Days Off</label> -->
-      <!-- <div *ngFor="let day of weekdays" [(ngModel)]="settings.weeklyDaysOffDTO.days"> -->
-      <!-- <div *ngFor="let day of weekdays">
+    <!-- <div *ngFor="let day of weekdays" [(ngModel)]="settings.weeklyDaysOffDTO.days"> -->
+    <!-- <div *ngFor="let day of weekdays">
         <div class="form-check">
           <label class="form-check-label">{{ day.label }}</label>
           <input class="form-check-input" type="checkbox" [value]="day.value" >
@@ -48,5 +81,3 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
-  
-  
