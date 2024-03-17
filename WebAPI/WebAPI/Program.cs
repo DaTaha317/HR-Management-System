@@ -68,7 +68,6 @@ namespace WebAPI
             builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
             builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             builder.Services.AddScoped<IAttendence, AttendanceRepo>();
-            builder.Services.AddScoped<IOrganization, OrganizationRepo>();
             builder.Services.AddScoped<ICommission, CommissionRepo>();
             builder.Services.AddScoped<IDeduction, DeductionRepo>();
             builder.Services.AddScoped<IWeeklyDaysOff, WeeklyDaysOffRepo>();

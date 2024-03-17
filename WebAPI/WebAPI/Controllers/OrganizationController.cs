@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
 using WebAPI.Models;
@@ -9,79 +9,87 @@ namespace WebAPI.Controllers
     [ApiController]
     public class OrganizationController : ControllerBase
     {
-        private IOrganization organizationRepo;
+
         private ICommission commissionRepo;
         private IDeduction deductionRepo;
+        private IWeeklyDaysOff weeklyDaysOffRepo;
 
-        public OrganizationController(IOrganization organizationRepo, ICommission commissionRepo, IDeduction deductionRepo)
+        public OrganizationController(ICommission commissionRepo, IDeduction deductionRepo, IWeeklyDaysOff weeklyDaysOffRepo)
         {
             this.deductionRepo = deductionRepo;
-            this.organizationRepo = organizationRepo;
             this.commissionRepo = commissionRepo;
+            this.weeklyDaysOffRepo = weeklyDaysOffRepo;
         }
 
 
         [HttpPost]
-        public ActionResult Update(SettingsRequest settingsRequest)
+        public ActionResult Update([FromBody] OrganizationSettings organization)
         {
-            CommissionDTO commissionDTO = settingsRequest.CommissionDTO;
-            DeductionDTO deductionDTO = settingsRequest.DeductionDTO;
-
+            CommissionDTO commissionDTO = organization.CommissionDTO;
+            DeductionDTO deductionDTO = organization.DeductionDTO;
+            WeeklyDaysDTO weeklyDaysDTO = organization.WeeklyDaysDTO;
 
             // check if there exist one record
-            OrganizationSettings? organization = organizationRepo.Get();
+            //OrganizationSettings? organization = organizationRepo.Get();
+            CommissionSettings oldCommision = commissionRepo.Get();
+            DeductionSettings oldDeduction = deductionRepo.Get();
+            WeeklyDaysOff oldDaysOff = weeklyDaysOffRepo.Get();
 
-            if (organization == null)
+            if (oldCommision == null )
             {
                 // Setting data
                 CommissionSettings commission = new CommissionSettings()
                 {
-                    type = commissionDTO.type,
+                    type = (Unit)commissionDTO.type,
                     Hours = commissionDTO.Hours,
                     Amount = commissionDTO.Amount
                 };
-                commissionRepo.Add(commission);
-                commissionRepo.Save();
 
                 DeductionSettings deduction = new DeductionSettings()
                 {
-                    type = deductionDTO.type,
+                    type = (Unit)deductionDTO.type,
                     Hours = deductionDTO.Hours,
                     Amount = deductionDTO.Amount
                 };
+
+                WeeklyDaysOff newDaysOff = new WeeklyDaysOff();
+                foreach(var day in organization.WeeklyDaysDTO.days)
+                {
+                    newDaysOff.Days.Add((DaysName)day);
+                }
+                commissionRepo.Add(commission);
+                commissionRepo.Save();
+
                 deductionRepo.Add(deduction);
                 deductionRepo.Save();
+                weeklyDaysOffRepo.Add(newDaysOff);
+                weeklyDaysOffRepo.Save();
 
-                // adding one record when null
-                organization = new OrganizationSettings()
-                {
-                    CommissionId = commission.Id,
-                    DeductionId = deduction.Id
-                };
-
-                organizationRepo.Add(organization);
-                organizationRepo.Save();
-
-                return Ok();
             }
 
             // updating only when not null
-            CommissionSettings oldCommision = commissionRepo.Get();
-            oldCommision.type = commissionDTO.type;
+            oldCommision.type = (Unit)commissionDTO.type;
             oldCommision.Hours = commissionDTO.Hours;
             oldCommision.Amount = commissionDTO.Amount;
-            commissionRepo.Update(oldCommision);
-            commissionRepo.Save();
 
 
-            DeductionSettings oldDeduction = deductionRepo.Get();
-            oldDeduction.type = deductionDTO.type;
+            oldDeduction.type = (Unit)deductionDTO.type;
             oldDeduction.Hours = deductionDTO.Hours;
             oldDeduction.Amount = deductionDTO.Amount;
+
+            oldDaysOff.Days.Clear();
+            foreach(var day in organization.WeeklyDaysDTO.days)
+            {
+                oldDaysOff.Days.Add((DaysName)day);
+            }
+            commissionRepo.Update(oldCommision);
+            commissionRepo.Save();
             deductionRepo.Update(oldDeduction);
             deductionRepo.Save();
+            weeklyDaysOffRepo.Update(oldDaysOff);
+            weeklyDaysOffRepo.Save();
 
-            return Ok();
+            return CreatedAtAction("Get", organization);
 
         }
 
@@ -89,53 +97,49 @@ namespace WebAPI.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            if (organizationRepo.Get() == null)
+            if (commissionRepo.Get() == null)
             {
                 return NoContent();
             }
 
             CommissionSettings commission = commissionRepo.Get();
             DeductionSettings deduction = deductionRepo.Get();
-            SettingsRequest settingsRequest = new SettingsRequest()
+            WeeklyDaysOff weeklyDays = weeklyDaysOffRepo.Get();
+
+            WeeklyDaysDTO weeklyDaysDTO = new WeeklyDaysDTO();
+            weeklyDaysDTO.days = new List<int>();
+            foreach(var day in  weeklyDays.Days)
+            {
+                weeklyDaysDTO.days.Add((int)day);
+            }
+            OrganizationSettings organization = new OrganizationSettings()
             {
                 CommissionDTO = new CommissionDTO()
                 {
-                    type = commission.type,
+                    type = (int)commission.type,
                     Hours = commission.Hours,
                     Amount = commission.Amount
                 },
                 DeductionDTO = new DeductionDTO()
                 {
-                    type = deduction.type,
+                    type = (int)deduction.type,
                     Hours = deduction.Hours,
                     Amount = deduction.Amount
-                }
+                },
+                WeeklyDaysDTO = new WeeklyDaysDTO()
+                {
+                    days = weeklyDaysDTO.days
+                } 
             };
 
-            return Ok(settingsRequest);
+            return Ok(organization);
         }
 
 
     }
 
 
-    // client should send request like this
-    //  {
-    //  "CommissionDTO": {
-    //    "type": "commissionType",
-    //    "Hours": 10,
-    //    "Amount": 100
-    //  },
-    //  "DeductionDTO": {
-    //    "type": "deductionType",
-    //    "Hours": 5,
-    //    "Amount": 50
-    //  }
-    //}
 
-    public class SettingsRequest
-    {
-        public CommissionDTO CommissionDTO { get; set; }
-        public DeductionDTO DeductionDTO { get; set; }
-    }
+
+ 
 }

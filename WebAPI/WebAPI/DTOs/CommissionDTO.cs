@@ -4,7 +4,7 @@ namespace WebAPI.DTOs
 {
     public class CommissionDTO
     {
-        public Unit type { get; set; }
+        public int type { get; set; }
 
         public int Hours { get; set; }
 

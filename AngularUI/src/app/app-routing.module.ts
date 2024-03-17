@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+
+import { OrganizationSettingsComponent } from './components/organization-settings/organization-settings.component';
+ 
 import { NewAdminComponent } from './components/new-admin/new-admin.component';
 import { AttendanceReportComponent } from './components/attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
@@ -17,6 +20,10 @@ const routes: Routes = [
   { path: 'salary/report', component: SalaryReportComponent },
   { path: 'daysoff', component: OfficalDaysComponent },
   { path: 'employee/add', component: AddEmployeeComponent },
+  {path:'UpdateEmployee',component:UpdateEmployeeComponent},
+  {path:'employees',component:DisplayEmployeeComponent},
+   {path: 'settings', component: OrganizationSettingsComponent},
+
   { path: 'employee/update', component: UpdateEmployeeComponent },
   { path: 'employee/display', component: DisplayEmployeeComponent },
 ];
