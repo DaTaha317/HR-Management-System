@@ -7,10 +7,9 @@ import { AccountService } from 'src/app/services/account.service';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
-
   model: any = {};
 
   departments: IDepartment[] | undefined;
@@ -20,7 +19,7 @@ export class SignInComponent {
   formError: boolean = false;
   fillForm: boolean = false;
 
-  constructor(private accountService: AccountService, private router: Router) { }
+  constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -29,10 +28,12 @@ export class SignInComponent {
   initializeForm(): void {
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(4)]), // array of validators
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+      ]), // array of validators
     });
   }
-
 
   login() {
     let email = this.signInForm.value['email'];
@@ -42,18 +43,12 @@ export class SignInComponent {
     }
     this.accountService.login(email, password).subscribe({
       next: () => {
-        console.log("yes");
-        this.router.navigate(['/admin/add']);
+        console.log('yes');
+        this.router.navigate(['/home']);
       },
       error: () => {
         this.formError = true;
-      }
-    }
-    )
-
+      },
+    });
   }
-
-
-
-
 }

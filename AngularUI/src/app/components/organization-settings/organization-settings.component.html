@@ -1,52 +1,111 @@
-<div>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <form (submit)="onSubmit()">
+        <!-- Overtime Section -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="commissionType">Overtime Type</label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                [(ngModel)]="settings.commissionDTO.type"
+                [ngModelOptions]="{ standalone: true }"
+                (change)="onComissionTypeChange()"
+              >
+                <option disabled>Select an option</option>
+                <option [value]="0">Hours</option>
+                <option [value]="1">Money</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="commissionHours">Hours</label>
+              <input
+                type="number"
+                class="form-control"
+                id="commissionHours"
+                name="commissionHours"
+                [(ngModel)]="settings.commissionDTO.hours"
+                [disabled]="this.comissionHoursState"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="commissionAmount">Amount</label>
+              <input
+                type="number"
+                class="form-control"
+                id="commissionAmount"
+                name="commissionAmount"
+                [(ngModel)]="settings.commissionDTO.amount"
+                [disabled]="this.comissionMoneyState"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Deduction Section -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="deductionType">Deduction Type</label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                [(ngModel)]="settings.deductionDTO.type"
+                [ngModelOptions]="{ standalone: true }"
+                (change)="onDeductionTypeChange()"
+              >
+                <option disabled>Select an option</option>
+                <option [value]="0">Hours</option>
+                <option [value]="1">Money</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="deductionHours">Hours</label>
+              <input
+                type="number"
+                class="form-control"
+                id="deductionHours"
+                name="deductionHours"
+                [(ngModel)]="settings.deductionDTO.hours"
+                [disabled]="this.deductionHoursState"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="deductionAmount">Amount</label>
+              <input
+                type="number"
+                class="form-control"
+                id="deductionAmount"
+                name="deductionAmount"
+                [(ngModel)]="settings.deductionDTO.amount"
+                [disabled]="this.deductionMoneyState"
+              />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn bgMain txtMain mt-3">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-  <form (submit)="onSubmit()" >
-    <div class="form-group">
-      <label for="commissionType">Commission Type</label>
-      <select class="form-select" aria-label="Default select example" [(ngModel)]="settings.commissionDTO.type" [ngModelOptions]="{ standalone: true }">
-        <option disabled>Select an option</option>
-        <option [value]="0">Hours</option>
-        <option [value]="1">Money</option>
-      </select>
-      <!-- <input type="text" class="form-control" id="commissionType" name="commissionType" > -->
-    </div>
-    <div class="form-group">
-      <label for="commissionHours">Commission Hours</label>
-      <input type="number" class="form-control" id="commissionHours" name="commissionHours" [(ngModel)]="settings.commissionDTO.hours">
-    </div>
-    <div class="form-group">
-      <label for="commissionAmount">Commission Amount</label>
-      <input type="number" class="form-control" id="commissionAmount" name="commissionAmount" [(ngModel)]="settings.commissionDTO.amount">
-    </div>
-    <div class="form-group">
-      <label for="deductionType">Deduction Type</label>
-      <select class="form-select" aria-label="Default select example" [(ngModel)]="settings.deductionDTO.type" [ngModelOptions]="{ standalone: true }">
-        <option disabled>Select an option</option>
-        <option [value]="0">Hours</option>
-        <option [value]="1">Money</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="deductionHours">Deduction Hours</label>
-      <input type="number" class="form-control" id="deductionHours" name="deductionHours" [(ngModel)]="settings.deductionDTO.hours">
-    </div>
-    <div class="form-group">
-      <label for="deductionAmount">Deduction Amount</label>
-      <input type="number" class="form-control" id="deductionAmount" name="deductionAmount" [(ngModel)]="settings.deductionDTO.amount">
-    </div>
-    <!-- <div class="form-group" *ngIf="settings.weeklyDaysOffDTO"> -->
-      <!-- <div class="form-group" >
+<!-- <div class="form-group" *ngIf="settings.weeklyDaysOffDTO"> -->
+<!-- <div class="form-group" >
       <label>Weekly Days Off</label> -->
-      <!-- <div *ngFor="let day of weekdays" [(ngModel)]="settings.weeklyDaysOffDTO.days"> -->
-      <!-- <div *ngFor="let day of weekdays">
+<!-- <div *ngFor="let day of weekdays" [(ngModel)]="settings.weeklyDaysOffDTO.days"> -->
+<!-- <div *ngFor="let day of weekdays">
         <div class="form-check">
           <label class="form-check-label">{{ day.label }}</label>
           <input class="form-check-input" type="checkbox" [value]="day.value" >
         </div>
       </div>
     </div> -->
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
-  
-  

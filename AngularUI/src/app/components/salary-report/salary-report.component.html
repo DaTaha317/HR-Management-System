@@ -1,34 +1,40 @@
 <div class="container mt-5">
-  <div class="d-flex justify-content-end mb-3">
-    <input
-      type="text"
-      class="form-control me-2"
-      placeholder="Search"
-      aria-label="Search"
-    />
-    <button class="btn btn-primary" type="button">Search</button>
+  <div class="d-flex justify-content-start align-items-center mb-4">
+    <div class="col-md-3 d-flex align-items-center me-2">
+      <label for="month" class="form-label me-2">Month</label>
+      <div class="input-group">
+        <select class="form-select" id="month">
+          <option selected>Select Month</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <!-- Add options for other months -->
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3 d-flex align-items-center me-2">
+      <label for="year" class="form-label me-2">Year</label>
+      <div class="input-group">
+        <select class="form-select" id="year">
+          <option selected>Select Year</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <!-- Add options for other years -->
+        </select>
+      </div>
+    </div>
+    <div class="d-flex align-items-center ms-auto">
+      <input
+        type="text"
+        class="form-control me-2"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button type="button" class="btn bgMain txtMain">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label for="month" class="form-label">Month</label>
-      <select class="form-select" id="month">
-        <option selected>Select Month</option>
-        <option value="1">January</option>
-        <option value="2">February</option>
-        <!-- Add options for other months -->
-      </select>
-    </div>
-    <div class="col-md-6">
-      <label for="year" class="form-label">Year</label>
-      <select class="form-select" id="year">
-        <option selected>Select Year</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <!-- Add options for other years -->
-      </select>
-    </div>
-  </div>
   <table class="table">
     <thead>
       <tr>

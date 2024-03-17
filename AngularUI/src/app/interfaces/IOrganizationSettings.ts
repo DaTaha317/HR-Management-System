@@ -5,17 +5,16 @@ export interface IOrganizationSettings {
 }
 
 interface CommissionDTO {
-  type: null;
+  type: number | null;
   hours?: number;
   amount?: number;
 }
 
 interface DeductionDTO {
-  type: null;
+  type: number | null;
   hours?: number;
   amount?: number;
 }
-
 
 interface WeeklyDaysOffDTO {
   days: number[];
