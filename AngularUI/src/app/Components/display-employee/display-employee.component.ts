@@ -13,6 +13,7 @@ export class DisplayEmployeeComponent implements OnInit {
   employees: IEmployee[] = [];
   totalLength: any;
   page: number = 1;
+  searchText: any;
 
   constructor(
     private employeeService: EmpServicesService,

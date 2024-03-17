@@ -28,6 +28,14 @@
     </div>
     <!-- Table Column -->
     <div class="col-lg-8">
+      <div class="mb-3">
+        <input
+          type="search"
+          [(ngModel)]="searchText"
+          class="form-control"
+          placeholder="Search"
+        />
+      </div>
       <table class="table">
         <thead>
           <tr class="text-center">
@@ -41,6 +49,7 @@
           <tr
             *ngFor="
               let item of daysOffList
+                | filter : searchText
                 | paginate
                   : {
                       itemsPerPage: 8,

@@ -19,6 +19,7 @@ import { OfficalDaysComponent } from './components/offical-days/offical-days.com
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { DisplayEmployeeComponent } from './components/display-employee/display-employee.component';
 import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UpdateEmployeeComponent } from './components/update-employee/update-emp
     AddEmployeeComponent,
     DisplayEmployeeComponent,
     UpdateEmployeeComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
