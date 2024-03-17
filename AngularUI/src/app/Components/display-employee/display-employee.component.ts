@@ -7,31 +7,38 @@ import { EmpServicesService } from 'src/app/services/emp-services.service';
 @Component({
   selector: 'app-display-employee',
   templateUrl: './display-employee.component.html',
-  styleUrls: ['./display-employee.component.css']
+  styleUrls: ['./display-employee.component.css'],
 })
-export class DisplayEmployeeComponent implements OnInit{
-  employees:IEmployee[]=[];
-  constructor(private employeeService:EmpServicesService,private router:Router){}
+export class DisplayEmployeeComponent implements OnInit {
+  employees: IEmployee[] = [];
+  totalLength: any;
+  page: number = 1;
+
+  constructor(
+    private employeeService: EmpServicesService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.employeeService.getEmployees().subscribe((data) => {
-      console.warn("Employees", data);
+      console.warn('Employees', data);
       this.employees = data as IEmployee[];
       console.log(this.employees);
     });
   }
-  deleteEmployee(id: number):void {
-    this.employeeService.deleteEmployee(id).subscribe(
-      ()=>{
-        this.employees=this.employees.filter(emp=>emp.id!==id);
-      }
-    );
+  addEmployee() {
+    this.router.navigate(['/employee/add']);
   }
-  updateForm(employee:IEmployee){
-    console.log("hello");
-    this.router.navigate(['/UpdateEmployee'],{state:{employee}});
+  deleteEmployee(id: number): void {
+    this.employeeService.deleteEmployee(id).subscribe(() => {
+      this.employees = this.employees.filter((emp) => emp.id !== id);
+    });
+  }
+  updateForm(employee: IEmployee) {
+    console.log('hello');
+    this.router.navigate(['/employee/update'], { state: { employee } });
     console.log(employee);
   }
-  trackByFn(index:number, employee:IEmployee) {
-    return employee.id; 
+  trackByFn(index: number, employee: IEmployee) {
+    return employee.id;
   }
 }

@@ -1,16 +1,68 @@
-<div class="card" style="width: 18rem;"  *ngFor="let emp of employees;trackBy:trackByFn;">
-    <div class="card-body">
-      <h5 class="card-title">{{emp.fullName}}</h5>
-      <p class="card-text">{{emp.address}}</p>
-      <p class="card-text">{{emp.gender}}</p>
-      <p class="card-text">{{emp.phoneNumber}}</p>
-      <p class="card-text">{{emp.baseSalary}}</p>
-      <p class="card-text">{{emp.birthDate}}</p>
-      <p class="card-text">{{emp.contractDate}}</p>
-      <p class="card-text">{{emp.arrival}}</p>
-      <p class="card-text">{{emp.departure}}</p>
-      <p class="card-text">{{emp.departmentName}}</p>
-      <button class="btn btn-primary" (click)="updateForm(emp)">Update</button>
-      <button class="btn btn-primary" (click)="deleteEmployee(emp.id)">Delete</button>
+<div class="container my-5">
+  <div class="d-flex justify-content-between mb-3">
+    <button class="btn bgMain txtMain" (click)="addEmployee()">Add</button>
+    <input type="text" class="form-control" placeholder="Search" />
+  </div>
+
+  <table class="table text-center">
+    <thead>
+      <tr>
+        <th scope="col">Full Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Base Salary</th>
+        <th scope="col">Birth Date</th>
+        <th scope="col">Contract Date</th>
+        <th scope="col">Clock In</th>
+        <th scope="col">Clock Out</th>
+        <th scope="col">Department</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let emp of employees
+            | paginate
+              : {
+                  itemsPerPage: 8,
+                  currentPage: page,
+                  totalItems: totalLength
+                };
+          trackBy: trackByFn
+        "
+      >
+        <td>{{ emp.fullName }}</td>
+        <td>{{ emp.address }}</td>
+        <td>{{ emp.gender }}</td>
+        <td>{{ emp.phoneNumber }}</td>
+        <td>{{ emp.baseSalary }}</td>
+        <td>{{ emp.birthDate }}</td>
+        <td>{{ emp.contractDate }}</td>
+        <td>{{ emp.arrival }}</td>
+        <td>{{ emp.departure }}</td>
+        <td>{{ emp.departmentName }}</td>
+        <td>
+          <div
+            class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
+          >
+            <button class="btn bgMain txtMain" (click)="updateForm(emp)">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteEmployee(emp.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="row mt-3 justify-content-end">
+    <div class="col-lg-6">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
+</div>
