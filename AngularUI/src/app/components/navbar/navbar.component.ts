@@ -5,13 +5,10 @@ import { AccountService } from 'src/app/services/account.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-
-  constructor(public accountService: AccountService, private router: Router) {
-
-  }
+  constructor(public accountService: AccountService, private router: Router) {}
 
   logout() {
     this.accountService.logout();
@@ -21,5 +18,4 @@ export class NavbarComponent {
   routeToLogin() {
     this.router.navigate(['/']);
   }
-
 }
