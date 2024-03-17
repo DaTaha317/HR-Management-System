@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { IDepartment } from 'src/app/interfaces/IDepartment';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -19,7 +20,7 @@ export class SignInComponent {
   formError: boolean = false;
   fillForm: boolean = false;
 
-  constructor(private accountService: AccountService, private router: Router) {}
+  constructor(private accountService: AccountService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -43,9 +44,10 @@ export class SignInComponent {
     }
     this.accountService.login(email, password).subscribe({
       next: () => {
-        console.log('yes');
+        this.toastr.success("logged in successfully");
         this.router.navigate(['/home']);
       },
+
       error: () => {
         this.formError = true;
       },
