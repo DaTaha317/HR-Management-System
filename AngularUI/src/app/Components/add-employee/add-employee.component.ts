@@ -5,6 +5,7 @@ import { EmpServicesService } from 'src/app/services/emp-services.service';
 import { IDepartment } from 'src/app/interfaces/IDepartment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IEmployee } from 'src/app/interfaces/IEmployee';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-employee',
@@ -18,7 +19,8 @@ export class AddEmployeeComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private employeeService: EmpServicesService,
-    private departmentServices: DeptServicesService
+    private departmentServices: DeptServicesService,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.departmentServices.getDepartments().subscribe((data) => {
@@ -31,7 +33,9 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeDTO.arrival = this.formatTime(this.employeeDTO.arrival);
     this.employeeDTO.departure = this.formatTime(this.employeeDTO.departure);
     this.employeeDTO.departmentName = this.selectedDepartment;
-    this.employeeService.addEmployee(this.employeeDTO).subscribe((data) => {});
+    this.employeeService.addEmployee(this.employeeDTO).subscribe((data) => {
+      this.toastr.success('An Employee has been added');
+    });
   }
 
   private formatTime(timeValue: string): string {

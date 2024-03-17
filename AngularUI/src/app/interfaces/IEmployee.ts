@@ -2,7 +2,7 @@ import { Time } from '@angular/common';
 import { IDepartment } from './IDepartment';
 
 export interface IEmployee {
-  id: number;
+  ssn: number;
   fullName: string;
   address: string;
   phoneNumber: string;
@@ -12,9 +12,9 @@ export interface IEmployee {
   contractDate: Date;
   baseSalary: number;
   arrival: Time;
-  departure:Time;
+  departure: Time;
   deptId?: number;
-  departmentName:string;
+  departmentName: string;
 }
 
 export enum Gender {
