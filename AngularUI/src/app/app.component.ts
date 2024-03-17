@@ -8,7 +8,7 @@ import { AccountService } from './services/account.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private accountService: AccountService) {}
+  constructor(public accountService: AccountService) {}
 
   ngOnInit(): void {
     this.setCurrentUser();
