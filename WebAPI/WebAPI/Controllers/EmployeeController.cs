@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
             {
                 EmployeeDTO employeesDTO = new EmployeeDTO()
                 {
-                    Id = employee.SSN,
+                    SSN = employee.SSN,
                     FullName = employee.FullName,
                     Address = employee.Address,
                     Arrival = employee.Arrival,

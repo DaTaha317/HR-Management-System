@@ -22,6 +22,7 @@
     <thead>
       <tr>
         <th scope="col">Full Name</th>
+        <th scope="col">Social Security Number</th>
         <th scope="col">Address</th>
         <th scope="col">Gender</th>
         <th scope="col">Phone Number</th>
@@ -49,6 +50,7 @@
         "
       >
         <td>{{ emp.fullName }}</td>
+        <td>{{ emp.ssn }}</td>
         <td>{{ emp.address }}</td>
         <td>{{ emp.gender == 0 ? "Male" : "Female" }}</td>
         <td>{{ emp.phoneNumber }}</td>
@@ -65,7 +67,7 @@
             <button class="btn bgMain txtMain" (click)="updateForm(emp)">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger" (click)="deleteEmployee(emp.id)">
+            <button class="btn btn-danger" (click)="deleteEmployee(emp.ssn)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>

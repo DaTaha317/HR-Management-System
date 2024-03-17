@@ -21,9 +21,7 @@ export class DisplayEmployeeComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.employeeService.getEmployees().subscribe((data) => {
-      console.warn('Employees', data);
       this.employees = data as IEmployee[];
-      console.log(this.employees);
     });
   }
   addEmployee() {
@@ -31,15 +29,13 @@ export class DisplayEmployeeComponent implements OnInit {
   }
   deleteEmployee(id: number): void {
     this.employeeService.deleteEmployee(id).subscribe(() => {
-      this.employees = this.employees.filter((emp) => emp.id !== id);
+      this.employees = this.employees.filter((emp) => emp.ssn !== id);
     });
   }
   updateForm(employee: IEmployee) {
-    console.log('hello');
     this.router.navigate(['/employee/update'], { state: { employee } });
-    console.log(employee);
   }
   trackByFn(index: number, employee: IEmployee) {
-    return employee.id;
+    return employee.ssn;
   }
 }
