@@ -21,6 +21,9 @@ import { AddEmployeeComponent } from './components/add-employee/add-employee.com
 import { DisplayEmployeeComponent } from './Components/display-employee/display-employee.component';
 import { UpdateEmployeeComponent } from './Components/update-employee/update-employee.component';
 import { OrganizationSettingsComponent } from './components/organization-settings/organization-settings.component';
+import { DisplayEmployeeComponent } from './components/display-employee/display-employee.component';
+import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { OrganizationSettingsComponent } from './components/organization-setting
     DisplayEmployeeComponent,
     UpdateEmployeeComponent,
     OrganizationSettingsComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

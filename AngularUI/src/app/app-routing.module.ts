@@ -10,8 +10,8 @@ import { AttendanceReportComponent } from './components/attendance-report/attend
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
-import { UpdateEmployeeComponent } from './Components/update-employee/update-employee.component';
-import {DisplayEmployeeComponent} from './Components/display-employee/display-employee.component';
+import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
+import { DisplayEmployeeComponent } from './components/display-employee/display-employee.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: SignInComponent },
@@ -22,8 +22,10 @@ const routes: Routes = [
   { path: 'employee/add', component: AddEmployeeComponent },
   {path:'UpdateEmployee',component:UpdateEmployeeComponent},
   {path:'employees',component:DisplayEmployeeComponent},
-   {path: 'settings', component: OrganizationSettingsComponent}
+   {path: 'settings', component: OrganizationSettingsComponent},
 
+  { path: 'employee/update', component: UpdateEmployeeComponent },
+  { path: 'employee/display', component: DisplayEmployeeComponent },
 ];
 
 @NgModule({
