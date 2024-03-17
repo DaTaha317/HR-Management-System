@@ -31,6 +31,8 @@ namespace WebAPI.Models
 
             modelBuilder.Entity<Department>().HasIndex(c => c.Name).IsUnique();
 
+            modelBuilder.Entity<Employee>().HasIndex(c => c.SSN).IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
 

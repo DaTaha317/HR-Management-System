@@ -6,6 +6,8 @@ namespace WebAPI.Models
     public class Employee
     {
         [Key]
+        public int Id { get; set; }
+
         public int SSN { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }

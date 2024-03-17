@@ -52,6 +52,21 @@ namespace WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CommissionSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    type = table.Column<int>(type: "int", nullable: false),
+                    Hours = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "money", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommissionSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DaysOffs",
                 columns: table => new
                 {
@@ -61,6 +76,21 @@ namespace WebAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DaysOffs", x => x.Date);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeductionSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    type = table.Column<int>(type: "int", nullable: false),
+                    Hours = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "money", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeductionSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,6 +104,19 @@ namespace WebAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WeeklyDaysOffs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Days = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeeklyDaysOffs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,8 +229,9 @@ namespace WebAPI.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    SSN = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SSN = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -202,7 +246,7 @@ namespace WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.SSN);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Employees_Departments_DeptId",
                         column: x => x.DeptId,
@@ -226,7 +270,7 @@ namespace WebAPI.Migrations
                         name: "FK_Attendences_Employees_EmpId",
                         column: x => x.EmpId,
                         principalTable: "Employees",
-                        principalColumn: "SSN",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -303,7 +347,16 @@ namespace WebAPI.Migrations
                 name: "Attendences");
 
             migrationBuilder.DropTable(
+                name: "CommissionSettings");
+
+            migrationBuilder.DropTable(
                 name: "DaysOffs");
+
+            migrationBuilder.DropTable(
+                name: "DeductionSettings");
+
+            migrationBuilder.DropTable(
+                name: "WeeklyDaysOffs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
