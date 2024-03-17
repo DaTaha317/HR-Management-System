@@ -20,6 +20,7 @@ export class OfficalDaysComponent implements OnInit {
   isUpdateFormVisible: boolean = false;
   totalLength: any;
   page: number = 1;
+  searchText: any;
 
   constructor(private daysOffService: DaysOffService) {}
 
