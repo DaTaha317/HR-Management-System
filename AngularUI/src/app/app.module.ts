@@ -18,11 +18,10 @@ import { AttendanceReportComponent } from './components/attendance-report/attend
 import { SalaryReportComponent } from './components/salary-report/salary-report.component';
 import { OfficalDaysComponent } from './components/offical-days/offical-days.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
-import { DisplayEmployeeComponent } from './Components/display-employee/display-employee.component';
-import { UpdateEmployeeComponent } from './Components/update-employee/update-employee.component';
-import { OrganizationSettingsComponent } from './components/organization-settings/organization-settings.component';
 import { DisplayEmployeeComponent } from './components/display-employee/display-employee.component';
 import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
+import { OrganizationSettingsComponent } from './components/organization-settings/organization-settings.component';
+
 import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
