@@ -326,11 +326,11 @@ namespace WebAPI.Migrations
 
             modelBuilder.Entity("WebAPI.Models.Employee", b =>
                 {
-                    b.Property<int>("SSN")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SSN"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -369,28 +369,17 @@ namespace WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SSN");
-
-                    b.HasIndex("DeptId");
-
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.WeeklyDaysOff", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("SSN")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Days")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeeklyDaysOffs");
+                    b.HasIndex("DeptId");
+
+                    b.HasIndex("SSN")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("WebAPI.Models.WeeklyDaysOff", b =>

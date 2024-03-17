@@ -12,7 +12,7 @@ using WebAPI.Models;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(HRDBContext))]
-    [Migration("20240315171153_v2")]
+    [Migration("20240317201223_v2")]
     partial class v2
     {
         /// <inheritdoc />
@@ -329,11 +329,11 @@ namespace WebAPI.Migrations
 
             modelBuilder.Entity("WebAPI.Models.Employee", b =>
                 {
-                    b.Property<int>("SSN")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SSN"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -372,14 +372,20 @@ namespace WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SSN");
+                    b.Property<int>("SSN")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("DeptId");
+
+                    b.HasIndex("SSN")
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>
+            modelBuilder.Entity("WebAPI.Models.WeeklyDaysOff", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -387,19 +393,13 @@ namespace WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CommissionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DeductionId")
-                        .HasColumnType("int");
+                    b.Property<string>("Days")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommissionId");
-
-                    b.HasIndex("DeductionId");
-
-                    b.ToTable("OrganizationSettings");
+                    b.ToTable("WeeklyDaysOffs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -471,25 +471,6 @@ namespace WebAPI.Migrations
                         .HasForeignKey("DeptId");
 
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.OrganizationSettings", b =>
-                {
-                    b.HasOne("WebAPI.Models.CommissionSettings", "Commission")
-                        .WithMany()
-                        .HasForeignKey("CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebAPI.Models.DeductionSettings", "Deduction")
-                        .WithMany()
-                        .HasForeignKey("DeductionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
-
-                    b.Navigation("Deduction");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Department", b =>

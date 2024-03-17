@@ -97,6 +97,7 @@ namespace WebAPI.Controllers
                 ContractDate = employeeDTO.ContractDate,
                 Nationality = employeeDTO.Nationality,
                 DeptId = department.Id,
+                SSN = employeeDTO.SSN,
             };
             employeeRepo.Add(employee);
             employeeRepo.Save();
@@ -126,6 +127,7 @@ namespace WebAPI.Controllers
             existingEmployee.ContractDate = employeeDTO.ContractDate;
             existingEmployee.Nationality = employeeDTO.Nationality;
             existingEmployee.DeptId = department.Id;
+            existingEmployee.SSN = employeeDTO.SSN;
 
             employeeRepo.Update(id, existingEmployee);
             employeeRepo.Save();
