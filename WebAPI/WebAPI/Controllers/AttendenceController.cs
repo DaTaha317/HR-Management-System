@@ -155,5 +155,41 @@ namespace WebAPI.Controllers
             }
             return Ok(attendanceDTOs);
         }
+
+
+        [HttpGet]
+        public ActionResult GetByPeriod(Period period)
+        {
+            List<AttendanceDTO> attendanceDTOs = new List<AttendanceDTO>();
+
+            List<Attendence> attendences = attendenceRepo.GetByPeriod(period.Start, period.End);
+
+            if (attendences.Count() == 0)
+                return NoContent();
+
+            foreach(var attendance in attendences)
+            {
+                AttendanceDTO attendanceDTO = new AttendanceDTO()
+                {
+                    EmpId = attendance.EmpId,
+                    Day = attendance.Day,
+                    Arrival = attendance.Arrival,
+                    Departure = attendance.Departure,
+                    EmpName = attendance.Employee.FullName,
+                    DeptName = attendance.Employee.Department.Name,
+                    Status = (int)attendance.Status
+                };
+
+                attendanceDTOs.Add(attendanceDTO);
+            }
+
+            return Ok(attendanceDTOs);
+        }
+    }
+
+    public class Period
+    {
+        public DateOnly Start { get; set; }
+        public DateOnly End { get; set; }
     }
 }
