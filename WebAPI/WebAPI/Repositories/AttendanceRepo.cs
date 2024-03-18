@@ -5,51 +5,56 @@ namespace WebAPI.Repositories
 {
     public class AttendanceRepo : IAttendence
     {
-        private readonly HRDBContext dBContext;
+        private readonly HRDBContext context;
 
-        public AttendanceRepo(HRDBContext dBContext)
+        public AttendanceRepo(HRDBContext context)
         {
-            this.dBContext = dBContext;
+            this.context = context;
         }
 
         public void Add(Attendence attendence)
         {
-            dBContext.Attendences.Add(attendence);
+            context.Attendences.Add(attendence);
         }
 
         public void Delete(int empId, DateOnly date)
         {
-            Attendence attendence = dBContext.Attendences.First(a => a.EmpId == empId && a.Day == date);
+            Attendence attendence = context.Attendences.First(a => a.EmpId == empId && a.Day == date);
 
-            dBContext.Attendences.Remove(attendence);
+            context.Attendences.Remove(attendence);
         }
 
         public List<Attendence> GetAll()
         {
-            return dBContext.Attendences.ToList();
+            return context.Attendences.ToList();
+        }
+
+        public List<Attendence> GetAttendenceByEmpId(int empId)
+        {
+            return context.Attendences.Where(a=> a.EmpId == empId).ToList();
         }
 
         public List<Attendence>? GetByPeriod(DateOnly startDate, DateOnly endDate)
         {
-            List<Attendence>? attendences = dBContext.Attendences.Where(a => a.Day >= startDate && a.Day <= endDate).ToList();
+            List<Attendence>? attendences = context.Attendences.Where(a => a.Day >= startDate && a.Day <= endDate).ToList();
             return attendences;
         }
 
         public Attendence? GetDayByEmpId(int empId, DateOnly day)
         {
-            return dBContext.Attendences.FirstOrDefault(a => a.EmpId == empId && a.Day == day);
+            return context.Attendences.FirstOrDefault(a => a.EmpId == empId && a.Day == day);
         }
 
         public void Save()
         {
-            dBContext.SaveChanges();
+            context.SaveChanges();
         }
 
         public void Update(int empId, DateOnly date, Attendence attendence)
         {
             if (GetDayByEmpId(empId,date) != null)
             {
-                dBContext.Attendences.Update(attendence);
+                context.Attendences.Update(attendence);
             }
         }
     }

@@ -10,6 +10,8 @@ namespace WebAPI.Interfaces
         public void Add(Attendence attendence);
         public void Update(int empId, DateOnly date, Attendence attendence);
         public void Delete(int empId, DateOnly date);
+
+        public List<Attendence> GetAttendenceByEmpId(int empId);
         public void Save();
     }
 }
