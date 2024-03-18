@@ -157,8 +157,8 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult GetByPeriod(Period period)
+        [HttpGet("GetByPeriod")]
+        public ActionResult GetByPeriod([FromQuery] Period period)
         {
             List<AttendanceDTO> attendanceDTOs = new List<AttendanceDTO>();
 
