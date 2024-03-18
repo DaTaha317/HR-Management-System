@@ -8,21 +8,18 @@ import { SettingsService } from 'src/app/services/settings.service';
   styleUrls: ['./organization-settings.component.css'],
 })
 export class OrganizationSettingsComponent implements OnInit {
-  comissionHoursState: boolean = true;
-  comissionMoneyState: boolean = true;
-  deductionHoursState: boolean = true;
-  deductionMoneyState: boolean = true;
-
+  isComissionHours = true;
+  isDeductionHours = true;
   settings: IOrganizationSettings = {
     commissionDTO: {
-      type: null,
-      hours: 0,
-      amount: 0,
+      type: 0,
+      hours: undefined,
+      amount: undefined,
     },
     deductionDTO: {
-      type: null,
-      hours: 0,
-      amount: 0,
+      type: 0,
+      hours: undefined,
+      amount: undefined,
     },
     // weeklyDaysOffDTO:{
     //   days: []
@@ -80,25 +77,21 @@ export class OrganizationSettingsComponent implements OnInit {
 
   onComissionTypeChange() {
     if (this.settings.commissionDTO.type == 0) {
-      this.comissionHoursState = false;
-      this.comissionMoneyState = true;
-      this.settings.commissionDTO.amount = 0;
+      this.isComissionHours = true;
+      this.settings.commissionDTO.amount = undefined;
     } else {
-      this.comissionHoursState = true;
-      this.comissionMoneyState = false;
-      this.settings.commissionDTO.hours = 0;
+      this.isComissionHours = false;
+      this.settings.commissionDTO.hours = undefined;
     }
   }
 
   onDeductionTypeChange() {
     if (this.settings.deductionDTO.type == 0) {
-      this.deductionHoursState = false;
-      this.deductionMoneyState = true;
-      this.settings.deductionDTO.amount = 0;
+      this.isDeductionHours = true;
+      this.settings.deductionDTO.amount = undefined;
     } else {
-      this.deductionHoursState = true;
-      this.deductionMoneyState = false;
-      this.settings.deductionDTO.hours = 0;
+      this.isDeductionHours = false;
+      this.settings.deductionDTO.hours = undefined;
     }
   }
 
