@@ -4,7 +4,7 @@
       <form (submit)="onSubmit()">
         <!-- Overtime Section -->
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="commissionType">Overtime Type</label>
               <select
@@ -20,7 +20,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div *ngIf="isComissionHours" class="col-md-6">
             <div class="form-group">
               <label for="commissionHours">Hours</label>
               <input
@@ -29,11 +29,10 @@
                 id="commissionHours"
                 name="commissionHours"
                 [(ngModel)]="settings.commissionDTO.hours"
-                [disabled]="this.comissionHoursState"
               />
             </div>
           </div>
-          <div class="col-md-4">
+          <div *ngIf="!isComissionHours" class="col-md-6">
             <div class="form-group">
               <label for="commissionAmount">Amount</label>
               <input
@@ -42,14 +41,13 @@
                 id="commissionAmount"
                 name="commissionAmount"
                 [(ngModel)]="settings.commissionDTO.amount"
-                [disabled]="this.comissionMoneyState"
               />
             </div>
           </div>
         </div>
         <!-- Deduction Section -->
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="deductionType">Deduction Type</label>
               <select
@@ -65,7 +63,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div *ngIf="isDeductionHours" class="col-md-6">
             <div class="form-group">
               <label for="deductionHours">Hours</label>
               <input
@@ -74,11 +72,10 @@
                 id="deductionHours"
                 name="deductionHours"
                 [(ngModel)]="settings.deductionDTO.hours"
-                [disabled]="this.deductionHoursState"
               />
             </div>
           </div>
-          <div class="col-md-4">
+          <div *ngIf="!isDeductionHours" class="col-md-6">
             <div class="form-group">
               <label for="deductionAmount">Amount</label>
               <input
@@ -87,7 +84,6 @@
                 id="deductionAmount"
                 name="deductionAmount"
                 [(ngModel)]="settings.deductionDTO.amount"
-                [disabled]="this.deductionMoneyState"
               />
             </div>
           </div>

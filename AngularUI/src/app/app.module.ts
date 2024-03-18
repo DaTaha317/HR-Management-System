@@ -26,6 +26,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { AddAttendanceComponent } from './components/add-attendance/add-attendance.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
     UpdateEmployeeComponent,
     OrganizationSettingsComponent,
     FilterPipe,
+    AddAttendanceComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,6 @@ import { ToastrModule } from 'ngx-toastr';
       progressBar: true,
       positionClass: 'toast-bottom-right', //の位置 toast-top-right, toast-bottom-right, etc.
     })
-
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -66,4 +67,4 @@ import { ToastrModule } from 'ngx-toastr';
 
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
