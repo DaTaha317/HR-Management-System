@@ -8,7 +8,7 @@ namespace WebAPI.Models
         [Key]
         public int Id { get; set; }
 
-        public int SSN { get; set; }
+        public double SSN { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
@@ -19,8 +19,8 @@ namespace WebAPI.Models
 
         [Column(TypeName = "money")]
         public decimal BaseSalary { get; set; }
-        public TimeOnly? Arrival { get; set; }
-        public TimeOnly? Departure { get; set; }
+        public TimeOnly Arrival { get; set; }
+        public TimeOnly Departure { get; set; }
 
         [ForeignKey("Department")]
         public int? DeptId { get; set; }
