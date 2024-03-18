@@ -27,6 +27,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { AddAttendanceComponent } from './components/add-attendance/add-attendance.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { LoadingInterceptorInterceptor } from './_interceptors/loading-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -58,13 +60,17 @@ import { AddAttendanceComponent } from './components/add-attendance/add-attendan
       timeOut: 3000, // Toast disappears after 3 seconds
       progressBar: true,
       positionClass: 'toast-bottom-right', //の位置 toast-top-right, toast-bottom-right, etc.
+    }),
+    NgxSpinnerModule.forRoot({
+      type: 'line-scale-party'
     })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorInterceptor, multi: true },
   ],
 
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
