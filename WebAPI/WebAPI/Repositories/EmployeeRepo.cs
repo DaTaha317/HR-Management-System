@@ -16,7 +16,7 @@ namespace WebAPI.Repositories
         }
         public Employee GetById(int id)
         {
-            return dBContext.Employees.SingleOrDefault(e => e.SSN == id);
+            return dBContext.Employees.SingleOrDefault(e => e.Id == id);
         }
         public void Add(Employee employee)
         {

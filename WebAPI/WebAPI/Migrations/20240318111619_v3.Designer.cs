@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Models;
 
@@ -11,9 +12,11 @@ using WebAPI.Models;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(HRDBContext))]
-    partial class HRDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240318111619_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,16 +238,16 @@ namespace WebAPI.Migrations
                     b.Property<DateOnly>("Day")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Arrival")
+                    b.Property<TimeOnly>("Arrival")
                         .HasColumnType("time");
 
-                    b.Property<TimeOnly?>("Departure")
+                    b.Property<TimeOnly>("Departure")
                         .HasColumnType("time");
 
-                    b.Property<int?>("LatetimeInHours")
+                    b.Property<int>("LatetimeInHours")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OvertimeInHours")
+                    b.Property<int>("OvertimeInHours")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -378,8 +381,8 @@ namespace WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("SSN")
-                        .HasColumnType("float");
+                    b.Property<int>("SSN")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
