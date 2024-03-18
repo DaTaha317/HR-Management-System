@@ -12,23 +12,28 @@ import { OfficalDaysComponent } from './components/offical-days/offical-days.com
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
 import { DisplayEmployeeComponent } from './components/display-employee/display-employee.component';
+import { AuthGuard } from './_guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: SignInComponent },
-  { path: 'home', component: LandingComponent },
-  { path: 'admin/add', component: NewAdminComponent },
-  { path: 'attendance/report', component: AttendanceReportComponent },
-  { path: 'salary/report', component: SalaryReportComponent },
-  { path: 'daysoff', component: OfficalDaysComponent },
-  { path: 'employee/add', component: AddEmployeeComponent },
-  { path: 'settings', component: OrganizationSettingsComponent },
+  {
+    path: '', runGuardsAndResolvers: 'always', canActivate: [AuthGuard], children: [
+      { path: 'home', component: LandingComponent },
+      { path: 'admin/add', component: NewAdminComponent, canActivate: [AuthGuard] },
+      { path: 'attendance/report', component: AttendanceReportComponent },
+      { path: 'salary/report', component: SalaryReportComponent },
+      { path: 'daysoff', component: OfficalDaysComponent },
+      { path: 'employee/add', component: AddEmployeeComponent },
+      { path: 'settings', component: OrganizationSettingsComponent },
 
-  { path: 'employee/update', component: UpdateEmployeeComponent },
-  { path: 'employee/display', component: DisplayEmployeeComponent },
+      { path: 'employee/update', component: UpdateEmployeeComponent },
+      { path: 'employee/display', component: DisplayEmployeeComponent },
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
