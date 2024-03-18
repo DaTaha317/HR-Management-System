@@ -13,8 +13,12 @@ export class AttendanceService {
 
   addAttendance(attendance: IAttendence): Observable<IAttendence> {
     return this.http.post<IAttendence>(
-      `${this.baseUrl}/Attendance`,
+      `${this.baseUrl}/Attendence`,
       attendance
     );
+  }
+
+  getAll(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Attendence`);
   }
 }

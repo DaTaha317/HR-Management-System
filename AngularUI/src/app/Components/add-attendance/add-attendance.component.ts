@@ -15,6 +15,7 @@ export class AddAttendanceComponent implements OnInit {
   employees: IEmployee[] = [];
   attendance: any = {};
   selectedEmpId: number | undefined;
+  isPresent = false;
   constructor(
     private attendanceService: AttendanceService,
     private employeeService: EmpServicesService,
@@ -31,15 +32,26 @@ export class AddAttendanceComponent implements OnInit {
       .subscribe((emps) => (this.employees = emps as IEmployee[]));
   }
   onSubmit() {
-    this.attendance.arrival = TimeUtility.formatTime(this.attendance.arrival);
-    this.attendance.departure = TimeUtility.formatTime(
-      this.attendance.departure
-    );
+    if (this.attendance.status == 0) {
+      this.attendance.arrival = TimeUtility.formatTime(this.attendance.arrival);
+      this.attendance.departure = TimeUtility.formatTime(
+        this.attendance.departure
+      );
+    }
+
     this.attendance.day = TimeUtility.today();
     this.attendance.empId = this.selectedEmpId;
-    this.toastr.success(`emp id: ${this.attendance.empId}`);
+    console.log(this.attendance);
     this.attendanceService
       .addAttendance(this.attendance)
       .subscribe(() => this.toastr.success('Added successfully'));
+  }
+
+  onStatusChange() {
+    if (this.attendance.status == 0) {
+      this.isPresent = true;
+    } else {
+      this.isPresent = false;
+    }
   }
 }

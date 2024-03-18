@@ -20,29 +20,45 @@
                 </option>
               </select>
             </div>
-
             <div class="form-group">
-              <label for="arrival">Clocked In:</label>
-              <input
-                type="time"
-                id="arrival"
-                name="arrival"
+              <label for="status">Status:</label>
+              <select
+                id="status"
+                name="status"
+                [(ngModel)]="attendance.status"
                 class="form-control"
-                placeholder="HH:mm"
-                [(ngModel)]="attendance.arrival"
-              />
+                (change)="onStatusChange()"
+              >
+                <option value="" disabled selected>Select status</option>
+                <option value="0">Present</option>
+                <option value="1">Absent</option>
+              </select>
             </div>
 
-            <div class="form-group">
-              <label for="departure">Clocked Out:</label>
-              <input
-                type="time"
-                id="departure"
-                name="departure"
-                class="form-control"
-                placeholder="HH:mm"
-                [(ngModel)]="attendance.departure"
-              />
+            <div *ngIf="isPresent">
+              <div class="form-group">
+                <label for="arrival">Clocked In:</label>
+                <input
+                  type="time"
+                  id="arrival"
+                  name="arrival"
+                  class="form-control"
+                  placeholder="HH:mm"
+                  [(ngModel)]="attendance.arrival"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="departure">Clocked Out:</label>
+                <input
+                  type="time"
+                  id="departure"
+                  name="departure"
+                  class="form-control"
+                  placeholder="HH:mm"
+                  [(ngModel)]="attendance.departure"
+                />
+              </div>
             </div>
 
             <button type="submit" class="btn bgMain txtMain mt-3">

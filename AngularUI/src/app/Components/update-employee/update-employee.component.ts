@@ -29,7 +29,7 @@ export class UpdateEmployeeComponent implements OnInit {
     });
   }
   update(employee: IEmployee) {
-    this.employeeServices.updateEmployee(employee.ssn, employee).subscribe(
+    this.employeeServices.updateEmployee(employee.id, employee).subscribe(
       (response) => {
         this.toastr.success('Updated Successfully');
         this.router.navigate(['/employee/display']);
