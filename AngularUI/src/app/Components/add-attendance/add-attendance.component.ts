@@ -35,7 +35,9 @@ export class AddAttendanceComponent implements OnInit {
     this.attendance.departure = TimeUtility.formatTime(
       this.attendance.departure
     );
+    this.attendance.day = TimeUtility.today();
     this.attendance.empId = this.selectedEmpId;
+    this.toastr.success(`emp id: ${this.attendance.empId}`);
     this.attendanceService
       .addAttendance(this.attendance)
       .subscribe(() => this.toastr.success('Added successfully'));

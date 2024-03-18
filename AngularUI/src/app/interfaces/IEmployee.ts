@@ -2,6 +2,7 @@ import { Time } from '@angular/common';
 import { IDepartment } from './IDepartment';
 
 export interface IEmployee {
+  id: number;
   ssn: number;
   fullName: string;
   address: string;

@@ -15,7 +15,7 @@
                 [(ngModel)]="selectedEmpId"
               >
                 <option value="" disabled selected>Select Employee</option>
-                <option *ngFor="let emp of employees" [value]="emp.ssn">
+                <option *ngFor="let emp of employees" [value]="emp.id">
                   {{ emp.fullName }}
                 </option>
               </select>
