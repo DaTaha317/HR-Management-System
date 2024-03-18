@@ -55,7 +55,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       timeOut: 3000, // Toast disappears after 3 seconds
       progressBar: true,
-      positionClass: 'toast-top-right', //の位置 toast-top-right, toast-bottom-right, etc.
+      positionClass: 'toast-bottom-right', //の位置 toast-top-right, toast-bottom-right, etc.
     })
 
   ],
