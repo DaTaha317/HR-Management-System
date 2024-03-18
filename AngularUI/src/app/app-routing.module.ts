@@ -12,10 +12,11 @@ import { UpdateEmployeeComponent } from './components/update-employee/update-emp
 import { DisplayEmployeeComponent } from './components/display-employee/display-employee.component';
 import { AddAttendanceComponent } from './components/add-attendance/add-attendance.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { preventLoginGuard } from './_guards/prevent-login.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: SignInComponent },
+  { path: 'login', component: SignInComponent, canActivate: [preventLoginGuard] },
   {
     path: '', runGuardsAndResolvers: 'always', canActivate: [AuthGuard], children: [
       { path: 'home', component: LandingComponent },
