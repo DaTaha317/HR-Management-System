@@ -19,8 +19,8 @@ namespace WebAPI.Models
 
         [Column(TypeName = "money")]
         public decimal BaseSalary { get; set; }
-        public TimeOnly Arrival { get; set; }
-        public TimeOnly Departure { get; set; }
+        public TimeOnly? Arrival { get; set; }
+        public TimeOnly? Departure { get; set; }
 
         [ForeignKey("Department")]
         public int? DeptId { get; set; }

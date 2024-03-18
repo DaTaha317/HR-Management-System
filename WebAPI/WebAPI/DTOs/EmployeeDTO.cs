@@ -16,8 +16,8 @@ namespace WebAPI.DTOs
         public DateOnly BirthDate { get; set; }
         public DateOnly ContractDate { get; set; }
         public decimal BaseSalary { get; set; }
-        public TimeOnly Arrival { get; set; }
-        public TimeOnly Departure { get; set; }
+        public TimeOnly? Arrival { get; set; }
+        public TimeOnly? Departure { get; set; }
         public string departmentName { get; set; }
     }
 }

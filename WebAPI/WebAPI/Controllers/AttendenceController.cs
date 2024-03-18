@@ -51,8 +51,8 @@ namespace WebAPI.Controllers
         [HttpPost]
         public ActionResult Add(AttendanceDTO attendanceDTO)
         {
-            int employeeDepartureHour = employeeRepo.GetById(attendanceDTO.EmpId).Departure.Hour;
-            int employeeArrivalHour = employeeRepo.GetById(attendanceDTO.EmpId).Arrival.Hour;
+            int employeeDepartureHour =(int) employeeRepo.GetById(attendanceDTO.EmpId).Departure?.Hour;
+            int employeeArrivalHour =(int) employeeRepo.GetById(attendanceDTO.EmpId).Arrival?.Hour;
 
             if(attendanceDTO.Status == 0)
             {
@@ -82,6 +82,35 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
-
+        [HttpPut("{empId}")]
+        public IActionResult Update([FromRoute] int empId,[FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
+        {
+            Attendence existingAttendence = attendenceRepo.GetDayByEmpId(empId,date);
+            Employee employee = employeeRepo.GetById(empId);
+            if(existingAttendence == null)
+            {
+                return BadRequest("Employee with specified Date Not Found");
+            }
+            existingAttendence.Arrival = attendenceDTO.Arrival;
+            existingAttendence.Departure = attendenceDTO.Departure;
+            existingAttendence.Status = (AttendenceStatus)attendenceDTO.Status;
+            employee.Arrival = attendenceDTO.Arrival;
+            employee.Departure = attendenceDTO.Departure;
+            attendenceRepo.Update(empId,date,existingAttendence);
+            attendenceRepo.Save();
+            return Ok();
+        }
+        [HttpDelete("{empId}")]
+        public IActionResult Delete([FromRoute] int empId,[FromQuery] DateOnly date)
+        {
+            Attendence attendence = attendenceRepo.GetDayByEmpId(empId, date);
+            if (attendence == null)
+            {
+                return NotFound();
+            }
+            attendenceRepo.Delete(empId, date);
+            attendenceRepo.Save();
+            return NoContent();
+        }
     }
 }
