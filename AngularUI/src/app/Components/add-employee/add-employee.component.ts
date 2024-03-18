@@ -6,6 +6,7 @@ import { IDepartment } from 'src/app/interfaces/IDepartment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { ToastrService } from 'ngx-toastr';
+import { TimeUtility } from 'src/environments/TimeUtility';
 
 @Component({
   selector: 'app-add-employee',
@@ -30,19 +31,13 @@ export class AddEmployeeComponent implements OnInit {
 
   onSubmit() {
     // Format clock in and clock out times
-    this.employeeDTO.arrival = this.formatTime(this.employeeDTO.arrival);
-    this.employeeDTO.departure = this.formatTime(this.employeeDTO.departure);
+    this.employeeDTO.arrival = TimeUtility.formatTime(this.employeeDTO.arrival);
+    this.employeeDTO.departure = TimeUtility.formatTime(
+      this.employeeDTO.departure
+    );
     this.employeeDTO.departmentName = this.selectedDepartment;
     this.employeeService.addEmployee(this.employeeDTO).subscribe((data) => {
       this.toastr.success('An Employee has been added');
     });
-  }
-
-  private formatTime(timeValue: string): string {
-    // Split the time string into hours and minutes
-    const [hours, minutes] = timeValue.split(':');
-
-    // Format the time in HH:mm:ss format
-    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00`;
   }
 }

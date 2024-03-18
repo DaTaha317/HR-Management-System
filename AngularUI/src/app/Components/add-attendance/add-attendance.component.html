@@ -1,0 +1,56 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Employee Time Tracking</div>
+        <div class="card-body">
+          <form #f="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+            <!-- Employee Select -->
+            <div class="form-group">
+              <label for="employee">Employee:</label>
+              <select
+                id="employee"
+                name="employee"
+                class="form-control"
+                [(ngModel)]="selectedEmpId"
+              >
+                <option value="" disabled selected>Select Employee</option>
+                <option *ngFor="let emp of employees" [value]="emp.ssn">
+                  {{ emp.fullName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="arrival">Clocked In:</label>
+              <input
+                type="time"
+                id="arrival"
+                name="arrival"
+                class="form-control"
+                placeholder="HH:mm"
+                [(ngModel)]="attendance.arrival"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="departure">Clocked Out:</label>
+              <input
+                type="time"
+                id="departure"
+                name="departure"
+                class="form-control"
+                placeholder="HH:mm"
+                [(ngModel)]="attendance.departure"
+              />
+            </div>
+
+            <button type="submit" class="btn bgMain txtMain mt-3">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

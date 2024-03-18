@@ -5,5 +5,4 @@ export interface IAttendence {
   day: Date;
   arrival: Date;
   departure: Date;
-  employee?: IEmployee; // Navigation property
 }
