@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
                     Arrival = attendanceDTO.Arrival,
                     Departure = attendanceDTO.Departure,
                     OvertimeInHours = attendanceDTO.Departure?.Hour - employeeDepartureHour,
-                    LatetimeInHours = employeeArrivalHour - attendanceDTO.Arrival?.Hour
+                    LatetimeInHours = attendanceDTO.Arrival?.Hour - employeeArrivalHour
                 };
                 attendenceRepo.Add(attendence);
             }
@@ -80,7 +80,7 @@ namespace WebAPI.Controllers
             }
             attendenceRepo.Save();
 
-            return Ok();
+            return Created();
         }
         [HttpPut("{empId}")]
         public IActionResult Update([FromRoute] int empId,[FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
