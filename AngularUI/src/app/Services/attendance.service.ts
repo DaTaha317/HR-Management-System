@@ -13,8 +13,23 @@ export class AttendanceService {
 
   addAttendance(attendance: IAttendence): Observable<IAttendence> {
     return this.http.post<IAttendence>(
-      `${this.baseUrl}/Attendance`,
+      `${this.baseUrl}/Attendence`,
       attendance
+    );
+  }
+
+  getAll(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Attendence`);
+  }
+
+  deleteRecord(id: number): Observable<IAttendence> {
+    return this.http.delete<IAttendence>(`${this.baseUrl}/attendence/${id}`);
+  }
+
+  updateRecord(id: number, record: IAttendence): Observable<IAttendence> {
+    return this.http.put<IAttendence>(
+      `${this.baseUrl}/attendence/${id}`,
+      record
     );
   }
 }

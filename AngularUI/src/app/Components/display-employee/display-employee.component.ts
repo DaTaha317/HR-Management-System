@@ -29,7 +29,7 @@ export class DisplayEmployeeComponent implements OnInit {
   }
   deleteEmployee(id: number): void {
     this.employeeService.deleteEmployee(id).subscribe(() => {
-      this.employees = this.employees.filter((emp) => emp.ssn !== id);
+      this.employees = this.employees.filter((emp) => emp.id !== id);
     });
   }
   updateForm(employee: IEmployee) {
