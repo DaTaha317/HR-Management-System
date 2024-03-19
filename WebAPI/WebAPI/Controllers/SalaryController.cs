@@ -25,7 +25,8 @@ namespace WebAPI.Controllers
         public ActionResult GetPayslip(SalaryReport salaryReport)
         {
             PayrollCalculator payroll = new PayrollCalculator(EmployeeRepo, AttendenceRepo, CommissionRepo, DeductionRepo);
-            payroll.SetPayrollData(salaryReport.EmpIds, salaryReport.PayslipStartDate, salaryReport.PayslipEndDate);
+            //payroll.SetPayrollData(salaryReport.EmpIds, salaryReport.PayslipStartDate, salaryReport.PayslipEndDate);
+            payroll.SetPayrollData(salaryReport.PayslipStartDate, salaryReport.PayslipEndDate);
             List<Payslip> payslips = payroll.generatePayslips();
 
             return Ok(payslips);

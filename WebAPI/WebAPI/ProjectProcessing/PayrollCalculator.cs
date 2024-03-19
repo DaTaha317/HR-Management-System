@@ -47,17 +47,20 @@ namespace WebAPI.ProjectProcessing
 
 
         // set employee and payslip required data
-        public void SetPayrollData(int[] EmpIds, DateOnly PayslipStartDate, DateOnly PayslipEndDate)
+        //public void SetPayrollData(int[] EmpIds, DateOnly PayslipStartDate, DateOnly PayslipEndDate)
+        public void SetPayrollData(DateOnly PayslipStartDate, DateOnly PayslipEndDate)
         {
-            this.EmpIds = EmpIds;
+            //this.EmpIds = EmpIds;
             this.PayslipStartDate = PayslipStartDate;
             this.PayslipEndDate = PayslipEndDate;
         }
 
-        public void GetEmployeeData(int EmpId)
+        //public void GetEmployeeData(int EmpId)
+        public void GetEmployeeData(Employee Emp)
         {
             // TODO: load employee from database
-            currentEmployee = EmployeeRepo.GetById(EmpId);
+            //currentEmployee = EmployeeRepo.GetById(EmpId);
+            currentEmployee = Emp;
             // TODO: GetEmployeeSalaryData
             BaseSalary = currentEmployee.BaseSalary;
             // TODO: calculate employee working hours
@@ -139,10 +142,13 @@ namespace WebAPI.ProjectProcessing
         public List<Payslip> generatePayslips()
         {
             List<Payslip> result = new List<Payslip>();
-            for (int i = 0; i < EmpIds.Length; i++)
+            List<Employee> employees = EmployeeRepo.GetAll();
+            //for (int i = 0; i < EmpIds.Length; i++)
+            foreach(var employee in employees)
             {
                 // TODO: call this
-                GetEmployeeData(EmpIds[i]);
+                //GetEmployeeData(EmpIds[i]);
+                GetEmployeeData(employee);
                 if (currentEmployee == null)
                 {
                     // TODO: raise employee exception here :)
