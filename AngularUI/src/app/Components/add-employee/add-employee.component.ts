@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeptServicesService } from 'src/app/services/dept-services.service';
 import { EmpServicesService } from 'src/app/services/emp-services.service';
 import { IDepartment } from 'src/app/interfaces/IDepartment';
-import { ReactiveFormsModule } from '@angular/forms';
-import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { ToastrService } from 'ngx-toastr';
 import { TimeUtility } from 'src/environments/TimeUtility';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-add-employee',
@@ -14,15 +13,16 @@ import { TimeUtility } from 'src/environments/TimeUtility';
   styleUrls: ['./add-employee.component.css'],
 })
 export class AddEmployeeComponent implements OnInit {
+  modalRef?: BsModalRef; // this is a reference to bootstrap modal
   employeeDTO: any = {};
   selectedDepartment: string = '';
   departments: IDepartment[] = [];
   constructor(
-    private formBuilder: FormBuilder,
     private employeeService: EmpServicesService,
     private departmentServices: DeptServicesService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private modalService: BsModalService
+  ) { }
   ngOnInit(): void {
     this.departmentServices.getDepartments().subscribe((data) => {
       this.departments = data as IDepartment[];
@@ -39,5 +39,17 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeService.addEmployee(this.employeeDTO).subscribe((data) => {
       this.toastr.success('An Employee has been added');
     });
+  }
+
+  openModal(template: TemplateRef<void>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
   }
 }
