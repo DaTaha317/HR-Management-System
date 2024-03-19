@@ -6,6 +6,7 @@ import { IDepartment } from 'src/app/interfaces/IDepartment';
 import { ToastrService } from 'ngx-toastr';
 import { TimeUtility } from 'src/environments/TimeUtility';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ICountry } from 'src/app/interfaces/ICountry';
 
 @Component({
   selector: 'app-add-employee',
@@ -17,6 +18,7 @@ export class AddEmployeeComponent implements OnInit {
   employeeDTO: any = {};
   selectedDepartment: string = '';
   departments: IDepartment[] = [];
+  allCountries: string[] = [];
   constructor(
     private employeeService: EmpServicesService,
     private departmentServices: DeptServicesService,
@@ -27,9 +29,13 @@ export class AddEmployeeComponent implements OnInit {
     this.departmentServices.getDepartments().subscribe((data) => {
       this.departments = data as IDepartment[];
     });
+    this.allCountries = this.employeeService.allCountriesList;
   }
 
   onSubmit() {
+
+    console.log(this.employeeDTO);
+    return;
     // Format clock in and clock out times
     this.employeeDTO.arrival = TimeUtility.formatTime(this.employeeDTO.arrival);
     this.employeeDTO.departure = TimeUtility.formatTime(
@@ -52,4 +58,7 @@ export class AddEmployeeComponent implements OnInit {
   decline(): void {
     this.modalRef?.hide();
   }
+
+
+
 }
