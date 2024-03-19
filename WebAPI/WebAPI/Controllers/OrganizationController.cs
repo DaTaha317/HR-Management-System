@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
                 };
 
                 WeeklyDaysOff newDaysOff = new WeeklyDaysOff();
-                foreach(var day in organization.WeeklyDaysDTO.days)
+                foreach(var day in weeklyDaysDTO.days)
                 {
                     newDaysOff.Days.Add((DaysName)day);
                 }
