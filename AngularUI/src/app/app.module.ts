@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AddAttendanceComponent } from './components/add-attendance/add-attendance.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptorInterceptor } from './_interceptors/loading-interceptor.interceptor';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { LoadingInterceptorInterceptor } from './_interceptors/loading-intercept
     }),
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party'
-    })
+    }),
+    ModalModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
