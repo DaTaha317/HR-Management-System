@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 using WebAPI.Repositories;
@@ -19,6 +20,8 @@ namespace WebAPI
 
 
             builder.Services.AddControllers();
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
 
             builder.Services.AddDbContext<HRDBContext>(options =>
                  options.UseLazyLoadingProxies()
