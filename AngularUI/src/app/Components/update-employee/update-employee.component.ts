@@ -5,6 +5,7 @@ import { IDepartment } from 'src/app/interfaces/IDepartment';
 import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { DeptServicesService } from 'src/app/services/dept-services.service';
 import { EmpServicesService } from 'src/app/services/emp-services.service';
+import { TimeUtility } from 'src/environments/TimeUtility';
 
 @Component({
   selector: 'app-update-employee',
@@ -29,6 +30,8 @@ export class UpdateEmployeeComponent implements OnInit {
     });
   }
   update(employee: IEmployee) {
+    employee.arrival = TimeUtility.formatTime(employee.arrival);
+    employee.departure = TimeUtility.formatTime(employee.departure);
     this.employeeServices.updateEmployee(employee.id, employee).subscribe(
       (response) => {
         this.toastr.success('Updated Successfully');
