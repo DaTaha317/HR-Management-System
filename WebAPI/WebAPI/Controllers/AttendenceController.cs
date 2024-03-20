@@ -39,7 +39,9 @@ namespace WebAPI.Controllers
                     Departure = attendence.Departure,
                     EmpName = attendence.Employee.FullName,
                     DeptName = attendence.Employee.Department.Name,
-                    Status = (int)attendence.Status
+                    Status = (int)attendence.Status,
+                    LatetimeInHours=attendence.LatetimeInHours,
+                    OvertimeInHours=attendence.OvertimeInHours
                 };
 
                 attendanceDTOs.Add(attendanceDTO);
@@ -86,6 +88,7 @@ namespace WebAPI.Controllers
         public IActionResult Update([FromRoute] int empId,[FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
         {
             Attendence existingAttendence = attendenceRepo.GetDayByEmpId(empId,date);
+            Employee currentEmployee = employeeRepo.GetById(empId);
             if(existingAttendence == null)
             {
                 return BadRequest("Employee with specified Date Not Found");
@@ -93,6 +96,8 @@ namespace WebAPI.Controllers
             existingAttendence.Arrival = attendenceDTO.Arrival;
             existingAttendence.Departure = attendenceDTO.Departure;
             existingAttendence.Status = (AttendenceStatus)attendenceDTO.Status;
+            existingAttendence.LatetimeInHours = attendenceDTO.Arrival?.Hour - currentEmployee.Arrival.Hour;
+            existingAttendence.OvertimeInHours = attendenceDTO.Departure?.Hour - currentEmployee.Departure.Hour;
             attendenceRepo.Update(empId,date,existingAttendence);
             attendenceRepo.Save();
             return Ok();
