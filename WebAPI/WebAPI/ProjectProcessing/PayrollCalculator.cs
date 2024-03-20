@@ -117,7 +117,7 @@ namespace WebAPI.ProjectProcessing
             //overtime = (List<int>)AttendenceRepo.GetAttendenceByEmpId(currentEmployee.Id)
             //    .Where(att => att.Status == AttendenceStatus.Present)
             //    .ToList().Select(att => att.OvertimeInHours);
-            overtime = (List<int>)AttendenceRepo.GetByPeriod(PayslipStartDate, PayslipEndDate)
+            overtime = AttendenceRepo.GetByPeriod(PayslipStartDate, PayslipEndDate)
                 .Where(att => att.EmpId == currentEmployee.Id && att.Status == AttendenceStatus.Present)
                 .Select(att => att.OvertimeInHours ?? 0)
                 .ToList();
@@ -131,8 +131,8 @@ namespace WebAPI.ProjectProcessing
             //latetime = (List<int>)AttendenceRepo.GetAttendenceByEmpId(currentEmployee.Id)
             //    .Where(att => att.Status == AttendenceStatus.Present)
             //    .ToList().Select(att => att.LatetimeInHours);
-            latetime = (List<int>)AttendenceRepo.GetByPeriod(PayslipStartDate, PayslipEndDate)
-              .Where(att => att.EmpId == currentEmployee.Id && att.Status == AttendenceStatus.Absent)
+            latetime = AttendenceRepo.GetByPeriod(PayslipStartDate, PayslipEndDate)
+              .Where(att => att.EmpId == currentEmployee.Id && att.Status == AttendenceStatus.Present)
               .Select(att => att.LatetimeInHours ?? 0)
               .ToList();
             return latetime.Sum();

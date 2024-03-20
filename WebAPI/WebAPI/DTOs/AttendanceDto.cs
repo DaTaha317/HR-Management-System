@@ -9,7 +9,6 @@
         public int Status { get; set; }
         public string? DeptName { get; set; }
         public string? EmpName { get; set; }
-        public int? OvertimeInHours { get; set; }
-        public int? LatetimeInHours { get; set; }
+
     }
 }
