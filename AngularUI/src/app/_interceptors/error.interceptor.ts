@@ -33,12 +33,14 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.toastr.error('Unauthorised', error.status);
+              this.toastr.error('Unauthorized', error.status);
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
               break;
-
+            case 500:
+              this.toastr.error("Internal Server Error");
+              break;
             default:
               this.toastr.error('Something unexpected went wrong');
               console.log(error);
