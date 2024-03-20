@@ -24,7 +24,7 @@ export class AddEmployeeComponent implements OnInit {
     private departmentServices: DeptServicesService,
     private toastr: ToastrService,
     private modalService: BsModalService
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.departmentServices.getDepartments().subscribe((data) => {
       this.departments = data as IDepartment[];
@@ -33,9 +33,8 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-
     console.log(this.employeeDTO);
-    return;
+
     // Format clock in and clock out times
     this.employeeDTO.arrival = TimeUtility.formatTime(this.employeeDTO.arrival);
     this.employeeDTO.departure = TimeUtility.formatTime(
@@ -58,7 +57,4 @@ export class AddEmployeeComponent implements OnInit {
   decline(): void {
     this.modalRef?.hide();
   }
-
-
-
 }
