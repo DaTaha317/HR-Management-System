@@ -31,6 +31,7 @@ import { AddAttendanceComponent } from './components/add-attendance/add-attendan
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptorInterceptor } from './_interceptors/loading-interceptor.interceptor';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party'
     }),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
