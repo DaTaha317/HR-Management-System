@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
+using WebAPI.Extensions;
+using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 
@@ -21,40 +23,29 @@ namespace WebAPI.Controllers
 
 
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult<PagedList<AttendanceDTO>>> GetAll([FromQuery] UserParams userParams)
         {
-            List<Attendence> attendences = attendenceRepo.GetAll();
-            List<AttendanceDTO> attendanceDTOs = new List<AttendanceDTO>();
-            if(attendences.Count == 0)
+            var attendances = await attendenceRepo.GetAll(userParams);
+
+
+            if (attendances.Count == 0)
             {
                 return NotFound("Attendence list is empty");
             }
-            foreach(var attendence in attendences)
-            {
-                AttendanceDTO attendanceDTO = new AttendanceDTO()
-                {
-                    EmpId = attendence.EmpId,
-                    Day = attendence.Day,
-                    Arrival = attendence.Arrival,
-                    Departure = attendence.Departure,
-                    EmpName = attendence.Employee.FullName,
-                    DeptName = attendence.Employee.Department.Name,
-                    Status = (int)attendence.Status
-                };
 
-                attendanceDTOs.Add(attendanceDTO);
-            }
+            Response.AddPaginationHeader(new PaginationHeader(attendances.CurrentPage, attendances.TotalPages, attendances.PageSize, attendances.TotalCount));
 
-            return Ok(attendanceDTOs);
+
+            return Ok(attendances);
         }
 
         [HttpPost]
         public ActionResult Add(AttendanceDTO attendanceDTO)
         {
-            int employeeDepartureHour =(int) employeeRepo.GetById(attendanceDTO.EmpId).Departure.Hour;
-            int employeeArrivalHour =(int) employeeRepo.GetById(attendanceDTO.EmpId).Arrival.Hour;
+            int employeeDepartureHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Departure.Hour;
+            int employeeArrivalHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Arrival.Hour;
 
-            if(attendanceDTO.Status == 0)
+            if (attendanceDTO.Status == 0)
             {
                 Attendence attendence = new Attendence()
                 {
@@ -83,11 +74,11 @@ namespace WebAPI.Controllers
             return Created();
         }
         [HttpPut("{empId}")]
-        public IActionResult Update([FromRoute] int empId,[FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
+        public IActionResult Update([FromRoute] int empId, [FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
         {
-            Attendence existingAttendence = attendenceRepo.GetDayByEmpId(empId,date);
+            Attendence existingAttendence = attendenceRepo.GetDayByEmpId(empId, date);
             Employee currentEmployee = employeeRepo.GetById(empId);
-            if(existingAttendence == null)
+            if (existingAttendence == null)
             {
                 return BadRequest("Employee with specified Date Not Found");
             }
@@ -96,22 +87,22 @@ namespace WebAPI.Controllers
             {
                 existingAttendence.Arrival = null;
                 existingAttendence.Departure = null;
-                existingAttendence.LatetimeInHours = null ;
+                existingAttendence.LatetimeInHours = null;
                 existingAttendence.OvertimeInHours = null;
             }
-            else 
+            else
             {
                 existingAttendence.Arrival = attendenceDTO.Arrival;
                 existingAttendence.Departure = attendenceDTO.Departure;
                 existingAttendence.LatetimeInHours = attendenceDTO.Arrival?.Hour - currentEmployee.Arrival.Hour;
                 existingAttendence.OvertimeInHours = attendenceDTO.Departure?.Hour - currentEmployee.Departure.Hour;
             }
-            attendenceRepo.Update(empId,date,existingAttendence);
+            attendenceRepo.Update(empId, date, existingAttendence);
             attendenceRepo.Save();
             return Ok();
         }
         [HttpDelete("{empId}")]
-        public IActionResult Delete([FromRoute] int empId,[FromQuery] DateOnly date)
+        public IActionResult Delete([FromRoute] int empId, [FromQuery] DateOnly date)
         {
             Attendence attendence = attendenceRepo.GetDayByEmpId(empId, date);
             if (attendence == null)
@@ -180,7 +171,7 @@ namespace WebAPI.Controllers
             if (attendences.Count() == 0)
                 return NoContent();
 
-            foreach(var attendance in attendences)
+            foreach (var attendance in attendences)
             {
                 AttendanceDTO attendanceDTO = new AttendanceDTO()
                 {
