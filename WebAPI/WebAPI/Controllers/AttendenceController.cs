@@ -39,9 +39,7 @@ namespace WebAPI.Controllers
                     Departure = attendence.Departure,
                     EmpName = attendence.Employee.FullName,
                     DeptName = attendence.Employee.Department.Name,
-                    Status = (int)attendence.Status,
-                    LatetimeInHours=attendence.LatetimeInHours,
-                    OvertimeInHours=attendence.OvertimeInHours
+                    Status = (int)attendence.Status
                 };
 
                 attendanceDTOs.Add(attendanceDTO);
@@ -93,7 +91,8 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Employee with specified Date Not Found");
             }
-            if(attendenceDTO.Status == 0)
+            existingAttendence.Status = (AttendenceStatus)attendenceDTO.Status;
+            if (existingAttendence.Status == AttendenceStatus.Absent)
             {
                 existingAttendence.Arrival = null;
                 existingAttendence.Departure = null;
