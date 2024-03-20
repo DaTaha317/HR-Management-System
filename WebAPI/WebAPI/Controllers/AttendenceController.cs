@@ -93,8 +93,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Employee with specified Date Not Found");
             }
-            existingAttendence.Status = (AttendenceStatus)attendenceDTO.Status;
-            if (existingAttendence.Status == AttendenceStatus.Absent)
+            if(attendenceDTO.Status == 0)
             {
                 existingAttendence.Arrival = null;
                 existingAttendence.Departure = null;
