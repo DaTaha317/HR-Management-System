@@ -77,13 +77,26 @@ namespace WebAPI.Controllers
         public IActionResult Update([FromRoute] int empId, [FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
         {
             Attendence existingAttendence = attendenceRepo.GetDayByEmpId(empId, date);
+            Employee currentEmployee = employeeRepo.GetById(empId);
             if (existingAttendence == null)
             {
                 return BadRequest("Employee with specified Date Not Found");
             }
-            existingAttendence.Arrival = attendenceDTO.Arrival;
-            existingAttendence.Departure = attendenceDTO.Departure;
             existingAttendence.Status = (AttendenceStatus)attendenceDTO.Status;
+            if (existingAttendence.Status == AttendenceStatus.Absent)
+            {
+                existingAttendence.Arrival = null;
+                existingAttendence.Departure = null;
+                existingAttendence.LatetimeInHours = null;
+                existingAttendence.OvertimeInHours = null;
+            }
+            else
+            {
+                existingAttendence.Arrival = attendenceDTO.Arrival;
+                existingAttendence.Departure = attendenceDTO.Departure;
+                existingAttendence.LatetimeInHours = attendenceDTO.Arrival?.Hour - currentEmployee.Arrival.Hour;
+                existingAttendence.OvertimeInHours = attendenceDTO.Departure?.Hour - currentEmployee.Departure.Hour;
+            }
             attendenceRepo.Update(empId, date, existingAttendence);
             attendenceRepo.Save();
             return Ok();

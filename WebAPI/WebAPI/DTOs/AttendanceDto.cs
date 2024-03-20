@@ -9,5 +9,6 @@
         public int Status { get; set; }
         public string? DeptName { get; set; }
         public string? EmpName { get; set; }
+
     }
 }
