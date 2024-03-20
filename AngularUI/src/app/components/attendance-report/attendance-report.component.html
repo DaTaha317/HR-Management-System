@@ -66,6 +66,7 @@
         <th scope="col">Clock in</th>
         <th scope="col">Clock out</th>
         <th scope="col">Date</th>
+        <th scope="col">Status</th>
         <th scope="col">Handler</th>
       </tr>
     </thead>
@@ -79,6 +80,7 @@
         <td>{{ record.arrival }}</td>
         <td>{{ record.departure }}</td>
         <td>{{ record.day }}</td>
+        <td>{{ record.status == 0 ? "Attended" : "Absent" }}</td>
         <td>
           <div
             class="d-flex flex-column flex-sm-row gap-2 justify-content-center"

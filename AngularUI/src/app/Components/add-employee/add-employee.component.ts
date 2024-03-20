@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { TimeUtility } from 'src/environments/TimeUtility';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { calculateAge } from 'src/app/calculateAge';
+import { ICountry } from 'src/app/interfaces/ICountry';
+
 
 @Component({
   selector: 'app-add-employee',
@@ -19,11 +21,13 @@ export class AddEmployeeComponent implements OnInit {
   employeeDTO: any = {};
   selectedDepartment: string = '';
   departments: IDepartment[] = [];
+  allCountries: string[] = [];
   constructor(
     private formbuilder:FormBuilder,
     private employeeService: EmpServicesService,
     private departmentServices: DeptServicesService,
     private toastr: ToastrService,
+
     private modalService: BsModalService,
   ) { 
 this.validationEmployee=formbuilder.group({
@@ -40,12 +44,6 @@ this.validationEmployee=formbuilder.group({
   arrival: ["",Validators.required],
   departure:["",Validators.required],
   departmentName: ["",Validators.required],
-  
-
-  
-
-
-
 })
   }
   validatePhoneNumber(control: FormControl) {
@@ -128,9 +126,12 @@ this.validationEmployee=formbuilder.group({
     this.departmentServices.getDepartments().subscribe((data) => {
       this.departments = data as IDepartment[];
     });
+    this.allCountries = this.employeeService.allCountriesList;
   }
 
   onSubmit() {
+    console.log(this.employeeDTO);
+
     // Format clock in and clock out times
     this.employeeDTO.arrival = TimeUtility.formatTime(this.employeeDTO.arrival);
     this.employeeDTO.departure = TimeUtility.formatTime(

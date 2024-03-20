@@ -39,7 +39,7 @@ export class DisplayEmployeeComponent implements OnInit {
     this.router.navigate(['/employee/update'], { state: { employee } });
   }
   trackByFn(index: number, employee: IEmployee) {
-    return employee.ssn;
+    return employee.id;
   }
   closeForm() {
     const popupForm = document.getElementById('popupForm') as HTMLElement;
