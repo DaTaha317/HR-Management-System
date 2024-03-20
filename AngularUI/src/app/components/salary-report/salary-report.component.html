@@ -3,10 +3,16 @@
     <div class="col-md-3 d-flex align-items-center me-2">
       <label for="month" class="form-label me-2">Month</label>
       <div class="input-group">
-        <select class="form-select" id="month">
+        <select
+          class="form-select"
+          id="month"
+          [(ngModel)]="month"
+          [ngModelOptions]="{ standalone: true }"
+        >
           <option selected>Select Month</option>
           <option value="1">January</option>
           <option value="2">February</option>
+          <option value="3">March</option>
           <!-- Add options for other months -->
         </select>
       </div>
@@ -14,13 +20,26 @@
     <div class="col-md-3 d-flex align-items-center me-2">
       <label for="year" class="form-label me-2">Year</label>
       <div class="input-group">
-        <select class="form-select" id="year">
+        <select
+          class="form-select"
+          id="year"
+          [(ngModel)]="year"
+          [ngModelOptions]="{ standalone: true }"
+        >
           <option selected>Select Year</option>
           <option value="2022">2022</option>
-          <option value="2023">2023</option>
+          <option value="2024">2024</option>
           <!-- Add options for other years -->
         </select>
       </div>
+      <button
+        class="btn bgMain txtMain ms-3 d-inline-block w-auto"
+        style="white-space: nowrap"
+        (click)="onSearch()"
+        [disabled]="isSalaryMonth()"
+      >
+        Generate Report
+      </button>
     </div>
     <div class="d-flex align-items-center ms-auto">
       <input
@@ -28,6 +47,7 @@
         class="form-control me-2"
         placeholder="Search"
         aria-label="Search"
+        [(ngModel)]="searchText"
       />
       <button type="button" class="btn bgMain txtMain">
         <i class="fas fa-search"></i>
@@ -52,7 +72,40 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Table rows will go here -->
+      <tr
+        *ngFor="
+          let record of salaryReport
+            | filter : searchText
+            | paginate
+              : {
+                  itemsPerPage: 7,
+                  currentPage: page,
+                  totalItems: totalLength
+                }
+        "
+      >
+        <td>{{ record.fullName }}</td>
+        <td>{{ record.departmentName }}</td>
+        <td>{{ record.baseSalary }}</td>
+        <td>{{ record.attendanceDays }}</td>
+        <td>{{ record.absenceDays }}</td>
+        <td>{{ record.overtimeHours }}</td>
+        <td>{{ record.latenessHours }}</td>
+        <td>{{ record.totalAdditional }}</td>
+        <td>{{ record.totalDeduction }}</td>
+        <td>{{ record.netSalary }}</td>
+        <td>
+          <button type="button" class="btn btn-secondary">
+            <i class="fas fa-print"></i>
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
+  <!-- Pagination -->
+  <div class="row mt-3 justify-content-end">
+    <div class="col-lg-6">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
 </div>

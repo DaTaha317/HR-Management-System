@@ -1,3 +1,5 @@
+import { IMonth } from 'src/app/interfaces/IMonth';
+
 export class TimeUtility {
   //* From HTML time to C# timeOnly
   static formatTime(timeValue: string): string {
@@ -19,5 +21,18 @@ export class TimeUtility {
 
   static today(): string {
     return this.dateOnly(new Date());
+  }
+
+  //* Function to format IMonth for salary report request
+  static formatSalaryMonth(year: number, month: number): IMonth {
+    // Month in JavaScript is 0-indexed (January is 0, February is 1, etc.)
+    const firstDay = new Date(year, month - 1, 1);
+    const lastDay = new Date(year, month, 0); // Passing 0 as the day gets the last day of the previous month
+
+    const salaryMonth: IMonth = {
+      payslipStartDate: this.dateOnly(firstDay),
+      payslipEndDate: this.dateOnly(lastDay),
+    };
+    return salaryMonth;
   }
 }
