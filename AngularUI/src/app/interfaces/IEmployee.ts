@@ -11,8 +11,8 @@ export interface IEmployee {
   birthDate: Date;
   contractDate: Date;
   baseSalary: number;
-  arrival: Time;
-  departure: Time;
+  arrival: string;
+  departure: string;
   deptId?: number;
   departmentName: string;
 }
