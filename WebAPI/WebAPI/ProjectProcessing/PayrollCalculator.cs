@@ -90,7 +90,7 @@ namespace WebAPI.ProjectProcessing
 
         private decimal CalculateSalaryPerHour() { return SalaryPerDay / WorkingHours; }
 
-        private int CalculateWorkingHours() { return (currentEmployee.Departure.Hour + 12) - currentEmployee.Arrival.Hour; }
+        private int CalculateWorkingHours() { return (currentEmployee.Departure.Hour) - currentEmployee.Arrival.Hour; }
 
         private int CalculateAttendanceDays() { 
             //return AttendenceRepo.GetAttendenceByEmpId(currentEmployee.Id)
