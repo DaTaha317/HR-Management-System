@@ -14,12 +14,14 @@ export class DisplayEmployeeComponent implements OnInit {
   totalLength: any;
   page: number = 1;
   searchText: any;
+  deleteemp:number=1;
 
   constructor(
     private employeeService: EmpServicesService,
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.closeForm();
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as IEmployee[];
     });
@@ -31,11 +33,23 @@ export class DisplayEmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe(() => {
       this.employees = this.employees.filter((emp) => emp.id !== id);
     });
+    this.closeForm();
   }
   updateForm(employee: IEmployee) {
     this.router.navigate(['/employee/update'], { state: { employee } });
   }
   trackByFn(index: number, employee: IEmployee) {
     return employee.id;
+  }
+  closeForm() {
+    const popupForm = document.getElementById('popupForm') as HTMLElement;
+    popupForm.style.display = 'none'; 
+  }
+  SureForm(id:number) {
+   
+    this.deleteemp=id;
+    const popupForm = document.getElementById('popupForm') as HTMLElement;
+    popupForm.style.display = 'block'; 
+
   }
 }
