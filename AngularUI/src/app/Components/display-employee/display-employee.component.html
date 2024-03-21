@@ -35,6 +35,7 @@
         <th scope="col">Actions</th>
       </tr>
     </thead>
+
     <tbody>
       <tr
         *ngFor="
@@ -67,7 +68,7 @@
             <button class="btn bgMain txtMain" (click)="updateForm(emp)">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger" (click)="SureForm(emp.id)">
+            <button class="btn btn-danger" (click)="openModal(template,emp.id)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
@@ -82,23 +83,14 @@
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
-  <div id="popupForm" class="popupForm">
-    
-    <h1> Are You Sure Delete this Employee</h1>
-     
-      <div class="row">
-        <div class="col-lg-6 mb-3 mb-lg-0">
-          <button type="button" class="btn btn-danger w-100"  (click)="deleteEmployee(deleteemp)">Delete</button>
-        </div>
-        <div class="col-lg-6">
-          <button
-            type="button"
-            (click)="closeForm()"
-            class="btn btn-primary w-100"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    
-</div>
+   
+   <!-- pop up to delete -->
+   <br><br>
+   <ng-template #template>
+     <div class="modal-body text-center">
+       <p>Do you want to confirm?</p>
+       <button type="button" class="btn btn-default btn-danger" (click)="deleteEmployee(deleteemp)">Yes</button>
+       <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+     </div>
+   </ng-template>
+ 
