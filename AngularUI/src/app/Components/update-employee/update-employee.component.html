@@ -3,6 +3,7 @@
     #f="ngForm"
     (ngSubmit)="update(selectedEmployee)"
     class="form-container"
+    [formGroup]="validationUpdateEmployee"
   >
     <div class="row">
       <!-- Work Info -->
@@ -17,7 +18,16 @@
             [(ngModel)]="selectedEmployee.address"
             class="form-control"
             placeholder="Enter address"
-          />
+            formControlName="address" />
+            <div [hidden]="address?.valid||address?.untouched">
+              <small [hidden]="address?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+              <small *ngIf=" address?.errors?.['pattern'] " class="text-danger m-3">
+                this field is requird
+              </small>
+
+            </div>
         </div>
 
         <div class="form-group">
@@ -29,7 +39,16 @@
             [(ngModel)]="selectedEmployee.phoneNumber"
             class="form-control"
             placeholder="Enter phone number"
-          />
+            formControlName="phoneNumber" />
+            <div [hidden]="phoneNumber?.valid||phoneNumber?.untouched">
+              <small [hidden]="phoneNumber?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+              <small *ngIf="phoneNumber?.errors?.['pattern']" class="text-danger m-3">
+                phone number must be 11 number
+              </small>
+  
+            </div>
         </div>
 
         <div class="form-group">
@@ -41,7 +60,13 @@
             [(ngModel)]="selectedEmployee.arrival"
             class="form-control"
             placeholder="HH:mm"
-          />
+            formControlName="arrival" />
+            <div [hidden]="arrival?.valid||arrival?.untouched">
+              <small [hidden]="arrival?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+  
+            </div>
         </div>
 
         <div class="form-group">
@@ -53,7 +78,14 @@
             [(ngModel)]="selectedEmployee.departure"
             class="form-control"
             placeholder="HH:mm"
-          />
+            formControlName="departure" />
+            <div [hidden]="departure?.valid||departure?.untouched">
+              <small [hidden]="departure?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+  
+            </div>
+
         </div>
         <!-- Department Select -->
         <div class="form-group">
@@ -63,12 +95,18 @@
             name="department"
             [(ngModel)]="selectedEmployee.departmentName"
             class="form-control"
-          >
+            formControlName="departmentName">
             <option value="" disabled selected>Select Department</option>
             <option *ngFor="let dept of departments" [value]="dept.name">
               {{ dept.name }}
             </option>
           </select>
+          <div [hidden]="departmentName?.valid||departmentName?.untouched">
+            <small [hidden]="departmentName?.errors?.['requird']" class="text-danger m-3">
+              this field is requird
+            </small>
+
+          </div>
         </div>
       </div>
 
@@ -84,7 +122,15 @@
             [(ngModel)]="selectedEmployee.fullName"
             class="form-control"
             placeholder="Enter full name"
-          />
+            formControlName="fullName" />
+            <div [hidden]="fullName?.valid||fullName?.untouched">
+              <small [hidden]="fullName?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+              <small *ngIf="fullName?.errors?.['pattern']" class="text-danger m-3">
+                enter valid name
+              </small>
+            </div>
         </div>
 
         <div class="form-group">
@@ -94,24 +140,39 @@
             name="gender"
             [(ngModel)]="selectedEmployee.gender"
             class="form-control"
-          >
+            formControlName="gender">
             <option value="" disabled selected>Select Gender</option>
             <option value="0">Male</option>
             <option value="1">Female</option>
           </select>
-        </div>
+          <div [hidden]="gender?.valid||gender?.untouched">
+            <small [hidden]="gender?.errors?.['requird']" class="text-danger m-3">
+              this field is requird
+            </small>
 
+          </div>
+        </div>
         <div class="form-group">
           <label for="nationality">Nationality:</label>
-          <input
-            type="text"
-            id="nationality"
-            name="nationality"
-            [(ngModel)]="selectedEmployee.nationality"
-            class="form-control"
-            placeholder="Enter nationality"
-          />
+          <select id="nationality" name="nationality" [(ngModel)]="selectedEmployee.nationality" class="form-select"
+            aria-label="Default select example" formControlName="nationality">
+            <option selected>Open this select menu</option>
+            <option *ngFor="let country of allCountries" value="{{country}}">{{country}}</option>
+          </select>
+          <div [hidden]="nationality?.valid||nationality?.untouched">
+            <small [hidden]="nationality?.errors?.['requird']" class="text-danger m-3">
+              this field is requird
+            </small>
+
+          </div>
         </div>
+            
+            
+            
+           
+            
+           
+        
 
         <div class="form-group">
           <label for="birthDate">Birth Date:</label>
@@ -121,7 +182,16 @@
             name="birthDate"
             [(ngModel)]="selectedEmployee.birthDate"
             class="form-control"
-          />
+            formControlName="birthDate" />
+            <div [hidden]="birthDate?.valid||birthDate?.untouched">
+              <small *ngIf="birthDate?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+              <small *ngIf="birthDate?.errors?.['minAge']" class="text-danger m-3">
+                Employee must be at least 20 years old
+              </small>
+  
+            </div>
         </div>
 
         <div class="form-group">
@@ -132,7 +202,15 @@
             name="contractDate"
             [(ngModel)]="selectedEmployee.contractDate"
             class="form-control"
-          />
+            formControlName="contractDate" />
+            <div [hidden]="contractDate?.valid||contractDate?.untouched">
+              <small [hidden]="contractDate?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+              <small *ngIf="contractDate?.errors?.['invalidContractDate'] " class="text-danger m-3">
+                please enter a right contract date
+              </small>
+            </div>
         </div>
 
         <div class="form-group">
@@ -144,7 +222,13 @@
             [(ngModel)]="selectedEmployee.baseSalary"
             class="form-control"
             placeholder="Enter base salary"
-          />
+            formControlName="baseSalary" />
+            <div [hidden]="baseSalary?.valid||baseSalary?.untouched">
+              <small [hidden]="baseSalary?.errors?.['requird']" class="text-danger m-3">
+                please enter valid salary
+              </small>
+  
+            </div>
         </div>
         <div class="form-group">
           <label for="SSN">Social Security Number:</label>
@@ -155,12 +239,22 @@
             [(ngModel)]="selectedEmployee.ssn"
             class="form-control"
             placeholder="Enter Social Security Number"
-          />
+            formControlName="ssn" maxlength="14" minlength="14" />
+            <div [hidden]="ssn?.valid||ssn?.untouched">
+              <small [hidden]="ssn?.errors?.['requird']" class="text-danger m-3">
+                this field is requird
+              </small>
+              <small *ngIf="ssn?.errors?.['pattern']" class="text-danger m-3">
+                ssn must be 14 number
+              </small>
+  
+            </div>
         </div>
       </div>
     </div>
+    
 
     <!-- Submit Button -->
-    <button type="submit" class="btn bgMain txtMain">Update</button>
+    <button type="submit" [disabled]="validationUpdateEmployee.invalid" class="btn bgMain txtMain">Update</button>
   </form>
 </div>
