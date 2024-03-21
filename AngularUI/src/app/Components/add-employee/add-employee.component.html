@@ -105,7 +105,7 @@
         <div class="form-group">
           <label for="nationality">Nationality:</label>
           <select id="nationality" name="nationality" [(ngModel)]="employeeDTO.nationality" class="form-select"
-            aria-label="Default select example">
+            aria-label="Default select example" formControlName="nationality">
             <option selected>Open this select menu</option>
             <option *ngFor="let country of allCountries" value="{{country}}">{{country}}</option>
           </select>

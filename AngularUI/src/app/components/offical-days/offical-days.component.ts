@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 import { DaysOffService } from 'src/app/services/days-off.service';
 
 @Component({
@@ -16,15 +18,32 @@ export class OfficalDaysComponent implements OnInit {
     date: '',
   };
   daysOffList: any[] = [];
+  validationHolidays:FormGroup;
+
   selectedRowIndex: number = -1;
   isUpdateFormVisible: boolean = false;
   totalLength: any;
   page: number = 1;
   searchText: any;
 
-  constructor(private daysOffService: DaysOffService) {}
+  constructor(private daysOffService: DaysOffService,
+    private formbuilder:FormBuilder
+    ) {
+      this.validationHolidays= formbuilder.group({
+        name:["",Validators.required],
+        date:["",Validators.required]
+      })
+    }
+    get name(){
+      return this.validationHolidays.get('name')
+    }
+    get date(){
+      return this.validationHolidays.get('date')
+    }
 
   ngOnInit() {
+    this.resetvalidation()
+    this.closeForm();
     this.refreshDaysOffList();
   }
   onUpdateSubmit() {
@@ -43,6 +62,7 @@ export class OfficalDaysComponent implements OnInit {
       (response) => {
         this.refreshDaysOffList();
         this.resetForm();
+        this.resetvalidation();
       },
       (error) => {
         console.error('Error ', error);
@@ -69,17 +89,30 @@ export class OfficalDaysComponent implements OnInit {
       }
     );
   }
+  resetvalidation(){
+      this.validationHolidays.reset();
+  }
 
   refreshDaysOffList() {
-    this.daysOffService.getAllDaysOff().subscribe(
-      (data) => {
-        this.daysOffList = data;
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-      }
-    );
+    this.daysOffService.getAllDaysOff()
+      .pipe(
+        catchError((error) => {
+          console.error('Fetching Data Error');
+          return throwError("error");
+        })
+      )
+      .subscribe(
+        (data) => {
+          if (data !== null) {
+            this.daysOffList = data;
+          } else {
+            this.daysOffList = []; // Set daysOffList to an empty array if data is null
+          }
+          
+        }
+      );
   }
+ 
 
   // Method to show the update form with data from the selected row
   showUpdateForm(item: any) {
