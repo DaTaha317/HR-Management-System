@@ -33,7 +33,7 @@ export class AddEmployeeComponent implements OnInit {
       ssn: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern('[0-9]{14}')]],
       fullName: ["", [Validators.required]],
       address: ["", [Validators.required]],
-      phoneNumber: ["", [Validators.required, this.validatePhoneNumber, Validators.maxLength(11), Validators.minLength(11)]],
+      phoneNumber: ["", [Validators.required, this.validatePhoneNumber, Validators.pattern('[0-9]{11}')]],
       gender: ["", Validators.required],
       nationality: ["", Validators.required],
       birthDate: ["", [Validators.required, this.validateBirthDate]],
