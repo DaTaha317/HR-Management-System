@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { IOrganizationSettings } from 'src/app/interfaces/IOrganizationSettings';
 import { SettingsService } from 'src/app/services/settings.service';
 
@@ -21,30 +22,28 @@ export class OrganizationSettingsComponent implements OnInit {
       hours: undefined,
       amount: undefined,
     },
-    // weeklyDaysOffDTO:{
-    //   days: []
-    // }
+    weeklyDaysOffDTO: {
+      days: [],
+    },
   };
 
-  weekdays = [
-    { label: 'Saturday', value: 0 },
-    { label: 'Sunday', value: 1 },
-    { label: 'Monday', value: 2 },
-    { label: 'Tuesday', value: 3 },
-    { label: 'Wednesday', value: 4 },
-    { label: 'Thursday', value: 5 },
-    { label: 'Friday', value: 6 },
+  public daysOfWeek: { name: string; value: number }[] = [
+    { name: 'Saturday', value: 0 },
+    { name: 'Sunday', value: 1 },
+    { name: 'Monday', value: 2 },
+    { name: 'Tuesday', value: 3 },
+    { name: 'Wednesday', value: 4 },
+    { name: 'Thursday', value: 5 },
+    { name: 'Friday', value: 6 },
   ];
-  constructor(private organization: SettingsService) {}
+  constructor(
+    private organization: SettingsService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getSettings();
   }
-
-  // isChecked(day: number): boolean {
-  //   console.log(this.settings.weeklyDaysOffDTO.days.indexOf(day));
-  //   return this.settings.weeklyDaysOffDTO.days.includes(day);
-  // }
 
   getSettings() {
     this.organization.GetOrganization().subscribe(
@@ -95,20 +94,26 @@ export class OrganizationSettingsComponent implements OnInit {
     }
   }
 
-  // toggleDay(event: Event): void {
-  //   const target = event.target as HTMLInputElement;
-  //   const day = parseInt(target.value); // Parse the value to a number
-  //   if (this.settings && this.settings.weeklyDaysOffDTO) {
-  //     if (this.settings.weeklyDaysOffDTO.days) {
-  //       this.settings.weeklyDaysOffDTO.days = [];
-  //     }
+  onCheckboxChange(event: any, dayValue: number) {
+    const checkbox = event.target;
 
-  //     const index = this.settings.weeklyDaysOffDTO.days.indexOf(day);
-  //     if (index !== -1) {
-  //       this.settings.weeklyDaysOffDTO.days.splice(index, 1);
-  //     } else {
-  //       this.settings.weeklyDaysOffDTO.days.push(day);
-  //     }
-  //   }
-  // }
+    if (checkbox.checked) {
+      if (this.settings.weeklyDaysOffDTO.days.length < 2) {
+        this.settings.weeklyDaysOffDTO.days.push(dayValue);
+      } else {
+        checkbox.checked = false;
+        this.toastr.error('You cannot select more than 2 days off');
+      }
+    } else {
+      const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
+      if (index !== -1) {
+        this.settings.weeklyDaysOffDTO.days.splice(index, 1);
+      }
+    }
+
+    if (this.settings.weeklyDaysOffDTO.days.length === 0) {
+      checkbox.checked = true;
+      this.settings.weeklyDaysOffDTO.days.push(dayValue);
+    }
+  }
 }
