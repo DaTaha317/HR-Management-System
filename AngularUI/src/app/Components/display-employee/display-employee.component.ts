@@ -21,7 +21,7 @@ export class DisplayEmployeeComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.closeForm();
+    this.closeFormDelete();
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as IEmployee[];
     });
@@ -33,7 +33,7 @@ export class DisplayEmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe(() => {
       this.employees = this.employees.filter((emp) => emp.id !== id);
     });
-    this.closeForm();
+    this.closeFormDelete();
   }
   updateForm(employee: IEmployee) {
     this.router.navigate(['/employee/update'], { state: { employee } });
@@ -41,15 +41,15 @@ export class DisplayEmployeeComponent implements OnInit {
   trackByFn(index: number, employee: IEmployee) {
     return employee.id;
   }
-  closeForm() {
-    const popupForm = document.getElementById('popupForm') as HTMLElement;
+  closeFormDelete() {
+    const popupForm = document.getElementById('popupFormDelete') as HTMLElement;
     popupForm.style.display = 'none'; 
   }
   SureForm(id:number) {
    
     this.deleteemp=id;
-    const popupForm = document.getElementById('popupForm') as HTMLElement;
-    popupForm.style.display = 'block'; 
+    const popupFormDelete = document.getElementById('popupFormDelete') as HTMLElement;
+    popupFormDelete.style.display = 'block'; 
 
   }
 }

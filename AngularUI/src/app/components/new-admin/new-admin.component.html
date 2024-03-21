@@ -4,15 +4,22 @@
     <div class="col-md-8 col-lg-6 mx-auto">
       <div class="card shadow">
         <div class="card-body">
-          <form>
+          <form [formGroup]="validationAdmin">
             <div class="mb-3">
               <label for="fullName" class="form-label">Full Name</label>
               <input
                 type="text"
                 class="form-control"
                 id="fullName"
-                placeholder=""
+                placeholder="Enter Full Name" 
+                formControlName="fullname"
               />
+              <div [hidden]="fullname?.valid||fullname?.untouched">
+                <small [hidden]="fullname?.errors?.['requird']" class="text-danger m-3">
+                  this field requird
+                </small>
+    
+              </div>
             </div>
 
             <div class="mb-3">
@@ -20,37 +27,62 @@
               <input
                 type="text"
                 class="form-control"
-                id="username"
-                placeholder=""
+                
+                placeholder="Enter Username"
+                 formControlName="username"
               />
+              <div >
+                <small [hidden]="username?.valid||username?.untouched && ! username?.errors?.['requird']" class="text-danger m-3">
+                  this field requird
+                </small>
+    
+              </div>
             </div>
 
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input
-                type="email"
+                type="text"
                 class="form-control"
-                id="email"
-                placeholder=""
+              
+                placeholder="Enter Email"
+                 formControlName="email"
               />
+             
+                 <small [hidden]="email?.valid||email?.untouched && ! email?.errors?.['requird']" class="text-danger m-3">
+                  this field requird
+                </small>
+    
+              
             </div>
 
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" />
+              <input type="password" class="form-control" 
+              placeholder="Enter Password" formControlName="password"
+              />
+             
+                <small  [hidden]="password?.valid||password?.untouched && ! password?.errors?.['requird']" class="text-danger m-3">
+                  this field requird
+                </small>
+    
+              
             </div>
 
             <div class="mb-3">
               <label for="roles" class="form-label">Role</label>
-              <select class="form-select" id="roles">
+              <select class="form-select" id="roles" formControlName="role">
                 <option selected>Choose a role...</option>
                 <option value="admin">Admin</option>
                 <option value="editor">Editor</option>
               </select>
+              <small  [hidden]="role?.valid||role?.untouched && ! role?.errors?.['requird']" class="text-danger m-3">
+                this field requird
+              </small>
             </div>
 
             <div class="text-center">
-              <button type="submit" class="btn bgMain txtMain">Register</button>
+              <button type="submit" (click)="sucsess()" class="btn bgMain txtMain" [disabled]="validationAdmin.invalid">Register</button>
             </div>
           </form>
         </div>
