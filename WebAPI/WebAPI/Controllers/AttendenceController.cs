@@ -71,22 +71,24 @@ namespace WebAPI.Controllers
                 var overtime = (int)attendanceDTO.Departure?.Hour - employeeDepartureHour;
 
                 var latetime = (int)attendanceDTO.Arrival?.Hour - employeeArrivalHour;
+                attendence.LatetimeInHours = 0;
+                attendence.OvertimeInHours = 0;
 
                 if (overtime < 0)
                 {
-                    attendence.LatetimeInHours = overtime * -1;
+                    attendence.LatetimeInHours += overtime * -1;
                 }
                 else
                 {
-                    attendence.OvertimeInHours = overtime;
+                    attendence.OvertimeInHours += overtime;
                 }
                 if (latetime < 0)
                 {
-                    attendence.OvertimeInHours = latetime * -1;
+                    attendence.OvertimeInHours += latetime * -1;
                 }
                 else
                 {
-                    attendence.LatetimeInHours = latetime;
+                    attendence.LatetimeInHours += latetime;
                 }
 
                 attendenceRepo.Add(attendence);
@@ -141,13 +143,15 @@ namespace WebAPI.Controllers
 
                 var latetime = (int)attendenceDTO.Arrival?.Hour - currentEmployee.Arrival.Hour;
 
+                existingAttendence.LatetimeInHours = 0;
+                existingAttendence.OvertimeInHours = 0;
                 if (overtime < 0)
                 {
                     existingAttendence.LatetimeInHours += overtime * -1;
                 }
                 else
                 {
-                    existingAttendence.OvertimeInHours = overtime;
+                    existingAttendence.OvertimeInHours += overtime;
                 }
                 if (latetime < 0)
                 {
@@ -155,7 +159,7 @@ namespace WebAPI.Controllers
                 }
                 else
                 {
-                    existingAttendence.LatetimeInHours = latetime;
+                    existingAttendence.LatetimeInHours += latetime;
                 }
             }
             existingAttendence.Day = attendenceDTO.Day;
