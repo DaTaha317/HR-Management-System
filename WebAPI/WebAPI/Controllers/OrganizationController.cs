@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
@@ -13,85 +14,15 @@ namespace WebAPI.Controllers
         private ICommission commissionRepo;
         private IDeduction deductionRepo;
         private IWeeklyDaysOff weeklyDaysOffRepo;
+        private IMapper mapper;
 
-        public OrganizationController(ICommission commissionRepo, IDeduction deductionRepo, IWeeklyDaysOff weeklyDaysOffRepo)
+        public OrganizationController(ICommission commissionRepo, IDeduction deductionRepo, IWeeklyDaysOff weeklyDaysOffRepo, IMapper mapper)
         {
             this.deductionRepo = deductionRepo;
             this.commissionRepo = commissionRepo;
             this.weeklyDaysOffRepo = weeklyDaysOffRepo;
+            this.mapper = mapper;
         }
-
-        //#region oldhttpost
-        //[HttpPost]
-        //public ActionResult Update([FromBody] OrganizationSettings organization)
-        //{
-        //    CommissionDTO commissionDTO = organization.CommissionDTO;
-        //    DeductionDTO deductionDTO = organization.DeductionDTO;
-        //    WeeklyDaysDTO weeklyDaysDTO = organization.WeeklyDaysDTO;
-
-        //    // check if there exist one record
-        //    //OrganizationSettings? organization = organizationRepo.Get();
-        //    CommissionSettings oldCommision = commissionRepo.Get();
-        //    DeductionSettings oldDeduction = deductionRepo.Get();
-        //    WeeklyDaysOff oldDaysOff = weeklyDaysOffRepo.Get();
-
-        //    if (oldCommision == null )
-        //    {
-        //        // Setting data
-        //        CommissionSettings commission = new CommissionSettings()
-        //        {
-        //            type = (Unit)commissionDTO.type,
-        //            Hours = commissionDTO.Hours,
-        //            Amount = commissionDTO.Amount
-        //        };
-
-        //        DeductionSettings deduction = new DeductionSettings()
-        //        {
-        //            type = (Unit)deductionDTO.type,
-        //            Hours = deductionDTO.Hours,
-        //            Amount = deductionDTO.Amount
-        //        };
-
-        //        WeeklyDaysOff newDaysOff = new WeeklyDaysOff();
-        //        foreach(var day in weeklyDaysDTO.days)
-        //        {
-        //            newDaysOff.Days.Add((DaysName)day);
-        //        }
-        //        commissionRepo.Add(commission);
-        //        commissionRepo.Save();
-
-        //        deductionRepo.Add(deduction);
-        //        deductionRepo.Save();
-        //        weeklyDaysOffRepo.Add(newDaysOff);
-        //        weeklyDaysOffRepo.Save();
-
-        //    }
-
-        //    // updating only when not null
-        //    oldCommision.type = (Unit)commissionDTO.type;
-        //    oldCommision.Hours = commissionDTO.Hours;
-        //    oldCommision.Amount = commissionDTO.Amount;
-
-
-        //    oldDeduction.type = (Unit)deductionDTO.type;
-        //    oldDeduction.Hours = deductionDTO.Hours;
-        //    oldDeduction.Amount = deductionDTO.Amount;
-
-        //    oldDaysOff.Days.Clear();
-        //    foreach(var day in organization.WeeklyDaysDTO.days)
-        //    {
-        //        oldDaysOff.Days.Add((DaysName)day);
-        //    }
-        //    commissionRepo.Update(oldCommision);
-        //    commissionRepo.Save();
-        //    deductionRepo.Update(oldDeduction);
-        //    deductionRepo.Save();
-        //    weeklyDaysOffRepo.Update(oldDaysOff);
-        //    weeklyDaysOffRepo.Save();
-
-        //    return CreatedAtAction("Get", organization);
-        //}
-        //#endregion
 
         [HttpPost]
         public ActionResult Update([FromBody] OrganizationSettings organization)
@@ -100,151 +31,89 @@ namespace WebAPI.Controllers
             DeductionDTO deductionDTO = organization.DeductionDTO;
             WeeklyDaysDTO weeklyDaysDTO = organization.WeeklyDaysDTO;
 
-            CommissionSettings oldCommision = commissionRepo.Get();
+            CommissionSettings oldCommission = commissionRepo.Get();
             DeductionSettings oldDeduction = deductionRepo.Get();
             WeeklyDaysOff oldDaysOff = weeklyDaysOffRepo.Get();
 
-            // Check if all commission, deduction, and weeklyDaysDTO are null
-            if (oldCommision == null && oldDeduction == null && oldDaysOff == null)
+            // Map DTOs to domain entities
+            CommissionSettings commission = mapper.Map<CommissionSettings>(commissionDTO);
+            DeductionSettings deduction = mapper.Map<DeductionSettings>(deductionDTO);
+            WeeklyDaysOff newDaysOff = mapper.Map<WeeklyDaysOff>(weeklyDaysDTO);
+
+            if (oldCommission == null && oldDeduction == null && oldDaysOff == null)
             {
-                // Create new values for all three
-                CommissionSettings commission = new CommissionSettings()
-                {
-                    type = (Unit)commissionDTO.type,
-                    Hours = commissionDTO.Hours,
-                    Amount = commissionDTO.Amount
-                };
+                // Add new records
                 commissionRepo.Add(commission);
-                commissionRepo.Save();
-
-                DeductionSettings deduction = new DeductionSettings()
-                {
-                    type = (Unit)deductionDTO.type,
-                    Hours = deductionDTO.Hours,
-                    Amount = deductionDTO.Amount
-                };
                 deductionRepo.Add(deduction);
-                deductionRepo.Save();
-
-                WeeklyDaysOff newDaysOff = new WeeklyDaysOff();
-                foreach (var day in weeklyDaysDTO.days)
-                {
-                    newDaysOff.Days.Add((DaysName)day);
-                }
                 weeklyDaysOffRepo.Add(newDaysOff);
-                weeklyDaysOffRepo.Save();
             }
             else
             {
-                // Handle cases where one or more values are already present
-                if (oldCommision == null)
+                if (oldCommission != null)
                 {
-                    // Create new commission
-                    CommissionSettings commission = new CommissionSettings()
-                    {
-                        type = (Unit)commissionDTO.type,
-                        Hours = commissionDTO.Hours,
-                        Amount = commissionDTO.Amount
-                    };
-                    commissionRepo.Add(commission);
-                    commissionRepo.Save();
+                    // Update commission settings
+                    oldCommission.type = (Unit)commissionDTO.type;
+                    oldCommission.Hours = commissionDTO.Hours;
+                    oldCommission.Amount = commissionDTO.Amount;
+                    commissionRepo.Update(oldCommission);
                 }
                 else
                 {
-                    // Update existing commission
-                    oldCommision.type = (Unit)commissionDTO.type;
-                    oldCommision.Hours = commissionDTO.Hours;
-                    oldCommision.Amount = commissionDTO.Amount;
-                    commissionRepo.Update(oldCommision);
-                    commissionRepo.Save();
+                    commissionRepo.Add(commission);
                 }
 
-                if (oldDeduction == null)
+                if (oldDeduction != null)
                 {
-                    // Create new deduction
-                    DeductionSettings deduction = new DeductionSettings()
-                    {
-                        type = (Unit)deductionDTO.type,
-                        Hours = deductionDTO.Hours,
-                        Amount = deductionDTO.Amount
-                    };
-                    deductionRepo.Add(deduction);
-                    deductionRepo.Save();
-                }
-                else
-                {
-                    // Update existing deduction
+                    // Update deduction settings
                     oldDeduction.type = (Unit)deductionDTO.type;
                     oldDeduction.Hours = deductionDTO.Hours;
                     oldDeduction.Amount = deductionDTO.Amount;
                     deductionRepo.Update(oldDeduction);
-                    deductionRepo.Save();
+                }
+                else
+                {
+                    deductionRepo.Add(deduction);
                 }
 
-                if (oldDaysOff == null && weeklyDaysDTO != null)
+                if (oldDaysOff != null)
                 {
-                    // Create new weekly days off
-                    WeeklyDaysOff newDaysOff = new WeeklyDaysOff();
-                    foreach (var day in weeklyDaysDTO.days)
-                    {
-                        newDaysOff.Days.Add((DaysName)day);
-                    }
-                    weeklyDaysOffRepo.Add(newDaysOff);
-                    weeklyDaysOffRepo.Save();
-                }
-                else if (oldDaysOff != null && weeklyDaysDTO != null)
-                {
-                    // Update existing weekly days off
+                    // Update weekly days off
                     oldDaysOff.Days.Clear();
                     foreach (var day in weeklyDaysDTO.days)
                     {
                         oldDaysOff.Days.Add((DaysName)day);
                     }
                     weeklyDaysOffRepo.Update(oldDaysOff);
-                    weeklyDaysOffRepo.Save();
+                }
+                else
+                {
+                    weeklyDaysOffRepo.Add(newDaysOff);
                 }
             }
+
+            // Save changes
+            commissionRepo.Save();
+            deductionRepo.Save();
+            weeklyDaysOffRepo.Save();
 
             return CreatedAtAction("Get", organization);
         }
 
 
+
         [HttpGet]
         public ActionResult Get()
         {
-            if (commissionRepo.Get() == null)
-            {
-                return NoContent();
-            }
 
             CommissionSettings commission = commissionRepo.Get();
             DeductionSettings deduction = deductionRepo.Get();
             WeeklyDaysOff weeklyDays = weeklyDaysOffRepo.Get();
 
-            WeeklyDaysDTO weeklyDaysDTO = new WeeklyDaysDTO();
-            weeklyDaysDTO.days = new List<int>();
-            foreach(var day in  weeklyDays.Days)
-            {
-                weeklyDaysDTO.days.Add((int)day);
-            }
             OrganizationSettings organization = new OrganizationSettings()
             {
-                CommissionDTO = new CommissionDTO()
-                {
-                    type = (int)commission.type,
-                    Hours = commission.Hours,
-                    Amount = commission.Amount
-                },
-                DeductionDTO = new DeductionDTO()
-                {
-                    type = (int)deduction.type,
-                    Hours = deduction.Hours,
-                    Amount = deduction.Amount
-                },
-                WeeklyDaysDTO = new WeeklyDaysDTO()
-                {
-                    days = weeklyDaysDTO.days
-                } 
+                CommissionDTO = mapper.Map<CommissionDTO>(commission),
+                DeductionDTO = mapper.Map<DeductionDTO>(deduction),
+                WeeklyDaysDTO = mapper.Map<WeeklyDaysDTO>(weeklyDays)
             };
 
             return Ok(organization);

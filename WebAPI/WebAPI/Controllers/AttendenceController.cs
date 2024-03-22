@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.Extensions;
@@ -14,11 +14,18 @@ namespace WebAPI.Controllers
     {
         private IAttendence attendenceRepo;
         private IEmployeeRepo employeeRepo;
+        private IMapper mapper;
+        private IDaysOffRepo daysOffRepo;
+        private IWeeklyDaysOff weeklyDaysOffRepo;
 
-        public AttendenceController(IAttendence attendenceRepo, IEmployeeRepo employeeRepo)
+
+        public AttendenceController(IAttendence attendenceRepo, IEmployeeRepo employeeRepo, IMapper mapper, IDaysOffRepo daysOffRepo, IWeeklyDaysOff weeklyDaysOffRepo)
         {
             this.attendenceRepo = attendenceRepo;
             this.employeeRepo = employeeRepo;
+            this.mapper = mapper;
+            this.daysOffRepo = daysOffRepo;
+            this.weeklyDaysOffRepo = weeklyDaysOffRepo;
         }
 
 
@@ -42,40 +49,76 @@ namespace WebAPI.Controllers
         [HttpPost]
         public ActionResult Add(AttendanceDTO attendanceDTO)
         {
+            DaysOff daysOff = daysOffRepo.GetByDay(attendanceDTO.Day);
+            WeeklyDaysOff weeklyDays = weeklyDaysOffRepo.Get();
+            if (daysOff != null)
+                return BadRequest("This is an Official day off");
+
+            int dayIndex = (int)attendanceDTO.Day.DayOfWeek;
+
+            if (weeklyDays != null && weeklyDays.Days.Contains((DaysName)dayIndex))
+            {
+                return BadRequest("This is a weekly day off");
+            }
+
+
             int employeeDepartureHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Departure.Hour;
             int employeeArrivalHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Arrival.Hour;
-
+            Attendence attendence;
             if (attendanceDTO.Status == 0)
             {
-                Attendence attendence = new Attendence()
+                attendence = mapper.Map<Attendence>(attendanceDTO);
+                var overtime = (int)attendanceDTO.Departure?.Hour - employeeDepartureHour;
+
+                var latetime = (int)attendanceDTO.Arrival?.Hour - employeeArrivalHour;
+
+                if (overtime < 0)
                 {
-                    EmpId = attendanceDTO.EmpId,
-                    Day = attendanceDTO.Day,
-                    Status = (AttendenceStatus)attendanceDTO.Status,
-                    Arrival = attendanceDTO.Arrival,
-                    Departure = attendanceDTO.Departure,
-                    OvertimeInHours = attendanceDTO.Departure?.Hour - employeeDepartureHour,
-                    LatetimeInHours = attendanceDTO.Arrival?.Hour - employeeArrivalHour
-                };
+                    attendence.LatetimeInHours = overtime * -1;
+                }
+                else
+                {
+                    attendence.OvertimeInHours = overtime;
+                }
+                if (latetime < 0)
+                {
+                    attendence.OvertimeInHours = latetime * -1;
+                }
+                else
+                {
+                    attendence.LatetimeInHours = latetime;
+                }
+
                 attendenceRepo.Add(attendence);
             }
             else
             {
-                Attendence attendence = new Attendence()
-                {
-                    EmpId = attendanceDTO.EmpId,
-                    Day = attendanceDTO.Day,
-                    Status = (AttendenceStatus)attendanceDTO.Status
-                };
+                attendence = mapper.Map<Attendence>(attendanceDTO);
+
                 attendenceRepo.Add(attendence);
             }
             attendenceRepo.Save();
 
-            return Created();
+
+            return CreatedAtAction("GetDayByEmpId", new { empId = attendence.EmpId, date = attendence.Day }, attendanceDTO);
         }
+
         [HttpPut("{empId}")]
         public IActionResult Update([FromRoute] int empId, [FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
         {
+            DaysOff daysOff = daysOffRepo.GetByDay(attendenceDTO.Day);
+            WeeklyDaysOff weeklyDays = weeklyDaysOffRepo.Get();
+            if (daysOff != null)
+                return BadRequest("This is an Official day off");
+
+            int dayIndex = (int)attendenceDTO.Day.DayOfWeek;
+
+            if (weeklyDays != null && weeklyDays.Days.Contains((DaysName)dayIndex))
+            {
+                return BadRequest("This is a weekly day off");
+            }
+
+
             Attendence existingAttendence = attendenceRepo.GetDayByEmpId(empId, date);
             Employee currentEmployee = employeeRepo.GetById(empId);
             if (existingAttendence == null)
@@ -94,13 +137,34 @@ namespace WebAPI.Controllers
             {
                 existingAttendence.Arrival = attendenceDTO.Arrival;
                 existingAttendence.Departure = attendenceDTO.Departure;
-                existingAttendence.LatetimeInHours = attendenceDTO.Arrival?.Hour - currentEmployee.Arrival.Hour;
-                existingAttendence.OvertimeInHours = attendenceDTO.Departure?.Hour - currentEmployee.Departure.Hour;
+                var overtime = (int)attendenceDTO.Departure?.Hour - currentEmployee.Departure.Hour;
+
+                var latetime = (int)attendenceDTO.Arrival?.Hour - currentEmployee.Arrival.Hour;
+
+                if (overtime < 0)
+                {
+                    existingAttendence.LatetimeInHours += overtime * -1;
+                }
+                else
+                {
+                    existingAttendence.OvertimeInHours = overtime;
+                }
+                if (latetime < 0)
+                {
+                    existingAttendence.OvertimeInHours += latetime * -1;
+                }
+                else
+                {
+                    existingAttendence.LatetimeInHours = latetime;
+                }
             }
+            existingAttendence.Day = attendenceDTO.Day;
             attendenceRepo.Update(empId, date, existingAttendence);
             attendenceRepo.Save();
             return Ok();
         }
+
+
         [HttpDelete("{empId}")]
         public IActionResult Delete([FromRoute] int empId, [FromQuery] DateOnly date)
         {
@@ -113,6 +177,9 @@ namespace WebAPI.Controllers
             attendenceRepo.Save();
             return NoContent();
         }
+
+
+
         [HttpGet("GetEmployeeDay/{empId}")]
         public IActionResult GetDayByEmpId([FromRoute] int empId, [FromQuery] DateOnly day)
         {
@@ -121,19 +188,13 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            AttendanceDTO attendanceDTO = new AttendanceDTO()
-            {
-                EmpId = attendence.EmpId,
-                Day = attendence.Day,
-                Arrival = attendence.Arrival,
-                Departure = attendence.Departure,
-                EmpName = attendence.Employee.FullName,
-                DeptName = attendence.Employee.Department.Name,
-                Status = (int)attendence.Status
-            };
+            AttendanceDTO attendanceDTO = mapper.Map<AttendanceDTO>(attendence);
 
             return Ok(attendanceDTO);
         }
+
+
+
         [HttpGet("{empId}")]
         public IActionResult GetAttendenceByEmpId(int empId)
         {
@@ -145,16 +206,7 @@ namespace WebAPI.Controllers
             }
             foreach (var attendance in attendences)
             {
-                AttendanceDTO attendanceDTO = new AttendanceDTO()
-                {
-                    EmpId = attendance.EmpId,
-                    Day = attendance.Day,
-                    Arrival = attendance.Arrival,
-                    Departure = attendance.Departure,
-                    EmpName = attendance.Employee.FullName,
-                    DeptName = attendance.Employee.Department.Name,
-                    Status = (int)attendance.Status
-                };
+                AttendanceDTO attendanceDTO = mapper.Map<AttendanceDTO>(attendance);
                 attendanceDTOs.Add(attendanceDTO);
             }
             return Ok(attendanceDTOs);
@@ -164,26 +216,17 @@ namespace WebAPI.Controllers
         [HttpGet("GetByPeriod")]
         public ActionResult GetByPeriod([FromQuery] Period period)
         {
-            List<AttendanceDTO> attendanceDTOs = new List<AttendanceDTO>();
 
             List<Attendence> attendences = attendenceRepo.GetByPeriod(period.Start, period.End);
 
             if (attendences.Count() == 0)
-                return NoContent();
+                return NotFound("There is no Attendances.");
+
+            List<AttendanceDTO> attendanceDTOs = new List<AttendanceDTO>();
 
             foreach (var attendance in attendences)
             {
-                AttendanceDTO attendanceDTO = new AttendanceDTO()
-                {
-                    EmpId = attendance.EmpId,
-                    Day = attendance.Day,
-                    Arrival = attendance.Arrival,
-                    Departure = attendance.Departure,
-                    EmpName = attendance.Employee.FullName,
-                    DeptName = attendance.Employee.Department.Name,
-                    Status = (int)attendance.Status
-                };
-
+                AttendanceDTO attendanceDTO = mapper.Map<AttendanceDTO>(attendance);
                 attendanceDTOs.Add(attendanceDTO);
             }
 
