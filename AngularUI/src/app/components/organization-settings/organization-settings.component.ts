@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { IOrganizationSettings } from 'src/app/interfaces/IOrganizationSettings';
 import { SettingsService } from 'src/app/services/settings.service';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-organization-settings',
@@ -28,13 +29,13 @@ export class OrganizationSettingsComponent implements OnInit {
   };
 
   public daysOfWeek: { name: string; value: number }[] = [
-    { name: 'Saturday', value: 0 },
-    { name: 'Sunday', value: 1 },
-    { name: 'Monday', value: 2 },
-    { name: 'Tuesday', value: 3 },
-    { name: 'Wednesday', value: 4 },
-    { name: 'Thursday', value: 5 },
-    { name: 'Friday', value: 6 },
+    { name: 'Saturday', value: 6 },
+    { name: 'Sunday', value: 0 },
+    { name: 'Monday', value: 1 },
+    { name: 'Tuesday', value: 2 },
+    { name: 'Wednesday', value: 3 },
+    { name: 'Thursday', value: 4 },
+    { name: 'Friday', value: 5 },
   ];
   constructor(
     private organization: SettingsService,
@@ -57,6 +58,7 @@ export class OrganizationSettingsComponent implements OnInit {
             this.isDeductionHours = false;
           }
         }
+
         console.log(data);
       },
       (error) => {
@@ -101,23 +103,37 @@ export class OrganizationSettingsComponent implements OnInit {
   }
 
   onCheckboxChange(event: any, dayValue: number) {
-    // const checkbox = event.target;
-    // if (checkbox.checked) {
-    //   if (this.settings.weeklyDaysOffDTO.days.length < 2) {
-    //     this.settings.weeklyDaysOffDTO.days.push(dayValue);
-    //   } else {
-    //     checkbox.checked = false;
-    //     this.toastr.error('You cannot select more than 2 days off');
-    //   }
-    // } else {
-    //   const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
-    //   if (index !== -1) {
-    //     this.settings.weeklyDaysOffDTO.days.splice(index, 1);
-    //   }
-    // }
-    // if (this.settings.weeklyDaysOffDTO.days.length === 0) {
-    //   checkbox.checked = true;
-    //   this.settings.weeklyDaysOffDTO.days.push(dayValue);
-    // }
+    const checkbox = event.target;
+
+    // Ensure that weeklyDaysOffDTO is defined and has the 'days' property
+    if (this.settings.weeklyDaysOffDTO && this.settings.weeklyDaysOffDTO.days) {
+      if (checkbox.checked) {
+        // Check if days array has been initialized
+        if (!Array.isArray(this.settings.weeklyDaysOffDTO.days)) {
+          this.settings.weeklyDaysOffDTO.days = [];
+        }
+        // Check if there are less than 2 days selected
+        if (this.settings.weeklyDaysOffDTO.days.length < 2) {
+          this.settings.weeklyDaysOffDTO.days.push(dayValue);
+        } else {
+          checkbox.checked = false;
+          this.toastr.error('You cannot select more than 2 days off');
+        }
+      } else {
+        // Remove the day from the array if unchecked
+        const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
+        if (index !== -1) {
+          this.settings.weeklyDaysOffDTO.days.splice(index, 1);
+        }
+      }
+    } else {
+      // If weeklyDaysOffDTO or days property is not available, initialize them
+      this.settings.weeklyDaysOffDTO = { days: [] };
+      this.settings.weeklyDaysOffDTO.days.push(dayValue);
+    }
+  }
+
+  trackByIdx(index: number, obj: any): any {
+    return index;
   }
 }
