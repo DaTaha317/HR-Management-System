@@ -16,5 +16,10 @@ namespace WebAPI.Helpers
                 _pageSize = value > MaxPageSize ? MaxPageSize : value;
             }
         }
+
+        // filters for startDate and endDate (default)
+        public DateOnly startDate { get; set; } = new DateOnly(2008, 1, 1); // default start date
+        public DateOnly endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now); // default end date
+
     }
 }

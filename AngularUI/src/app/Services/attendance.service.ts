@@ -4,14 +4,18 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IAttendence } from '../interfaces/IAttendence';
 import { PaginationResult } from '../interfaces/IPagination';
+import { UserParams } from '../models/UserParams';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AttendanceService {
+  userParams: UserParams | undefined;
   baseUrl = environment.baseUrl;
   paginatedResult: PaginationResult<IAttendence[]> = new PaginationResult<IAttendence[]>;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.userParams = new UserParams();
+  }
 
   addAttendance(attendance: IAttendence): Observable<IAttendence> {
     return this.http.post<IAttendence>(
@@ -21,14 +25,16 @@ export class AttendanceService {
   }
 
   // these params are optional because we have default values
-  getAll(page?: number, itemsPerPage?: number) {
+  getAll(userParams: UserParams) {
 
     let params = new HttpParams();
 
     // append to http params
-    if (page && itemsPerPage) {
-      params = params.append("pageSize", itemsPerPage);
-      params = params.append("pageNumber", page);
+    if (userParams.pageNumber && userParams.pageSize) {
+      params = params.append("pageSize", userParams.pageSize);
+      params = params.append("pageNumber", userParams.pageNumber);
+      params = params.append("startDate", userParams.startDate);
+      params = params.append("endDate", userParams.endDate);
     }
 
     return this.http.get<IAttendence[]>(`${this.baseUrl}/Attendence`, { observe: 'response', params }).pipe(
@@ -60,4 +66,9 @@ export class AttendanceService {
       record
     );
   }
+
+  ResetUserParams() {
+    this.userParams = new UserParams();
+  }
+
 }
