@@ -50,8 +50,8 @@ export class AttendanceService {
     );
   }
 
-  deleteRecord(id: number): Observable<IAttendence> {
-    return this.http.delete<IAttendence>(`${this.baseUrl}/attendence/${id}`);
+  deleteRecord(id: number,date:Date): Observable<IAttendence> {
+    return this.http.delete<IAttendence>(`${this.baseUrl}/attendence/${id}?date=${date}`);
   }
 
   updateRecord(id: number, record: IAttendence): Observable<IAttendence> {
