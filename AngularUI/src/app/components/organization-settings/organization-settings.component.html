@@ -107,7 +107,10 @@
             </div>
             <div class="card-body">
               <form class="row row-cols-1 row-cols-md-3">
-                <div *ngFor="let day of daysOfWeek" class="col">
+                <div
+                  *ngFor="let day of daysOfWeek; trackBy: trackByIdx"
+                  class="col"
+                >
                   <label>
                     <input
                       type="checkbox"
