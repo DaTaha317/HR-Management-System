@@ -50,6 +50,12 @@ export class OrganizationSettingsComponent implements OnInit {
       (data: IOrganizationSettings | undefined) => {
         if (data) {
           this.settings = data;
+          if (this.settings.commissionDTO.type == 1) {
+            this.isComissionHours = false;
+          }
+          if (this.settings.deductionDTO.type == 1) {
+            this.isDeductionHours = false;
+          }
         }
         console.log(data);
       },
@@ -77,43 +83,41 @@ export class OrganizationSettingsComponent implements OnInit {
   onComissionTypeChange() {
     if (this.settings.commissionDTO.type == 0) {
       this.isComissionHours = true;
-      this.settings.commissionDTO.amount = undefined;
+      this.settings.commissionDTO.hours = undefined;
     } else {
       this.isComissionHours = false;
-      this.settings.commissionDTO.hours = undefined;
+      this.settings.commissionDTO.amount = undefined;
     }
   }
 
   onDeductionTypeChange() {
     if (this.settings.deductionDTO.type == 0) {
       this.isDeductionHours = true;
-      this.settings.deductionDTO.amount = undefined;
+      this.settings.deductionDTO.hours = undefined;
     } else {
       this.isDeductionHours = false;
-      this.settings.deductionDTO.hours = undefined;
+      this.settings.deductionDTO.amount = undefined;
     }
   }
 
   onCheckboxChange(event: any, dayValue: number) {
-    const checkbox = event.target;
-
-    if (checkbox.checked) {
-      if (this.settings.weeklyDaysOffDTO.days.length < 2) {
-        this.settings.weeklyDaysOffDTO.days.push(dayValue);
-      } else {
-        checkbox.checked = false;
-        this.toastr.error('You cannot select more than 2 days off');
-      }
-    } else {
-      const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
-      if (index !== -1) {
-        this.settings.weeklyDaysOffDTO.days.splice(index, 1);
-      }
-    }
-
-    if (this.settings.weeklyDaysOffDTO.days.length === 0) {
-      checkbox.checked = true;
-      this.settings.weeklyDaysOffDTO.days.push(dayValue);
-    }
+    // const checkbox = event.target;
+    // if (checkbox.checked) {
+    //   if (this.settings.weeklyDaysOffDTO.days.length < 2) {
+    //     this.settings.weeklyDaysOffDTO.days.push(dayValue);
+    //   } else {
+    //     checkbox.checked = false;
+    //     this.toastr.error('You cannot select more than 2 days off');
+    //   }
+    // } else {
+    //   const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
+    //   if (index !== -1) {
+    //     this.settings.weeklyDaysOffDTO.days.splice(index, 1);
+    //   }
+    // }
+    // if (this.settings.weeklyDaysOffDTO.days.length === 0) {
+    //   checkbox.checked = true;
+    //   this.settings.weeklyDaysOffDTO.days.push(dayValue);
+    // }
   }
 }
