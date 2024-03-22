@@ -16,36 +16,39 @@
       </button>
     </div>
   </div>
+  <form #form="ngForm" (submit)="getFilteredDate()" *ngIf="userParams">
 
-  <div class="row mb-4">
-    <div class="col-md-3 d-flex align-items-center">
-      <label for="fromDate" class="form-label me-2">From</label>
-      <div class="input-group">
-        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-        <input type="date" class="form-control" id="fromDate" />
+    <div class="row mb-4">
+      <div class="col-md-3 d-flex align-items-center">
+        <label for="fromDate" class="form-label me-2">From</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+          <input [(ngModel)]="userParams.startDate" name="startDate" type="date" class="form-control" id="fromDate" />
+        </div>
+      </div>
+      <div class="col-md-3 d-flex align-items-center">
+        <label for="toDate" class="form-label me-2">To</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+          <input [(ngModel)]="userParams.endDate" name="endDate" type="date" class="form-control" id="toDate" />
+        </div>
+      </div>
+      <div class="col-md-6 d-flex justify-content-between align-items-center">
+        <button type="submit" class="btn bgMain txtMain me-2">Show</button>
+        <div>
+          <button type="button" class="btn btn-danger me-2">
+            <i class="fas fa-file-pdf"></i>
+          </button>
+          <button type="button" class="btn btn-secondary">
+            <i class="fas fa-print"></i>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-md-3 d-flex align-items-center">
-      <label for="toDate" class="form-label me-2">To</label>
-      <div class="input-group">
-        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-        <input type="date" class="form-control" id="toDate" />
-      </div>
-    </div>
-    <div class="col-md-6 d-flex justify-content-between align-items-center">
-      <button type="button" class="btn bgMain txtMain me-2">Show</button>
-      <div>
-        <button type="button" class="btn btn-danger me-2">
-          <i class="fas fa-file-pdf"></i>
-        </button>
-        <button type="button" class="btn btn-secondary">
-          <i class="fas fa-print"></i>
-        </button>
-      </div>
-    </div>
-  </div>
+  </form>
 
-  <table class="table">
+  <p *ngIf="!attendanceReport">No data available</p>
+  <table class="table" *ngIf="attendanceReport">
     <thead class="bgMain txtMain">
       <tr>
         <th scope="col">Department</th>
@@ -79,7 +82,7 @@
     </tbody>
   </table>
 
-  <div class="d-flex justify-content-center" *ngIf="pagination">
+  <div class="d-flex justify-content-center" *ngIf="pagination && attendanceReport">
     <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
       [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
       nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
