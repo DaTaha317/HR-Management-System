@@ -33,9 +33,13 @@ namespace WebAPI.Repositories
 
         public async Task<PagedList<AttendanceDTO>> GetAll(UserParams userParams)
         {
-            var query = context.Attendences.ProjectTo<AttendanceDTO>(_mapper.ConfigurationProvider).AsNoTracking();
 
-            return await PagedList<AttendanceDTO>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+            var query = context.Attendences.AsQueryable();
+
+            // query for date from (user params)
+            query = query.Where(a => a.Day >= userParams.startDate && a.Day <= userParams.endDate);
+
+            return await PagedList<AttendanceDTO>.CreateAsync(query.AsNoTracking().ProjectTo<AttendanceDTO>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
         }
 
         public List<Attendence> GetAttendenceByEmpId(int empId)
