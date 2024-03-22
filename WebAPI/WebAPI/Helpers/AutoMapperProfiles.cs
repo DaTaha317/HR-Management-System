@@ -19,6 +19,15 @@ namespace WebAPI.Helpers
                     src => src.Employee.Department.Name
                 )
             );
+
+            CreateMap<AttendanceDTO, Attendence>();
+            CreateMap<CommissionSettings, CommissionDTO>();
+            CreateMap<DeductionSettings, DeductionDTO>();
+            CreateMap<WeeklyDaysOff, WeeklyDaysDTO>();
+            CreateMap<CommissionDTO, CommissionSettings>();
+            CreateMap<DeductionDTO, DeductionSettings>();
+            CreateMap<WeeklyDaysDTO, WeeklyDaysOff>();
+
         }
     }
 }
