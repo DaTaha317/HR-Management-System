@@ -73,7 +73,7 @@
             <button class="btn bgMain txtMain">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger" (click)="deleteRecord(record.empId)">
+            <button class="btn btn-danger" (click)="openModal(template,record.empId,record.day)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
@@ -89,3 +89,12 @@
     </pagination>
 
   </div>
+   <!-- pop up to delete -->
+   <br><br>
+   <ng-template #template>
+     <div class="modal-body text-center">
+       <p>Do you want to confirm?</p>
+       <button type="button" class="btn btn-default btn-danger" (click)="DeleteAttendence(attendancedel,attendancedate)">Yes</button>
+       <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+     </div>
+   </ng-template>

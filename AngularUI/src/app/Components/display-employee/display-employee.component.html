@@ -6,12 +6,7 @@
       </button>
     </div>
     <div class="d-flex align-items-center">
-      <input
-        type="search"
-        [(ngModel)]="searchText"
-        class="form-control me-2"
-        placeholder="Search"
-      />
+      <input type="search" [(ngModel)]="searchText" class="form-control me-2" placeholder="Search" />
       <button type="button" class="btn bgMain txtMain">
         <i class="fas fa-search"></i>
       </button>
@@ -35,9 +30,9 @@
         <th scope="col">Actions</th>
       </tr>
     </thead>
+
     <tbody>
-      <tr
-        *ngFor="
+      <tr *ngFor="
           let emp of employees
             | filter : searchText
             | paginate
@@ -47,8 +42,7 @@
                   totalItems: totalLength
                 };
           trackBy: trackByFn
-        "
-      >
+        ">
         <td>{{ emp.fullName }}</td>
         <td>{{ emp.ssn }}</td>
         <td>{{ emp.address }}</td>
@@ -61,13 +55,11 @@
         <td>{{ emp.departure }}</td>
         <td>{{ emp.departmentName }}</td>
         <td>
-          <div
-            class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
-          >
+          <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
             <button class="btn bgMain txtMain" (click)="updateForm(emp)">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger" (click)="SureForm(emp.id)">
+            <button class="btn btn-danger" (click)="openModal(template,emp.id)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
@@ -82,23 +74,13 @@
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
-  <div id="popupFormDelete" class="popupFormDelete">
-    
-    <h1> Are You Sure Delete this Employee</h1>
-     
-      <div class="row">
-        <div class="col-lg-6 mb-3 mb-lg-0">
-          <button type="button" class="btn btn-danger w-100"  (click)="deleteEmployee(deleteemp)">Delete</button>
-        </div>
-        <div class="col-lg-6">
-          <button
-            type="button"
-            (click)="closeFormDelete()"
-            class="btn btn-primary w-100"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    
-</div>
+
+  <!-- pop up to delete -->
+  <br><br>
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm?</p>
+      <button type="button" class="btn btn-default btn-danger" (click)="deleteEmployee(deleteemp)">Yes</button>
+      <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    </div>
+  </ng-template>

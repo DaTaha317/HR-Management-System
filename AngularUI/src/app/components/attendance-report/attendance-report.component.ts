@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { UserParams } from 'src/app/models/UserParams';
 import { ToastrService } from 'ngx-toastr';
 import { IAttendence } from 'src/app/interfaces/IAttendence';
 import { Pagination } from 'src/app/interfaces/IPagination';
-import { UserParams } from 'src/app/models/UserParams';
 import { AttendanceService } from 'src/app/services/attendance.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-attendance-report',
@@ -11,7 +13,9 @@ import { AttendanceService } from 'src/app/services/attendance.service';
   styleUrls: ['./attendance-report.component.css'],
 })
 export class AttendanceReportComponent implements OnInit {
-
+  modalRef?: BsModalRef;
+  attendancedel: number = 1;
+  attendancedate: Date = new Date();
   pagination: Pagination | undefined;
 
   attendanceReport: IAttendence[] | undefined = [];
@@ -20,6 +24,8 @@ export class AttendanceReportComponent implements OnInit {
 
 
   constructor(
+    private modalService: BsModalService,
+
     private attendanceService: AttendanceService,
     private toastr: ToastrService
   ) {
@@ -55,10 +61,14 @@ export class AttendanceReportComponent implements OnInit {
     }
   }
 
-  deleteRecord(id: number): void {
-    this.attendanceService.deleteRecord(id).subscribe(() => {
+  deleteRecord(id: number, date: Date): void {
+    console.log(id)
+
+    this.attendanceService.deleteRecord(id, date).subscribe(() => {
       this.toastr.success('Deleted Successfully');
+      this.getAttendanceReport();
     });
+
   }
 
   pageChanged(event: any) {
@@ -74,6 +84,32 @@ export class AttendanceReportComponent implements OnInit {
 
   resetFilters() {
     this.attendanceService.ResetUserParams();
+  }
+  decline(): void {
+    this.modalRef?.hide();
+  }
+  openModal(template: TemplateRef<void>, id: number, date: Date) {
+    console.log(id)
+    console.log(date)
+
+    this.attendancedate = date;
+    this.attendancedel = id;
+
+
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+  DeleteAttendence(id: number, date: Date) {
+
+
+    this.attendancedel = id;
+    this.attendancedate = date;
+
+
+
+    this.deleteRecord(this.attendancedel, this.attendancedate);
+    this.modalRef?.hide();
+    this.getAttendanceReport();
+
   }
 
 }

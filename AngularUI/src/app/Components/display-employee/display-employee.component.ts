@@ -1,8 +1,10 @@
-import { state } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { EmpServicesService } from 'src/app/services/emp-services.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-display-employee',
@@ -11,17 +13,22 @@ import { EmpServicesService } from 'src/app/services/emp-services.service';
 })
 export class DisplayEmployeeComponent implements OnInit {
   employees: IEmployee[] = [];
+  modalRef?: BsModalRef; // this is a reference to bootstrap modal
+
   totalLength: any;
   page: number = 1;
   searchText: any;
-  deleteemp:number=1;
+  deleteemp: number = 1;
 
   constructor(
     private employeeService: EmpServicesService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private modalService: BsModalService,
+
+  ) { }
   ngOnInit(): void {
-    this.closeFormDelete();
+
+    //this.closeFormDelete();
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as IEmployee[];
     });
@@ -30,9 +37,12 @@ export class DisplayEmployeeComponent implements OnInit {
     this.router.navigate(['/employee/add']);
   }
   deleteEmployee(id: number): void {
+    this.modalRef?.hide();
+    console.log(id)
     this.employeeService.deleteEmployee(id).subscribe(() => {
       this.employees = this.employees.filter((emp) => emp.id !== id);
     });
+
     this.closeFormDelete();
   }
   updateForm(employee: IEmployee) {
@@ -41,15 +51,25 @@ export class DisplayEmployeeComponent implements OnInit {
   trackByFn(index: number, employee: IEmployee) {
     return employee.id;
   }
+
   closeFormDelete() {
     const popupForm = document.getElementById('popupFormDelete') as HTMLElement;
-    popupForm.style.display = 'none'; 
+    popupForm.style.display = 'none';
   }
-  SureForm(id:number) {
-   
-    this.deleteemp=id;
-    const popupFormDelete = document.getElementById('popupFormDelete') as HTMLElement;
-    popupFormDelete.style.display = 'block'; 
+  SureForm(id: number) {
 
+    this.deleteemp = id;
+    const popupFormDelete = document.getElementById('popupFormDelete') as HTMLElement;
+    popupFormDelete.style.display = 'block';
+
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+  }
+  openModal(template: TemplateRef<void>, id: number) {
+    this.deleteemp = id;
+
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 }

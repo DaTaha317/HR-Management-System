@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -8,6 +8,8 @@ import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { DeptServicesService } from 'src/app/services/dept-services.service';
 import { EmpServicesService } from 'src/app/services/emp-services.service';
 import { TimeUtility } from 'src/environments/TimeUtility';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-update-employee',
@@ -21,12 +23,17 @@ export class UpdateEmployeeComponent implements OnInit {
   employees: IEmployee[] = [];
   departments: IDepartment[] = [];
   updateFormData = {} as IEmployee;
+  modalRef?: BsModalRef; // this is a reference to bootstrap modal
+
   constructor(
+    private modalService: BsModalService,
+
     private router: Router,
     private employeeService: EmpServicesService,
     private employeeServices: EmpServicesService,
     private departmentServices: DeptServicesService,
     private toastr: ToastrService,
+
     private formBuilder:FormBuilder
   ) {
     this.validationUpdateEmployee=formBuilder.group({
@@ -139,5 +146,21 @@ export class UpdateEmployeeComponent implements OnInit {
         console.error('Error updating employee:', error);
       }
     );
+  }
+  UpdateEmployeeBtn(emp:IEmployee){
+
+this.updateFormData=emp;
+console.log(this.updateFormData)
+this.update(this.updateFormData)
+this.modalRef?.hide();
+
+  }
+  decline(): void {
+    this.modalRef?.hide();
+  }
+  openModal(template: TemplateRef<void>,emb:IEmployee) {
+    this.updateFormData=emb;
+
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 }
