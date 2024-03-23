@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Pagination } from 'src/app/interfaces/IPagination';
-import { UserParams } from 'src/app/models/UserParams';
-import { AttendanceService } from 'src/app/services/attendance.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { UserParams } from 'src/app/models/UserParams';
 import { ToastrService } from 'ngx-toastr';
 import { IAttendence } from 'src/app/interfaces/IAttendence';
 import { Pagination } from 'src/app/interfaces/IPagination';

@@ -75,19 +75,12 @@
     </div>
   </div>
 
-  <div id="popupFormDelete" class="popupFormDelete">
-
-    <h1> Are You Sure Delete this Employee</h1>
-
-    <div class="row">
-      <div class="col-lg-6 mb-3 mb-lg-0">
-        <button type="button" class="btn btn-danger w-100" (click)="deleteEmployee(deleteemp)">Delete</button>
-      </div>
-      <div class="col-lg-6">
-        <button type="button" (click)="closeFormDelete()" class="btn btn-primary w-100">
-          Cancel
-        </button>
-      </div>
+  <!-- pop up to delete -->
+  <br><br>
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm?</p>
+      <button type="button" class="btn btn-default btn-danger" (click)="deleteEmployee(deleteemp)">Yes</button>
+      <button type="button" class="btn btn-primary" (click)="decline()">No</button>
     </div>
-
-  </div>
+  </ng-template>

@@ -1,9 +1,8 @@
-import { state } from '@angular/animations';
-import { Router } from '@angular/router';
 import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { EmpServicesService } from 'src/app/services/emp-services.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 
@@ -29,7 +28,7 @@ export class DisplayEmployeeComponent implements OnInit {
   ) { }
   ngOnInit(): void {
 
-    this.closeFormDelete();
+    //this.closeFormDelete();
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as IEmployee[];
     });
