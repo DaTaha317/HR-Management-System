@@ -12,7 +12,7 @@ import { __values } from 'tslib';
 export class OrganizationSettingsComponent implements OnInit {
   isComissionHours = true;
   isDeductionHours = true;
-  settings: IOrganizationSettings = {
+  public settings: IOrganizationSettings = {
     commissionDTO: {
       type: 0,
       hours: undefined,
@@ -23,19 +23,19 @@ export class OrganizationSettingsComponent implements OnInit {
       hours: undefined,
       amount: undefined,
     },
-    weeklyDaysOffDTO: {
+    weeklyDaysDTO: {
       days: [],
     },
   };
 
-  public daysOfWeek: { name: string; value: number }[] = [
-    { name: 'Saturday', value: 6 },
-    { name: 'Sunday', value: 0 },
-    { name: 'Monday', value: 1 },
-    { name: 'Tuesday', value: 2 },
-    { name: 'Wednesday', value: 3 },
-    { name: 'Thursday', value: 4 },
-    { name: 'Friday', value: 5 },
+  public daysOfWeek: { name: string; value: number; state: boolean }[] = [
+    { name: 'Saturday', value: 6, state: false },
+    { name: 'Sunday', value: 0, state: false },
+    { name: 'Monday', value: 1, state: false },
+    { name: 'Tuesday', value: 2, state: false },
+    { name: 'Wednesday', value: 3, state: false },
+    { name: 'Thursday', value: 4, state: false },
+    { name: 'Friday', value: 5, state: false },
   ];
   constructor(
     private organization: SettingsService,
@@ -48,7 +48,7 @@ export class OrganizationSettingsComponent implements OnInit {
 
   getSettings() {
     this.organization.GetOrganization().subscribe(
-      (data: IOrganizationSettings | undefined) => {
+      (data: IOrganizationSettings) => {
         if (data) {
           this.settings = data;
           if (this.settings.commissionDTO.type == 1) {
@@ -58,8 +58,7 @@ export class OrganizationSettingsComponent implements OnInit {
             this.isDeductionHours = false;
           }
         }
-
-        console.log(data);
+        this.updateStateBasedOnNumbers(data.weeklyDaysDTO.days);
       },
       (error) => {
         console.error('Error fetching organization settings:', error);
@@ -72,9 +71,9 @@ export class OrganizationSettingsComponent implements OnInit {
       .UpdateOrganization(this.settings as IOrganizationSettings)
       .subscribe(
         (response) => {
-          console.log(' added successfully:', response);
+          this.toastr.success('Successfully Updated');
 
-          // this.getSettings();
+          this.getSettings();
         },
         (error) => {
           console.error('Error ', error);
@@ -105,35 +104,54 @@ export class OrganizationSettingsComponent implements OnInit {
   onCheckboxChange(event: any, dayValue: number) {
     const checkbox = event.target;
 
-    // Ensure that weeklyDaysOffDTO is defined and has the 'days' property
-    if (this.settings.weeklyDaysOffDTO && this.settings.weeklyDaysOffDTO.days) {
+    // Ensure that weeklyDaysDTO is defined and has the 'days' property
+    if (this.settings.weeklyDaysDTO && this.settings.weeklyDaysDTO.days) {
       if (checkbox.checked) {
         // Check if days array has been initialized
-        if (!Array.isArray(this.settings.weeklyDaysOffDTO.days)) {
-          this.settings.weeklyDaysOffDTO.days = [];
+        if (!Array.isArray(this.settings.weeklyDaysDTO.days)) {
+          this.settings.weeklyDaysDTO.days = [];
         }
         // Check if there are less than 2 days selected
-        if (this.settings.weeklyDaysOffDTO.days.length < 2) {
-          this.settings.weeklyDaysOffDTO.days.push(dayValue);
+        if (this.settings.weeklyDaysDTO.days.length < 2) {
+          this.settings.weeklyDaysDTO.days.push(dayValue);
         } else {
           checkbox.checked = false;
           this.toastr.error('You cannot select more than 2 days off');
         }
       } else {
         // Remove the day from the array if unchecked
-        const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
+        const index = this.settings.weeklyDaysDTO.days.indexOf(dayValue);
         if (index !== -1) {
-          this.settings.weeklyDaysOffDTO.days.splice(index, 1);
+          this.settings.weeklyDaysDTO.days.splice(index, 1);
         }
       }
     } else {
-      // If weeklyDaysOffDTO or days property is not available, initialize them
-      this.settings.weeklyDaysOffDTO = { days: [] };
-      this.settings.weeklyDaysOffDTO.days.push(dayValue);
+      // If weeklyDaysDTO or days property is not available, initialize them
+      this.settings.weeklyDaysDTO = { days: [] };
+      this.settings.weeklyDaysDTO.days.push(dayValue);
     }
   }
 
   trackByIdx(index: number, obj: any): any {
     return index;
+  }
+
+  public getActiveDays(): number[] {
+    return this.daysOfWeek.reduce((activeDays: number[], day) => {
+      if (day.state) {
+        activeDays.push(day.value);
+      }
+      return activeDays;
+    }, []);
+  }
+
+  public updateStateBasedOnNumbers(numbers: number[]): void {
+    this.daysOfWeek.forEach((day) => {
+      if (numbers.includes(day.value)) {
+        day.state = true;
+      } else {
+        day.state = false;
+      }
+    });
   }
 }
