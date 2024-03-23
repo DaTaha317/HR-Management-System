@@ -115,6 +115,8 @@
                     <input
                       type="checkbox"
                       [value]="day.value"
+                      [(ngModel)]="day.state"
+                      [ngModelOptions]="{ standalone: true }"
                       (change)="onCheckboxChange($event, day.value)"
                     />
                     {{ day.name }}

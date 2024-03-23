@@ -12,7 +12,7 @@ import { __values } from 'tslib';
 export class OrganizationSettingsComponent implements OnInit {
   isComissionHours = true;
   isDeductionHours = true;
-  settings: IOrganizationSettings = {
+  public settings: IOrganizationSettings = {
     commissionDTO: {
       type: 0,
       hours: undefined,
@@ -28,14 +28,22 @@ export class OrganizationSettingsComponent implements OnInit {
     },
   };
 
-  public daysOfWeek: { name: string; value: number }[] = [
-    { name: 'Saturday', value: 6 },
-    { name: 'Sunday', value: 0 },
-    { name: 'Monday', value: 1 },
-    { name: 'Tuesday', value: 2 },
-    { name: 'Wednesday', value: 3 },
-    { name: 'Thursday', value: 4 },
-    { name: 'Friday', value: 5 },
+  sun = false;
+  mon = false;
+  tue = false;
+  wed = false;
+  thu = false;
+  fri = false;
+  sat = false;
+
+  public daysOfWeek: { name: string; value: number; state: boolean }[] = [
+    { name: 'Saturday', value: 6, state: this.sat },
+    { name: 'Sunday', value: 0, state: this.sun },
+    { name: 'Monday', value: 1, state: this.mon },
+    { name: 'Tuesday', value: 2, state: this.tue },
+    { name: 'Wednesday', value: 3, state: this.wed },
+    { name: 'Thursday', value: 4, state: this.thu },
+    { name: 'Friday', value: 5, state: this.fri },
   ];
   constructor(
     private organization: SettingsService,
