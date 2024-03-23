@@ -23,7 +23,7 @@ export class OrganizationSettingsComponent implements OnInit {
       hours: undefined,
       amount: undefined,
     },
-    weeklyDaysOffDTO: {
+    weeklyDaysDTO: {
       days: [],
     },
   };
@@ -60,6 +60,7 @@ export class OrganizationSettingsComponent implements OnInit {
         }
 
         console.log(data);
+        console.log(data?.weeklyDaysDTO.days);
       },
       (error) => {
         console.error('Error fetching organization settings:', error);
@@ -105,31 +106,31 @@ export class OrganizationSettingsComponent implements OnInit {
   onCheckboxChange(event: any, dayValue: number) {
     const checkbox = event.target;
 
-    // Ensure that weeklyDaysOffDTO is defined and has the 'days' property
-    if (this.settings.weeklyDaysOffDTO && this.settings.weeklyDaysOffDTO.days) {
+    // Ensure that weeklyDaysDTO is defined and has the 'days' property
+    if (this.settings.weeklyDaysDTO && this.settings.weeklyDaysDTO.days) {
       if (checkbox.checked) {
         // Check if days array has been initialized
-        if (!Array.isArray(this.settings.weeklyDaysOffDTO.days)) {
-          this.settings.weeklyDaysOffDTO.days = [];
+        if (!Array.isArray(this.settings.weeklyDaysDTO.days)) {
+          this.settings.weeklyDaysDTO.days = [];
         }
         // Check if there are less than 2 days selected
-        if (this.settings.weeklyDaysOffDTO.days.length < 2) {
-          this.settings.weeklyDaysOffDTO.days.push(dayValue);
+        if (this.settings.weeklyDaysDTO.days.length < 2) {
+          this.settings.weeklyDaysDTO.days.push(dayValue);
         } else {
           checkbox.checked = false;
           this.toastr.error('You cannot select more than 2 days off');
         }
       } else {
         // Remove the day from the array if unchecked
-        const index = this.settings.weeklyDaysOffDTO.days.indexOf(dayValue);
+        const index = this.settings.weeklyDaysDTO.days.indexOf(dayValue);
         if (index !== -1) {
-          this.settings.weeklyDaysOffDTO.days.splice(index, 1);
+          this.settings.weeklyDaysDTO.days.splice(index, 1);
         }
       }
     } else {
-      // If weeklyDaysOffDTO or days property is not available, initialize them
-      this.settings.weeklyDaysOffDTO = { days: [] };
-      this.settings.weeklyDaysOffDTO.days.push(dayValue);
+      // If weeklyDaysDTO or days property is not available, initialize them
+      this.settings.weeklyDaysDTO = { days: [] };
+      this.settings.weeklyDaysDTO.days.push(dayValue);
     }
   }
 
