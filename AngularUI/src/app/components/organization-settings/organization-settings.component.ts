@@ -28,22 +28,14 @@ export class OrganizationSettingsComponent implements OnInit {
     },
   };
 
-  sun = false;
-  mon = false;
-  tue = false;
-  wed = false;
-  thu = false;
-  fri = false;
-  sat = false;
-
   public daysOfWeek: { name: string; value: number; state: boolean }[] = [
-    { name: 'Saturday', value: 6, state: this.sat },
-    { name: 'Sunday', value: 0, state: this.sun },
-    { name: 'Monday', value: 1, state: this.mon },
-    { name: 'Tuesday', value: 2, state: this.tue },
-    { name: 'Wednesday', value: 3, state: this.wed },
-    { name: 'Thursday', value: 4, state: this.thu },
-    { name: 'Friday', value: 5, state: this.fri },
+    { name: 'Saturday', value: 6, state: false },
+    { name: 'Sunday', value: 0, state: false },
+    { name: 'Monday', value: 1, state: false },
+    { name: 'Tuesday', value: 2, state: false },
+    { name: 'Wednesday', value: 3, state: false },
+    { name: 'Thursday', value: 4, state: false },
+    { name: 'Friday', value: 5, state: false },
   ];
   constructor(
     private organization: SettingsService,
@@ -56,7 +48,7 @@ export class OrganizationSettingsComponent implements OnInit {
 
   getSettings() {
     this.organization.GetOrganization().subscribe(
-      (data: IOrganizationSettings | undefined) => {
+      (data: IOrganizationSettings) => {
         if (data) {
           this.settings = data;
           if (this.settings.commissionDTO.type == 1) {
@@ -66,9 +58,7 @@ export class OrganizationSettingsComponent implements OnInit {
             this.isDeductionHours = false;
           }
         }
-
-        console.log(data);
-        console.log(data?.weeklyDaysDTO.days);
+        this.updateStateBasedOnNumbers(data.weeklyDaysDTO.days);
       },
       (error) => {
         console.error('Error fetching organization settings:', error);
@@ -81,9 +71,9 @@ export class OrganizationSettingsComponent implements OnInit {
       .UpdateOrganization(this.settings as IOrganizationSettings)
       .subscribe(
         (response) => {
-          console.log(' added successfully:', response);
+          this.toastr.success('Successfully Updated');
 
-          // this.getSettings();
+          this.getSettings();
         },
         (error) => {
           console.error('Error ', error);
@@ -144,5 +134,24 @@ export class OrganizationSettingsComponent implements OnInit {
 
   trackByIdx(index: number, obj: any): any {
     return index;
+  }
+
+  public getActiveDays(): number[] {
+    return this.daysOfWeek.reduce((activeDays: number[], day) => {
+      if (day.state) {
+        activeDays.push(day.value);
+      }
+      return activeDays;
+    }, []);
+  }
+
+  public updateStateBasedOnNumbers(numbers: number[]): void {
+    this.daysOfWeek.forEach((day) => {
+      if (numbers.includes(day.value)) {
+        day.state = true;
+      } else {
+        day.state = false;
+      }
+    });
   }
 }

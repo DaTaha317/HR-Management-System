@@ -4,15 +4,15 @@
       <h5 class="card-title text-center">Attendance Settings</h5>
     </div>
     <div class="card-body">
-      <div class="row">
-        <!-- Overtime Section -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <h6 class="card-title">Overtime Settings</h6>
-            </div>
-            <div class="card-body">
-              <form>
+      <form (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Overtime Section -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title">Overtime Settings</h6>
+              </div>
+              <div class="card-body">
                 <div class="form-group">
                   <label for="commissionType">Method</label>
                   <select
@@ -47,18 +47,16 @@
                     [(ngModel)]="settings.commissionDTO.amount"
                   />
                 </div>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- Deduction Section -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <h6 class="card-title">Deduction Settings</h6>
-            </div>
-            <div class="card-body">
-              <form>
+          <!-- Deduction Section -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title">Deduction Settings</h6>
+              </div>
+              <div class="card-body">
                 <div class="form-group">
                   <label for="deductionType">Method</label>
                   <select
@@ -93,47 +91,47 @@
                     [(ngModel)]="settings.deductionDTO.amount"
                   />
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Checkboxes Section -->
-      <div class="row mt-3">
-        <div class="col-lg">
-          <div class="card">
-            <div class="card-header">
-              <h6 class="card-title">Weekly days off</h6>
-            </div>
-            <div class="card-body">
-              <form class="row row-cols-1 row-cols-md-3">
-                <div
-                  *ngFor="let day of daysOfWeek; trackBy: trackByIdx"
-                  class="col"
-                >
-                  <label>
-                    <input
-                      type="checkbox"
-                      [value]="day.value"
-                      [(ngModel)]="day.state"
-                      [ngModelOptions]="{ standalone: true }"
-                      (change)="onCheckboxChange($event, day.value)"
-                    />
-                    {{ day.name }}
-                  </label>
+        <!-- Checkboxes Section -->
+        <div class="row mt-3">
+          <div class="col-lg">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title">Weekly days off</h6>
+              </div>
+              <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-3">
+                  <div
+                    *ngFor="let day of daysOfWeek; trackBy: trackByIdx"
+                    class="col"
+                  >
+                    <label>
+                      <input
+                        type="checkbox"
+                        [value]="day.value"
+                        [(ngModel)]="day.state"
+                        [ngModelOptions]="{ standalone: true }"
+                        (change)="onCheckboxChange($event, day.value)"
+                      />
+                      {{ day.name }}
+                    </label>
+                  </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Submit Button -->
-      <div class="row mt-3 text-center">
-        <div class="col">
-          <button type="submit" class="btn bgMain txtMain">Submit</button>
+        <!-- Submit Button -->
+        <div class="row mt-3 text-center">
+          <div class="col">
+            <button type="submit" class="btn bgMain txtMain">Submit</button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
