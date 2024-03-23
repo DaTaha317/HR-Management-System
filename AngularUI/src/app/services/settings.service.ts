@@ -5,21 +5,21 @@ import { IOrganizationSettings } from '../interfaces/IOrganizationSettings';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService {
-
   private apiURL = environment.baseUrl;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  GetOrganization(): Observable<any>{
-    let data = this.http.get<IOrganizationSettings>(`${this.apiURL}/Organization`);
-    console.log(data);
+  GetOrganization(): Observable<any> {
+    let data = this.http.get<IOrganizationSettings>(
+      `${this.apiURL}/Organization`
+    );
     return data;
   }
 
-  UpdateOrganization(settings : IOrganizationSettings) : Observable<any>{
+  UpdateOrganization(settings: IOrganizationSettings): Observable<any> {
     return this.http.post(`${this.apiURL}/Organization`, settings);
   }
 }

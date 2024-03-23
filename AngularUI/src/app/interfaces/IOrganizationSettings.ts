@@ -1,7 +1,7 @@
 export interface IOrganizationSettings {
   commissionDTO: CommissionDTO;
   deductionDTO: DeductionDTO;
-  // weeklyDaysOffDTO: WeeklyDaysOffDTO
+  weeklyDaysOffDTO: WeeklyDaysOffDTO;
 }
 
 interface CommissionDTO {
