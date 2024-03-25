@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,33 +17,37 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   
     public class ApplicationUserController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
-        public ApplicationUserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        public ApplicationUserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.configuration = configuration;
+            this.roleManager = roleManager;
         }
+
 
         [HttpPost("register")]
         public async Task<ActionResult> Registration(RegisterDTO account)
         {
             if (ModelState.IsValid)
             {
-                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(account.Password);
+                //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(account.Password);
 
                 ApplicationUser user = new ApplicationUser()
                 {
                     FullName = account.FullName,
                     Email = account.Email,
-                    PasswordHash = hashedPassword,
+                    PasswordHash = account.Password,
                     UserName = account.Email
                 };
-                IdentityResult result = await userManager.CreateAsync(user);
+                IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
                 if (result.Succeeded)
                 {
                     //await signInManager.SignInAsync(user, isPersistent: false);
@@ -71,7 +77,7 @@ namespace WebAPI.Controllers
                 {
                     return Unauthorized();
                 }
-                bool checkPassword = BCrypt.Net.BCrypt.Verify(account.Password, user.PasswordHash);
+                bool checkPassword = await userManager.CheckPasswordAsync(user, account.Password);
                 if (checkPassword)
                 {
                     //claims 
@@ -111,15 +117,70 @@ namespace WebAPI.Controllers
             return Unauthorized();
         }
 
-    //    ApplicationUser user = await userManager.FindByEmailAsync(model.Email);
+        [HttpGet("GetUsers")]
+        [Authorize(Roles = "SuperAdmin")]
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await userManager.Users
+                .ToListAsync();
 
-    //    if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
-    //    {
-    //        // Passwords match
-    //        // You can proceed to sign in the user
-    //        await signInManager.SignInAsync(user, isPersistent: false);
-    //        return Ok("Login successful."); // Return success response
-    //}
+            var usersWithRoles = new List<object>();
 
-}
+            foreach (var user in users)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                usersWithRoles.Add(new { user.Id, user.FullName, user.Email, Roles = roles });
+            }
+
+            return Ok(usersWithRoles);
+        }
+
+
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpGet("UserRoles")]
+        public async Task<ActionResult> ManageRoles(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null) 
+                NotFound();
+
+            var roles = await roleManager.Roles.ToListAsync();
+            var userRoleVM = new UserRolesDTO
+            {
+                UserId = user.Id,
+                UserEmail = user.Email,
+                Roles = roles.Select(role => new CheckBoxDTO
+                {
+                    DisplayValue = role.Name,
+                    IsSelected = userManager.IsInRoleAsync(user, role.Name).Result
+                }).ToList()
+            };
+
+            return Ok(userRoleVM);
+
+        }
+
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpPost("UpdateRoles")]
+        public async Task<ActionResult> UpdateRoles(UserRolesDTO userRolesDTO)
+        {
+            var user = await userManager.FindByIdAsync(userRolesDTO.UserId);
+            if (user == null)
+                return NotFound();
+
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            await userManager.RemoveFromRolesAsync(user, userRoles);
+            await userManager.AddToRolesAsync(user, userRolesDTO.Roles.Where(role => role.IsSelected).Select(role => role.DisplayValue));
+
+            return CreatedAtAction("ManageRoles", user.Id, new { user.Email, userRolesDTO.Roles });
+
+
+        }
+
+
+
+
+
+    }
 }
