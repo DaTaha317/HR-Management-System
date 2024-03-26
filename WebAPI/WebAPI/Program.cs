@@ -1,11 +1,13 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Writers;
 using System.Text;
+using WebAPI.Filters;
 using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Models;
@@ -23,7 +25,8 @@ namespace WebAPI
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
-
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider,PermissionPolicyProvider>();
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             builder.Services.AddDbContext<HRDBContext>(options =>
                  options.UseLazyLoadingProxies()
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))

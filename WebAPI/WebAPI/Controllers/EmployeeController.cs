@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.Constants;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
@@ -18,6 +19,7 @@ namespace WebAPI.Controllers
             this.departmentRepo = departmentRepo;
         }
         #region getall
+        [Authorize(Permissions.Employees.view)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -51,6 +53,7 @@ namespace WebAPI.Controllers
         }
         #endregion
         #region get
+        [Authorize(Permissions.Employees.view)]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -76,6 +79,7 @@ namespace WebAPI.Controllers
             return Ok(employeeDTO);
         }
         #endregion
+        [Authorize(Permissions.Employees.create)]
         [HttpPost]
         public IActionResult Add(EmployeeDTO employeeDTO)
         {
@@ -107,6 +111,7 @@ namespace WebAPI.Controllers
             employeeRepo.Save();
             return CreatedAtAction("GetById", new { id = employee.SSN }, employeeDTO);
         }
+        [Authorize(Permissions.Employees.edit)]
         [HttpPut("{id}")]
         public IActionResult Update(int id, EmployeeDTO employeeDTO)
         {
@@ -138,6 +143,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
         #region delete
+        [Authorize(Permissions.Employees.delete)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
