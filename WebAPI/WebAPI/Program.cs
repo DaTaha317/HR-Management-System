@@ -25,8 +25,8 @@ namespace WebAPI
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
-            builder.Services.AddSingleton<IAuthorizationPolicyProvider,PermissionPolicyProvider>();
-            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+
             builder.Services.AddDbContext<HRDBContext>(options =>
                  options.UseLazyLoadingProxies()
                  .UseSqlServer(builder.Configuration.GetConnectionString("cs"))
@@ -71,6 +71,7 @@ namespace WebAPI
                 };
             });
 
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
             builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
             builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
@@ -106,6 +107,7 @@ namespace WebAPI
                 });
             });
 
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
             var app = builder.Build();
 
