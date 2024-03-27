@@ -82,6 +82,7 @@ namespace WebAPI.Controllers
             var roles = await roleManager.Roles.ToListAsync();
             return Ok(roles);
         }
+
         [HttpPost("AddRole")]
         public async Task<ActionResult>Add(RoleFormDTO model)
         {
@@ -97,6 +98,8 @@ namespace WebAPI.Controllers
             await roleManager.CreateAsync(new IdentityRole(model.Name.Trim()));
             return RedirectToAction(nameof(GetAllRoles));
         }
+
+
         [HttpGet("AllPermessions")]
         public async Task<ActionResult> ManagePermessions(string roleId)
         {

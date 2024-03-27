@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Writers;
+using System.Security.Claims;
 using System.Text;
 using WebAPI.Filters;
 using WebAPI.Helpers;
@@ -25,6 +26,8 @@ namespace WebAPI
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
 
             builder.Services.AddDbContext<HRDBContext>(options =>
@@ -67,11 +70,13 @@ namespace WebAPI
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     ValidateAudience = true,
                     ValidAudience = builder.Configuration["JWT:ValidAudiance"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
 
-            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
             builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
             builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
@@ -107,7 +112,6 @@ namespace WebAPI
                 });
             });
 
-            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
             var app = builder.Build();
 

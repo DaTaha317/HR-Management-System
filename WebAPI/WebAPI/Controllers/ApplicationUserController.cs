@@ -73,20 +73,21 @@ namespace WebAPI.Controllers
             {
                 // check user credentials
                 ApplicationUser user = await userManager.FindByEmailAsync(account.Email);
-                if(user == null)
+                if (user == null)
                 {
                     return Unauthorized();
                 }
                 bool checkPassword = await userManager.CheckPasswordAsync(user, account.Password);
                 if (checkPassword)
                 {
-                    //claims 
+                    // Claims
                     List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id)); // Add user's ID claim
                     claims.Add(new Claim(ClaimTypes.Name, user.FullName));
                     claims.Add(new Claim(ClaimTypes.Email, user.Email));
                     claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
-                    //get roles
+                    // Get roles
                     var roles = await userManager.GetRolesAsync(user);
                     foreach (var role in roles)
                     {
@@ -96,11 +97,10 @@ namespace WebAPI.Controllers
                     SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
                     SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-                    //create token
+                    // Create token
                     JwtSecurityToken token = new JwtSecurityToken(
-                        issuer: configuration["JWT:ValidIssuer"], //url web api
-                        //issuer: "https://localhost:7266/",
-                        audience: configuration["JWT:ValidAudiance"], //url consumer angular
+                        issuer: configuration["JWT:ValidIssuer"], // URL of the Web API
+                        audience: configuration["JWT:ValidAudiance"], // URL of the consumer (Angular)
                         claims: claims,
                         expires: DateTime.Now.AddDays(1),
                         signingCredentials: signingCredentials
@@ -108,10 +108,9 @@ namespace WebAPI.Controllers
 
                     return Ok(new
                     {
-                        token= new JwtSecurityTokenHandler().WriteToken(token),
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = token.ValidTo
                     });
-                    
                 }
             }
             return Unauthorized();

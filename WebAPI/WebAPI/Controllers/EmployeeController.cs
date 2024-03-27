@@ -13,15 +13,17 @@ namespace WebAPI.Controllers
     {
         private IEmployeeRepo employeeRepo;
         private IDepartmentRepo departmentRepo;
-        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo)
+        private IAuthorizationService authorizationService;
+        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo, IAuthorizationService authorizationService)
         {
             this.employeeRepo = employeeRepo;
             this.departmentRepo = departmentRepo;
+            this.authorizationService = authorizationService;
         }
         #region getall
         [Authorize(Permissions.Employees.view)]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
             List<Employee> employees = employeeRepo.GetAll();
             if (employees.Count == 0)

@@ -6,11 +6,12 @@ namespace WebAPI.Filters
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {
-        public DefaultAuthorizationPolicyProvider FallbackPolicyProvider { get; }
+        private readonly DefaultAuthorizationPolicyProvider FallbackPolicyProvider;
         public PermissionPolicyProvider(IOptions<AuthorizationOptions> options)
         {
-            FallbackPolicyProvider=new DefaultAuthorizationPolicyProvider(options);
+            FallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);
         }
+
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
             return FallbackPolicyProvider.GetDefaultPolicyAsync();
