@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Constants;
 using WebAPI.DTOs;
@@ -29,7 +30,7 @@ namespace WebAPI.Controllers
             this.weeklyDaysOffRepo = weeklyDaysOffRepo;
         }
 
-
+        [Authorize(Permissions.Attendance.view)]
         [HttpGet]
         public async Task<ActionResult<PagedList<AttendanceDTO>>> GetAll([FromQuery] UserParams userParams)
         {
@@ -47,6 +48,7 @@ namespace WebAPI.Controllers
             return Ok(attendances);
         }
 
+        [Authorize(Permissions.Attendance.create)]
         [HttpPost]
         public ActionResult Add(AttendanceDTO attendanceDTO)
         {
@@ -106,6 +108,7 @@ namespace WebAPI.Controllers
             return CreatedAtAction("GetDayByEmpId", new { empId = attendence.EmpId, date = attendence.Day }, attendanceDTO);
         }
 
+        [Authorize(Permissions.Attendance.edit)]
         [HttpPut("{empId}")]
         public IActionResult Update([FromRoute] int empId, [FromQuery] DateOnly date, [FromBody] AttendanceDTO attendenceDTO)
         {
@@ -169,7 +172,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-
+        [Authorize(Permissions.Attendance.delete)]
         [HttpDelete("{empId}")]
         public IActionResult Delete([FromRoute] int empId, [FromQuery] DateOnly date)
         {
@@ -184,7 +187,7 @@ namespace WebAPI.Controllers
         }
 
 
-
+        [Authorize(Permissions.Attendance.view)]
         [HttpGet("GetEmployeeDay/{empId}")]
         public IActionResult GetDayByEmpId([FromRoute] int empId, [FromQuery] DateOnly day)
         {
@@ -199,7 +202,7 @@ namespace WebAPI.Controllers
         }
 
 
-
+        [Authorize(Permissions.Attendance.view)]
         [HttpGet("{empId}")]
         public IActionResult GetAttendenceByEmpId(int empId)
         {
@@ -217,7 +220,7 @@ namespace WebAPI.Controllers
             return Ok(attendanceDTOs);
         }
 
-
+        [Authorize(Permissions.Attendance.view)]
         [HttpGet("GetByPeriod")]
         public ActionResult GetByPeriod([FromQuery] Period period)
         {

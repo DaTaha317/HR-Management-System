@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Constants;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 using WebAPI.ProjectProcessing;
@@ -21,6 +23,7 @@ namespace WebAPI.Controllers
             this.CommissionRepo = CommissionRepo;
             this.DeductionRepo = DeductionRepo;
         }
+        [Authorize(Permissions.Salary.create)]
         [HttpPost]
         public ActionResult GetPayslip(SalaryReport salaryReport)
         {
