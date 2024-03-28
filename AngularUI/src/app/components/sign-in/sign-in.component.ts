@@ -27,6 +27,7 @@ export class SignInComponent {
   }
 
   initializeForm(): void {
+
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -34,6 +35,7 @@ export class SignInComponent {
         Validators.minLength(4),
       ]), // array of validators
     });
+    
   }
 
   login() {
@@ -52,5 +54,11 @@ export class SignInComponent {
         this.formError = true;
       },
     });
+  }
+  get email(){
+    return this.signInForm.get("email")
+  }
+  get password(){
+    return this.signInForm.get("password")
   }
 }

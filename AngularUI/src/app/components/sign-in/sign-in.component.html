@@ -21,25 +21,45 @@
                   formControlName="email"
                   placeholder="Email"
                 />
+                 
+              <div [hidden]="email?.valid || (!email?.touched )">
+                <small *ngIf="email?.errors?.['required'] && (email?.touched )" class="text-danger m-3">
+                 * This field is required
+                </small>
+                <small *ngIf="email?.errors?.['email'] && (email?.touched )" class="text-danger m-3">
+                 * enter valid email
+                </small>
               </div>
+              </div>
+            
               <div class="mb-3">
                 <input
                   type="password"
                   class="form-control"
                   formControlName="password"
                   placeholder="Password"
-                />
+                /> 
+                <div [hidden]="password?.valid || (!password?.touched )">
+                  <small *ngIf="password?.errors?.['required'] && (password?.touched )" class="text-danger m-3">
+                    *This field is required
+                  </small>
+                  <small *ngIf="password?.errors?.['minlength'] && (password?.touched )" class="text-danger m-3">
+                   * miumium  must be 4 numbers
+                  </small>
+                </div>
               </div>
-              <label
-                class="invalid-feedback d-block mt-0 mb-2 ms-1"
-                *ngIf="formError"
-                >Wrong email or password</label
-              >
+              
+             
               <div class="text-center">
-                <button class="btn me-2 bgMain txtMain" type="submit">
+                <button class="btn me-2 bgMain txtMain " id="BTN" type="submit">
                   Sign in
                 </button>
               </div>
+              <label
+              class="invalid-feedback d-block mt-2 mb-2 ms-1 alert alert-danger text-center"
+              *ngIf="formError" 
+              >Wrong email or password</label
+            >
             </form>
           </div>
         </div>

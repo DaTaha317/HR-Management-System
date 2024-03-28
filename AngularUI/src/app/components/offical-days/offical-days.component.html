@@ -84,7 +84,7 @@
                 <a class="btn bgMain txtMain" (click)="showUpdateForm(item)"
                   ><i class="fa-solid fa-pen"></i
                 ></a>
-                <a class="btn btn-danger" (click)="deleteDayOff(item.date)"
+                <a class="btn btn-danger" (click)="openModal(template,item.date)"
                   ><i class="fa-solid fa-trash"></i
                 ></a>
               </div>
@@ -94,6 +94,7 @@
       </table>
     </div>
   </div>
+
 
   <!-- Pagination -->
   <div class="row mt-3 justify-content-end">
@@ -138,3 +139,11 @@
     </div>
   </form>
 </div>
+<br><br>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Do you want to confirm?</p>
+    <button type="button" class="btn btn-default btn-danger m-2" (click)="deleteDayOff(deletDay)">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>

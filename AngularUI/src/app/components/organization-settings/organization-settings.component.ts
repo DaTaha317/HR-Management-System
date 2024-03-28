@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { IOrganizationSettings } from 'src/app/interfaces/IOrganizationSettings';
 import { SettingsService } from 'src/app/services/settings.service';
 import { __values } from 'tslib';
+
 
 @Component({
   selector: 'app-organization-settings',
@@ -10,6 +12,8 @@ import { __values } from 'tslib';
   styleUrls: ['./organization-settings.component.css'],
 })
 export class OrganizationSettingsComponent implements OnInit {
+  
+  validationSetting:FormGroup;
   isComissionHours = true;
   isDeductionHours = true;
   public settings: IOrganizationSettings = {
@@ -39,8 +43,31 @@ export class OrganizationSettingsComponent implements OnInit {
   ];
   constructor(
     private organization: SettingsService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    formbuilder:FormBuilder
+  ) {
+    this.validationSetting=formbuilder.group({
+      "commission":["",[Validators.required, Validators.pattern('[0-9]*'),this.nonNegativeValidator]],
+      "deduction":["",[Validators.required, Validators.pattern('[0-9]*'),this.nonNegativeValidator]],
+
+
+    })
+  }
+  nonNegativeValidator(control: AbstractControl): {[key: string]: any} | null {
+    const value = control.value;
+    if (value < 0) {
+      return { negative: true };
+    }
+    return null;
+  }
+  
+ 
+  get commission(){
+    return this.validationSetting.get("commission")
+  }
+  get deduction(){
+    return this.validationSetting.get("deduction")
+  }
 
   ngOnInit(): void {
     this.getSettings();

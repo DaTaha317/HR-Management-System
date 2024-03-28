@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { DaysOffService } from 'src/app/services/days-off.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-offical-days',
@@ -9,6 +10,7 @@ import { DaysOffService } from 'src/app/services/days-off.service';
   styleUrls: ['./offical-days.component.css'],
 })
 export class OfficalDaysComponent implements OnInit {
+  modalRef?: BsModalRef; // this is a reference to bootstrap modal
   formDataAdd: any = {
     name: '',
     date: '',
@@ -19,6 +21,7 @@ export class OfficalDaysComponent implements OnInit {
   };
   daysOffList: any[] = [];
   validationHolidays:FormGroup;
+  deletDay:Date=new Date('2000-01-01');
 
   selectedRowIndex: number = -1;
   isUpdateFormVisible: boolean = false;
@@ -27,7 +30,8 @@ export class OfficalDaysComponent implements OnInit {
   searchText: any;
 
   constructor(private daysOffService: DaysOffService,
-    private formbuilder:FormBuilder
+    private formbuilder:FormBuilder,
+    private modalService: BsModalService,
     ) {
       this.validationHolidays= formbuilder.group({
         name:["",Validators.required],
@@ -70,6 +74,7 @@ export class OfficalDaysComponent implements OnInit {
     );
   }
 
+
   deleteDayOff(dayOff: any) {
     const lastIndex = this.daysOffList.length - 1;
 
@@ -88,6 +93,7 @@ export class OfficalDaysComponent implements OnInit {
         console.error('Error ', error);
       }
     );
+    this.decline();
   }
   resetvalidation(){
       this.validationHolidays.reset();
@@ -128,5 +134,14 @@ export class OfficalDaysComponent implements OnInit {
   }
   resetForm() {
     this.formDataAdd = { name: '', date: '' }; // Reset form data
+  }
+  decline(): void {
+    this.modalRef?.hide();
+  }
+  openModal(template: TemplateRef<void>, date: Date) {
+    this.deletDay = date;
+
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+
   }
 }

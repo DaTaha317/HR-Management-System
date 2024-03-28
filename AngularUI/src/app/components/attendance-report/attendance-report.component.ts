@@ -63,7 +63,7 @@ export class AttendanceReportComponent implements OnInit {
   }
 
   deleteRecord(id: number, date: Date): void {
-    console.log(id)
+   
 
     this.attendanceService.deleteRecord(id, date).subscribe(() => {
       this.toastr.success('Deleted Successfully');
@@ -94,8 +94,7 @@ export class AttendanceReportComponent implements OnInit {
     this.modalRef?.hide();
   }
   openModal(template: TemplateRef<void>, id: number, date: Date) {
-    console.log(id)
-    console.log(date)
+    
 
     this.attendancedate = date;
     this.attendancedel = id;

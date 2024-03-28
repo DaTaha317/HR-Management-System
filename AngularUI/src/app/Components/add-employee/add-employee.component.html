@@ -23,14 +23,18 @@
           <label for="phoneNumber">Phone Number:</label>
           <input type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="employeeDTO.phoneNumber"
             class="form-control" placeholder="Enter phone number" formControlName="phoneNumber" />
-            <div [hidden]="phoneNumber?.valid||phoneNumber?.untouched">
-              <small [hidden]="phoneNumber?.errors?.['requird']" class="text-danger m-3">
-                this field is requird
+            
+            <div [hidden]="phoneNumber?.valid || (!phoneNumber?.touched )">
+              <small *ngIf="phoneNumber?.errors?.['required'] && (phoneNumber?.touched )" class="text-danger m-3">
+                This field is required
               </small>
-              <small *ngIf="phoneNumber?.errors?.['pattern']" class="text-danger m-3">
-                phone number must be 11 number
+              <small *ngIf="phoneNumber?.errors?.['pattern'] && (phoneNumber?.touched )" class="text-danger m-3">
+                phone number must be 11 digits (numbers only)
               </small>
-  
+              <small *ngIf="phoneNumber?.errors?.['phoneNumberExists'] && (phoneNumber?.touched )" class="text-danger m-3">
+                phone 
+              </small>
+              
             </div>
         </div>
 
@@ -46,17 +50,19 @@
           </div>
         </div>
 
+        
         <div class="form-group">
           <label for="departure">Clock Out:</label>
           <input type="time" id="departure" name="departure" [(ngModel)]="employeeDTO.departure" class="form-control"
-            placeholder="HH:mm" formControlName="departure" />
-          <div [hidden]="departure?.valid||departure?.untouched">
-            <small [hidden]="departure?.errors?.['requird']" class="text-danger m-3">
-              this field is requird
-            </small>
-
-          </div>
+                 formControlName="departure" />
+                 <div [hidden]="departure?.valid||departure?.untouched">
+                  <small [hidden]="departure?.errors?.['requird']" class="text-danger m-3">
+                    this field is requird
+                  </small>
+      
+                </div>
         </div>
+        
         <!-- Department Select -->
         <div class="form-group">
           <label for="department">Department:</label>
@@ -67,11 +73,11 @@
               {{ dept.name }}
             </option>
           </select>
-          <div [hidden]="departmentName?.valid||departmentName?.untouched">
-            <small [hidden]="departmentName?.errors?.['requird']" class="text-danger m-3">
-              this field is requird
+          <div [hidden]="departmentName?.valid || (!departmentName?.touched )">
+            <small *ngIf="departmentName?.errors?.['required'] && (departmentName?.touched )" class="text-danger m-3">
+              This field is required
             </small>
-
+           
           </div>
 
         </div>
@@ -83,13 +89,13 @@
         <div class="form-group">
           <label for="fullName">Full Name:</label>
           <input type="text" id="fullName" name="fullName" [(ngModel)]="employeeDTO.fullName" class="form-control"
-            placeholder="Enter full name" formControlName="fullName" />
-          <div [hidden]="fullName?.valid||fullName?.untouched">
-            <small [hidden]="fullName?.errors?.['requird']" class="text-danger m-3">
-              this field is requird
+                 placeholder="Enter full name" formControlName="fullName" />
+          <div [hidden]="fullName?.valid || (!fullName?.touched )">
+            <small *ngIf="fullName?.errors?.['required'] && (fullName?.touched)" class="text-danger m-3">
+              This field is required
             </small>
-            <small *ngIf="fullName?.errors?.['pattern']" class="text-danger m-3">
-              enter valid name
+            <small *ngIf="fullName?.errors?.['pattern'] && (fullName?.touched)" class="text-danger m-3">
+              Please enter a valid name (letters only)
             </small>
           </div>
         </div>
@@ -143,60 +149,56 @@
         <div class="form-group">
           <label for="contractDate">Contract Date:</label>
           <input type="date" id="contractDate" name="contractDate" [(ngModel)]="employeeDTO.contractDate"
-            class="form-control" formControlName="contractDate" />
-          <div [hidden]="contractDate?.valid||contractDate?.untouched">
-            <small [hidden]="contractDate?.errors?.['requird']" class="text-danger m-3">
-              this field is requird
+                 class="form-control" formControlName="contractDate" />
+          <div [hidden]="contractDate?.valid || (!contractDate?.touched )">
+            <small *ngIf="contractDate?.errors?.['required'] && (contractDate?.touched)" class="text-danger m-3">
+              This field is required
             </small>
-            <small *ngIf="contractDate?.errors?.['invalidContractDate'] " class="text-danger m-3">
-              please enter a right contract date
+            <small *ngIf="contractDate?.errors?.['invalidContractDate'] && (contractDate?.touched )" class="text-danger m-3">
+              Please enter a valid contract date
             </small>
           </div>
-
         </div>
 
         <div class="form-group">
           <label for="baseSalary">Base Salary:</label>
           <input type="number" id="baseSalary" name="baseSalary" [(ngModel)]="employeeDTO.baseSalary"
             class="form-control" placeholder="Enter base salary" formControlName="baseSalary" />
-          <div [hidden]="baseSalary?.valid||baseSalary?.untouched">
-            <small [hidden]="baseSalary?.errors?.['requird']" class="text-danger m-3">
-              please enter valid salary
+         
+          <div [hidden]="baseSalary?.valid || (!baseSalary?.touched )">
+            <small *ngIf="baseSalary?.errors?.['required'] && (baseSalary?.touched )" class="text-danger m-3">
+              This field is required
             </small>
-
+            <small *ngIf="baseSalary?.errors?.['pattern'] && (baseSalary?.touched )" class="text-danger m-3">
+              enter valid salary
+            </small>
+            <small *ngIf="baseSalary?.errors?.['nonZeroViolation'] && (baseSalary?.touched )" class="text-danger m-3">
+              cant be zero
+            </small>
           </div>
 
         </div>
         <div class="form-group">
           <label for="SSN">Social Security Number:</label>
           <input type="number" id="SSN" name="SSN" [(ngModel)]="employeeDTO.ssn" class="form-control"
-            placeholder="Enter Social Security Number" formControlName="ssn" maxlength="14" minlength="14" />
-          <div [hidden]="ssn?.valid||ssn?.untouched">
-            <small [hidden]="ssn?.errors?.['requird']" class="text-danger m-3">
-              this field is requird
+                 placeholder="Enter Social Security Number" formControlName="ssn" maxlength="14" minlength="14" />
+          <div [hidden]="ssn?.valid || (!ssn?.touched )">
+            <small *ngIf="ssn?.errors?.['required'] && (ssn?.touched )" class="text-danger m-3">
+              This field is required
             </small>
-            <small *ngIf="ssn?.errors?.['pattern']" class="text-danger m-3">
-              ssn must be 14 number
+            <small *ngIf="ssn?.errors?.['pattern'] && (ssn?.touched )" class="text-danger m-3">
+              SSN must be 14 numbers
             </small>
-
           </div>
         </div>
+        </div>
       </div>
-    </div>
+   
 
     <!-- Submit Button -->
-    <button type="submit" [disabled]="validationEmployee.invalid" class="btn bgMain txtMain">Add</button>
+    <button type="submit"  [disabled]="validationEmployee.invalid"  class="btn bgMain txtMain">Add</button>
 
-    <button type="button" class="btn btn-primary" (click)="openModal(template)">Open modal</button>
-    <br><br>
-    <ng-template #template>
-      <div class="modal-body text-center">
-        <p>Do you want to confirm?</p>
-        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
-      </div>
-    </ng-template>
+    
   </form>
 </div>
 
-<!-- <p>{{}}</p> -->
