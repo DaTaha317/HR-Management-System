@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WebAPI.Constants;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
 using WebAPI.Models;
@@ -11,14 +13,17 @@ namespace WebAPI.Controllers
     {
         private IEmployeeRepo employeeRepo;
         private IDepartmentRepo departmentRepo;
-        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo)
+        private IAuthorizationService authorizationService;
+        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo, IAuthorizationService authorizationService)
         {
             this.employeeRepo = employeeRepo;
             this.departmentRepo = departmentRepo;
+            this.authorizationService = authorizationService;
         }
         #region getall
+        [Authorize(Permissions.Employees.view)]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
             List<Employee> employees = employeeRepo.GetAll();
             if (employees.Count == 0)
@@ -50,6 +55,7 @@ namespace WebAPI.Controllers
         }
         #endregion
         #region get
+        [Authorize(Permissions.Employees.view)]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -75,6 +81,7 @@ namespace WebAPI.Controllers
             return Ok(employeeDTO);
         }
         #endregion
+        [Authorize(Permissions.Employees.create)]
         [HttpPost]
         public IActionResult Add(EmployeeDTO employeeDTO)
         {
@@ -106,6 +113,7 @@ namespace WebAPI.Controllers
             employeeRepo.Save();
             return CreatedAtAction("GetById", new { id = employee.SSN }, employeeDTO);
         }
+        [Authorize(Permissions.Employees.edit)]
         [HttpPut("{id}")]
         public IActionResult Update(int id, EmployeeDTO employeeDTO)
         {
@@ -137,6 +145,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
         #region delete
+        [Authorize(Permissions.Employees.delete)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

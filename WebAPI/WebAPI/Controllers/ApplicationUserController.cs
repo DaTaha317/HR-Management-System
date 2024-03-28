@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,33 +17,37 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   
     public class ApplicationUserController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
-        public ApplicationUserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        public ApplicationUserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.configuration = configuration;
+            this.roleManager = roleManager;
         }
+
 
         [HttpPost("register")]
         public async Task<ActionResult> Registration(RegisterDTO account)
         {
             if (ModelState.IsValid)
             {
-                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(account.Password);
+                //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(account.Password);
 
                 ApplicationUser user = new ApplicationUser()
                 {
                     FullName = account.FullName,
                     Email = account.Email,
-                    PasswordHash = hashedPassword,
+                    PasswordHash = account.Password,
                     UserName = account.Email
                 };
-                IdentityResult result = await userManager.CreateAsync(user);
+                IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
                 if (result.Succeeded)
                 {
                     //await signInManager.SignInAsync(user, isPersistent: false);
@@ -67,20 +73,21 @@ namespace WebAPI.Controllers
             {
                 // check user credentials
                 ApplicationUser user = await userManager.FindByEmailAsync(account.Email);
-                if(user == null)
+                if (user == null)
                 {
                     return Unauthorized();
                 }
-                bool checkPassword = BCrypt.Net.BCrypt.Verify(account.Password, user.PasswordHash);
+                bool checkPassword = await userManager.CheckPasswordAsync(user, account.Password);
                 if (checkPassword)
                 {
-                    //claims 
+                    // Claims
                     List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id)); // Add user's ID claim
                     claims.Add(new Claim(ClaimTypes.Name, user.FullName));
                     claims.Add(new Claim(ClaimTypes.Email, user.Email));
                     claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
-                    //get roles
+                    // Get roles
                     var roles = await userManager.GetRolesAsync(user);
                     foreach (var role in roles)
                     {
@@ -90,11 +97,10 @@ namespace WebAPI.Controllers
                     SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
                     SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-                    //create token
+                    // Create token
                     JwtSecurityToken token = new JwtSecurityToken(
-                        issuer: configuration["JWT:ValidIssuer"], //url web api
-                        //issuer: "https://localhost:7266/",
-                        audience: configuration["JWT:ValidAudiance"], //url consumer angular
+                        issuer: configuration["JWT:ValidIssuer"], // URL of the Web API
+                        audience: configuration["JWT:ValidAudiance"], // URL of the consumer (Angular)
                         claims: claims,
                         expires: DateTime.Now.AddDays(1),
                         signingCredentials: signingCredentials
@@ -102,24 +108,13 @@ namespace WebAPI.Controllers
 
                     return Ok(new
                     {
-                        token= new JwtSecurityTokenHandler().WriteToken(token),
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = token.ValidTo
                     });
-                    
                 }
             }
             return Unauthorized();
         }
 
-    //    ApplicationUser user = await userManager.FindByEmailAsync(model.Email);
-
-    //    if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
-    //    {
-    //        // Passwords match
-    //        // You can proceed to sign in the user
-    //        await signInManager.SignInAsync(user, isPersistent: false);
-    //        return Ok("Login successful."); // Return success response
-    //}
-
-}
+    }
 }

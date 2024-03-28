@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models
+﻿namespace WebAPI.Constants
 {
     public enum Unit
     {
