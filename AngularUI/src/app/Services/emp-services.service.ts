@@ -16,6 +16,7 @@ export class EmpServicesService {
   private baseUrl = environment.baseUrl;
   constructor(private http: HttpClient) { }
   addEmployee(employee: IEmployee): Observable<IEmployee> {
+    
     return this.http.post<any>(`${this.baseUrl}/employee`, employee);
   }
   getEmployees() {

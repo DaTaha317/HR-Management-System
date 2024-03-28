@@ -38,14 +38,14 @@ export class UpdateEmployeeComponent implements OnInit {
   ) {
     this.validationUpdateEmployee=formBuilder.group({
       ssn: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern('[0-9]{14}')]],
-      fullName: ["", [Validators.required]],
+      fullName: ["", [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
       address: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required, this.validatePhoneNumber, Validators.pattern('[0-9]{11}')]],
       gender: ["", Validators.required],
       nationality: ["", Validators.required],
       birthDate: ["", [Validators.required, this.validateBirthDate]],
       contractDate: ["", [Validators.required, this.contractDateValidator]],
-      baseSalary: ["", [Validators.required, Validators.pattern('[0-9]*')]],
+      baseSalary: ["", [Validators.required, Validators.pattern('[0-9]*'),this.BasedSalaryValidation]],
       arrival: ["", Validators.required],
       departure: ["", Validators.required],
       departmentName: ["", Validators.required],
@@ -77,17 +77,26 @@ export class UpdateEmployeeComponent implements OnInit {
   contractDateValidator(control: any) {
 
     const startDate = new Date('2008-01-01');
+    const currentDate = new Date();
     const contractDate = new Date(control.value);
 
-    if (contractDate < startDate) {
-      console.log(contractDate)
+    if (contractDate < startDate||contractDate > currentDate) {
+    
       return { 'invalidContractDate': true };
     }
-    console.log(contractDate)
+    
+    
 
 
     return null;
   };
+  BasedSalaryValidation(control: any) {
+    const value = control.value;
+    if (value === 0) {
+      return { 'nonZeroViolation': true };
+    }
+    return null;
+  }
 
 
 
@@ -150,7 +159,7 @@ export class UpdateEmployeeComponent implements OnInit {
   UpdateEmployeeBtn(emp:IEmployee){
 
 this.updateFormData=emp;
-console.log(this.updateFormData)
+
 this.update(this.updateFormData)
 this.modalRef?.hide();
 

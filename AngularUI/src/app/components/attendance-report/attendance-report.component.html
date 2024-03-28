@@ -64,15 +64,14 @@
       <tr *ngFor="let record of attendanceReport" [ngClass]="{ absent: record.status === 1 }">
         <td>{{ record.deptName }}</td>
         <td>{{ record.empName }}</td>
-        <td>{{ record.arrival }}</td>
-        <td>{{ record.departure }}</td>
+        <td>{{ record.arrival==null?" -------":record.arrival }}</td>
+        <td>{{ record.arrival==null?" -------":record.departure }}</td>
+
         <td>{{ record.day }}</td>
-        <td>{{ record.status == 0 ? "Attended" : "Absent" }}</td>
+        <td>{{ record.status == 0 ?  "Attended" : "Absent" }}</td>
         <td>
           <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
-            <button class="btn bgMain txtMain">
-              <i class="fas fa-pencil-alt"></i>
-            </button>
+           
             <button class="btn btn-danger" (click)="openModal(template,record.empId,record.day)">
               <i class="fas fa-trash-alt"></i>
             </button>
@@ -94,7 +93,7 @@
    <ng-template #template>
      <div class="modal-body text-center">
        <p>Do you want to confirm?</p>
-       <button type="button" class="btn btn-default btn-danger" (click)="DeleteAttendence(attendancedel,attendancedate)">Yes</button>
+       <button type="button" class="btn btn-default btn-danger m-2" (click)="DeleteAttendence(attendancedel,attendancedate)">Yes</button>
        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
      </div>
    </ng-template>

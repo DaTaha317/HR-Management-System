@@ -5,6 +5,7 @@ import { IEmployee } from 'src/app/interfaces/IEmployee';
 import { AttendanceService } from 'src/app/services/attendance.service';
 import { EmpServicesService } from 'src/app/services/emp-services.service';
 import { TimeUtility } from 'src/environments/TimeUtility';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-attendance',
@@ -13,14 +14,39 @@ import { TimeUtility } from 'src/environments/TimeUtility';
 })
 export class AddAttendanceComponent implements OnInit {
   employees: IEmployee[] = [];
+  
   attendance: any = {};
   selectedEmpId: number | undefined;
   isPresent = false;
+  validationAttendece: FormGroup;
   constructor(
+    private formBuilder: FormBuilder,
     private attendanceService: AttendanceService,
     private employeeService: EmpServicesService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.validationAttendece = formBuilder.group({
+      employee: ["", [Validators.required]],
+      status: ["", [Validators.required]],
+      arrival: ["", [Validators.required]],
+      deprture: ["", [Validators.required]],
+    });
+  }
+
+
+
+  get employee(){
+    return this.validationAttendece.get("employee")
+  }
+  get status(){
+    return this.validationAttendece.get("status")
+  }
+  get arrival(){
+    return this.validationAttendece.get("arrival")
+  }
+  get deprture(){
+    return this.validationAttendece.get("deprture")
+  }
 
   ngOnInit() {
     this.getEmployees();
@@ -37,14 +63,16 @@ export class AddAttendanceComponent implements OnInit {
       this.attendance.departure = TimeUtility.formatTime(
         this.attendance.departure
       );
+      
     }
 
     this.attendance.day = TimeUtility.today();
     this.attendance.empId = this.selectedEmpId;
-    console.log(this.attendance);
+    
     this.attendanceService
       .addAttendance(this.attendance)
-      .subscribe(() => this.toastr.success('Added successfully'));
+      .subscribe(() => this.toastr.success('Added successfully')
+      );
   }
 
   onStatusChange() {
@@ -54,4 +82,8 @@ export class AddAttendanceComponent implements OnInit {
       this.isPresent = false;
     }
   }
+ 
 }
+
+
+

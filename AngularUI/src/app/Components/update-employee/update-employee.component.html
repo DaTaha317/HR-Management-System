@@ -40,14 +40,13 @@
             class="form-control"
             placeholder="Enter phone number"
             formControlName="phoneNumber" />
-            <div [hidden]="phoneNumber?.valid||phoneNumber?.untouched">
-              <small [hidden]="phoneNumber?.errors?.['requird']" class="text-danger m-3">
-                this field is requird
+            <div [hidden]="phoneNumber?.valid || (!phoneNumber?.touched )">
+              <small *ngIf="phoneNumber?.errors?.['required'] && (phoneNumber?.touched )" class="text-danger m-3">
+                This field is required
               </small>
-              <small *ngIf="phoneNumber?.errors?.['pattern']" class="text-danger m-3">
-                phone number must be 11 number
+              <small *ngIf="phoneNumber?.errors?.['pattern'] && (phoneNumber?.touched )" class="text-danger m-3">
+                phone must be 11 digit (numbers only)
               </small>
-  
             </div>
         </div>
 
@@ -123,12 +122,12 @@
             class="form-control"
             placeholder="Enter full name"
             formControlName="fullName" />
-            <div [hidden]="fullName?.valid||fullName?.untouched">
-              <small [hidden]="fullName?.errors?.['requird']" class="text-danger m-3">
-                this field is requird
+            <div [hidden]="fullName?.valid || (!fullName?.touched )">
+              <small *ngIf="fullName?.errors?.['required'] && (fullName?.touched)" class="text-danger m-3">
+                This field is required
               </small>
-              <small *ngIf="fullName?.errors?.['pattern']" class="text-danger m-3">
-                enter valid name
+              <small *ngIf="fullName?.errors?.['pattern'] && (fullName?.touched)" class="text-danger m-3">
+                Please enter a valid name (letters only)
               </small>
             </div>
         </div>
@@ -203,12 +202,12 @@
             [(ngModel)]="selectedEmployee.contractDate"
             class="form-control"
             formControlName="contractDate" />
-            <div [hidden]="contractDate?.valid||contractDate?.untouched">
-              <small [hidden]="contractDate?.errors?.['requird']" class="text-danger m-3">
-                this field is requird
+            <div [hidden]="contractDate?.valid || (!contractDate?.touched )">
+              <small *ngIf="contractDate?.errors?.['required'] && (contractDate?.touched)" class="text-danger m-3">
+                This field is required
               </small>
-              <small *ngIf="contractDate?.errors?.['invalidContractDate'] " class="text-danger m-3">
-                please enter a right contract date
+              <small *ngIf="contractDate?.errors?.['invalidContractDate'] && (contractDate?.touched )" class="text-danger m-3">
+                Please enter a valid contract date
               </small>
             </div>
         </div>
@@ -223,12 +222,18 @@
             class="form-control"
             placeholder="Enter base salary"
             formControlName="baseSalary" />
-            <div [hidden]="baseSalary?.valid||baseSalary?.untouched">
-              <small [hidden]="baseSalary?.errors?.['requird']" class="text-danger m-3">
-                please enter valid salary
+            <div [hidden]="baseSalary?.valid || (!baseSalary?.touched )">
+              <small *ngIf="baseSalary?.errors?.['required'] && (baseSalary?.touched )" class="text-danger m-3">
+                This field is required
               </small>
-  
+              <small *ngIf="baseSalary?.errors?.['pattern'] && (baseSalary?.touched )" class="text-danger m-3">
+                enter valid salary
+              </small>
+              <small *ngIf="baseSalary?.errors?.['nonZeroViolation'] && (baseSalary?.touched )" class="text-danger m-3">
+                cant be zero
+              </small>
             </div>
+  
         </div>
         <div class="form-group">
           <label for="SSN">Social Security Number:</label>
@@ -240,14 +245,13 @@
             class="form-control"
             placeholder="Enter Social Security Number"
             formControlName="ssn" maxlength="14" minlength="14" />
-            <div [hidden]="ssn?.valid||ssn?.untouched">
-              <small [hidden]="ssn?.errors?.['requird']" class="text-danger m-3">
-                this field is requird
+            <div [hidden]="ssn?.valid || (!ssn?.touched )">
+              <small *ngIf="ssn?.errors?.['required'] && (ssn?.touched )" class="text-danger m-3">
+                This field is required
               </small>
-              <small *ngIf="ssn?.errors?.['pattern']" class="text-danger m-3">
-                ssn must be 14 number
+              <small *ngIf="ssn?.errors?.['pattern'] && (ssn?.touched )" class="text-danger m-3">
+                SSN must be 14 numbers
               </small>
-  
             </div>
         </div>
       </div>
@@ -255,14 +259,14 @@
     
 
     <!-- Submit Button -->
-    <button type="button" class="btn btn-primary" (click)="openModal(template,selectedEmployee)">update</button>
+    <button type="button" class="btn btn-primary" [disabled]="validationUpdateEmployee.invalid" (click)="openModal(template,selectedEmployee)">update</button>
 
 
     <ng-template #template>
       <div class="modal-body text-center">
         <p>Do you want to confirm update?</p>
-        <button type="button" class="btn btn-default btn-warning" (click)="UpdateEmployeeBtn(updateFormData)">Yes</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+        <button type="button" class="btn btn-default btn-warning m-2" (click)="UpdateEmployeeBtn(updateFormData)">Yes</button>
+        <button type="button" class="btn btn-primary " (click)="decline()">No</button>
       </div>
     </ng-template>
 

@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">Employee Time Tracking</div>
         <div class="card-body">
-          <form #f="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+          <form #f="ngForm" (ngSubmit)="onSubmit()"  [formGroup]="validationAttendece" class="form-container">
             <!-- Employee Select -->
             <div class="form-group">
               <label for="employee">Employee:</label>
@@ -13,12 +13,20 @@
                 name="employee"
                 class="form-control"
                 [(ngModel)]="selectedEmpId"
+                formControlName="employee"
               >
                 <option value="" disabled selected>Select Employee</option>
                 <option *ngFor="let emp of employees" [value]="emp.id">
                   {{ emp.fullName }}
                 </option>
               </select>
+              <div [hidden]="employee?.valid||employee?.untouched">
+                <small [hidden]="employee?.errors?.['requird']" class="text-danger m-3">
+                  this field is requird
+                </small>
+
+  
+              </div>
             </div>
             <div class="form-group">
               <label for="status">Status:</label>
@@ -26,6 +34,7 @@
                 id="status"
                 name="status"
                 [(ngModel)]="attendance.status"
+                formControlName="status"
                 class="form-control"
                 (change)="onStatusChange()"
               >
@@ -33,6 +42,13 @@
                 <option value="0">Present</option>
                 <option value="1">Absent</option>
               </select>
+              <div [hidden]="status?.valid||status?.untouched">
+                <small [hidden]="status?.errors?.['requird']" class="text-danger m-3">
+                  this field is requird
+                </small>
+
+  
+              </div>
             </div>
 
             <div *ngIf="isPresent">
@@ -45,7 +61,15 @@
                   class="form-control"
                   placeholder="HH:mm"
                   [(ngModel)]="attendance.arrival"
+                  formControlName="arrival"
                 />
+                <div [hidden]="arrival?.valid||arrival?.untouched">
+                  <small [hidden]="arrival?.errors?.['requird']" class="text-danger m-3">
+                    this field is requird
+                  </small>
+  
+    
+                </div>
               </div>
 
               <div class="form-group">
@@ -57,11 +81,19 @@
                   class="form-control"
                   placeholder="HH:mm"
                   [(ngModel)]="attendance.departure"
+                  formControlName="deprture"
                 />
+                <div [hidden]="deprture?.valid||deprture?.untouched">
+                  <small [hidden]="deprture?.errors?.['requird']" class="text-danger m-3">
+                    this field is requird
+                  </small>
+  
+    
+                </div>
               </div>
             </div>
 
-            <button type="submit" class="btn bgMain txtMain mt-3">
+            <button type="submit"   class="btn bgMain txtMain mt-3">
               Submit
             </button>
           </form>

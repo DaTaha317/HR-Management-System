@@ -4,7 +4,7 @@
       <h5 class="card-title text-center">Attendance Settings</h5>
     </div>
     <div class="card-body">
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()" [formGroup]="validationSetting">
         <div class="row">
           <!-- Overtime Section -->
           <div class="col-md-6">
@@ -35,7 +35,9 @@
                     id="commissionHours"
                     name="commissionHours"
                     [(ngModel)]="settings.commissionDTO.hours"
+                   
                   />
+               
                 </div>
                 <div *ngIf="!isComissionHours" class="form-group">
                   <label for="commissionAmount">Amount</label>
