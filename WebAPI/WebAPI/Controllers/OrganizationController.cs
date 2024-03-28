@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Constants;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
 using WebAPI.Models;
@@ -23,7 +25,7 @@ namespace WebAPI.Controllers
             this.weeklyDaysOffRepo = weeklyDaysOffRepo;
             this.mapper = mapper;
         }
-
+        [Authorize(Permissions.Settings.create)]
         [HttpPost]
         public ActionResult Update([FromBody] OrganizationSettings organization)
         {
@@ -100,7 +102,7 @@ namespace WebAPI.Controllers
         }
 
 
-
+        [Authorize(Permissions.Settings.view)]
         [HttpGet]
         public ActionResult Get()
         {

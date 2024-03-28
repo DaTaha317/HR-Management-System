@@ -20,6 +20,7 @@ namespace WebAPI.Helpers
         // filters for startDate and endDate (default)
         public DateOnly startDate { get; set; } = new DateOnly(2008, 1, 1); // default start date
         public DateOnly endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now); // default end date
+        public string stringQuery { get; set; } = ""; // 
 
     }
 }

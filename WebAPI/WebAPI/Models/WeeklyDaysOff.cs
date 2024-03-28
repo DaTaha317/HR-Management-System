@@ -1,4 +1,6 @@
 
+using WebAPI.Constants;
+
 namespace WebAPI.Models
 {
     public class WeeklyDaysOff

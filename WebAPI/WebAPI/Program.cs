@@ -1,10 +1,14 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Writers;
+using System.Security.Claims;
 using System.Text;
+using WebAPI.Filters;
 using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Models;
@@ -14,13 +18,16 @@ namespace WebAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
 
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
 
             builder.Services.AddDbContext<HRDBContext>(options =>
@@ -63,9 +70,12 @@ namespace WebAPI
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     ValidateAudience = true,
                     ValidAudience = builder.Configuration["JWT:ValidAudiance"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
+
 
             builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
             builder.Services.AddScoped<IDaysOffRepo, DaysOffRepo>();
@@ -104,7 +114,6 @@ namespace WebAPI
 
 
             var app = builder.Build();
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 
 
             // Configure the HTTP request pipeline.
@@ -113,6 +122,30 @@ namespace WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            //var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+            //var logger = loggerFactory.CreateLogger("app");
+
+            try
+            {
+                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+                await Seeds.DefaultRoles.SeedAsync(roleManager);
+                await Seeds.DefaultUsers.SeedBasicUserAsync(userManager);
+                await Seeds.DefaultUsers.SeedSuperAdminAsync(userManager, roleManager);
+
+                //logger.LogInformation("Data seeded");
+                //logger.LogInformation("Application Started");
+            }
+            catch (System.Exception exception)
+            {
+                //logger.LogWarning(exception, "An error occured while seeding role");
+            }
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+
 
             app.UseHttpsRedirection();
 
