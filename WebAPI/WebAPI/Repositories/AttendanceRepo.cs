@@ -39,6 +39,10 @@ namespace WebAPI.Repositories
             // query for date from (user params)
             query = query.Where(a => a.Day >= userParams.startDate && a.Day <= userParams.endDate);
 
+            // query for department name, employee name
+            query = query.Where(a => a.Employee.FullName.Contains(userParams.stringQuery)
+                || a.Employee.Department.Name.Contains(userParams.stringQuery));
+
             return await PagedList<AttendanceDTO>.CreateAsync(query.AsNoTracking().ProjectTo<AttendanceDTO>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
         }
 

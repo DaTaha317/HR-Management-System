@@ -35,6 +35,9 @@ export class AttendanceService {
       params = params.append("pageNumber", userParams.pageNumber);
       params = params.append("startDate", userParams.startDate);
       params = params.append("endDate", userParams.endDate);
+      if (userParams.queryString != "") {
+        params = params.append("stringQuery", userParams.queryString);
+      }
     }
 
     return this.http.get<IAttendence[]>(`${this.baseUrl}/Attendence`, { observe: 'response', params }).pipe(
@@ -56,7 +59,7 @@ export class AttendanceService {
     );
   }
 
-  deleteRecord(id: number,date:Date): Observable<IAttendence> {
+  deleteRecord(id: number, date: Date): Observable<IAttendence> {
     return this.http.delete<IAttendence>(`${this.baseUrl}/attendence/${id}?date=${date}`);
   }
 
