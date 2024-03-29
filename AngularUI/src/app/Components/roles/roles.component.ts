@@ -6,14 +6,12 @@ import { RolesService } from 'src/app/services/roles.service';
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.css']
+  styleUrls: ['./roles.component.css'],
 })
 export class RolesComponent implements OnInit {
-
   allUserRoles: IRole[] | undefined;
 
-  constructor(private rolesServices: RolesService, private router: Router) {
-  }
+  constructor(private rolesServices: RolesService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllRoles();
@@ -26,14 +24,15 @@ export class RolesComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-      }
-    })
+      },
+    });
   }
 
-  addRole(role: IRole | undefined) {
-    this.router.navigate(['roles/add'], { state: { role } });
+  updateRole(role: IRole | undefined) {
+    this.router.navigate(['roles/update'], { state: { role } });
   }
 
-
-
+  addRole() {
+    this.router.navigate(['roles/add']);
+  }
 }

@@ -1,9 +1,7 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div class="col-auto">
-      <button class="btn bgMain txtMain" (click)="addRole(undefined)">
-        Add Role
-      </button>
+      <button class="btn bgMain txtMain" (click)="addRole()">Add Role</button>
     </div>
     <div class="d-flex align-items-center">
       <input type="search" class="form-control me-2" placeholder="Search" />
@@ -12,7 +10,7 @@
       </button>
     </div>
   </div>
-  <hr>
+  <hr />
   <table class="table">
     <thead class="bgMain txtMain">
       <tr>
@@ -22,10 +20,12 @@
     </thead>
     <tbody *ngIf="allUserRoles">
       <tr *ngFor="let role of allUserRoles">
-        <td class="text-center">{{role.name}}</td>
+        <td class="text-center">{{ role.name }}</td>
         <td>
-          <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
-            <button class="btn bgMain txtMain" (click)="addRole(role)">
+          <div
+            class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
+          >
+            <button class="btn bgMain txtMain" (click)="updateRole(role)">
               <i class="fas fa-pencil-alt"></i>
             </button>
             <button class="btn btn-danger">
@@ -36,5 +36,4 @@
       </tr>
     </tbody>
   </table>
-
 </div>

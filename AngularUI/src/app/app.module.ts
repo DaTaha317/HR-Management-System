@@ -2,8 +2,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {  ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
@@ -28,11 +28,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { AddAttendanceComponent } from './components/add-attendance/add-attendance.component';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptorInterceptor } from './_interceptors/loading-interceptor.interceptor';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { RolesComponent } from './components/roles/roles.component';
+import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { AddRoleComponent } from './components/add-role/add-role.component';
 
 @NgModule({
@@ -52,13 +53,14 @@ import { AddRoleComponent } from './components/add-role/add-role.component';
     FilterPipe,
     AddAttendanceComponent,
     RolesComponent,
+    UpdateRoleComponent,
     AddRoleComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-   FormsModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
@@ -69,17 +71,21 @@ import { AddRoleComponent } from './components/add-role/add-role.component';
       positionClass: 'toast-bottom-right', //の位置 toast-top-right, toast-bottom-right, etc.
     }),
     NgxSpinnerModule.forRoot({
-      type: 'line-scale-party'
+      type: 'line-scale-party',
     }),
     ModalModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptorInterceptor,
+      multi: true,
+    },
   ],
 
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

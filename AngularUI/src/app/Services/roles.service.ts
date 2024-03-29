@@ -6,26 +6,29 @@ import { IRole } from '../interfaces/IRole';
 import { IRolePermission } from '../interfaces/IRolePermission';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RolesService {
-
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAllRoles(): Observable<IRole[]> {
     return this.http.get<IRole[]>(`${this.baseUrl}/SuperAdmin/AllRoles`);
   }
 
   getRolePermission(roleID: string): Observable<IRolePermission> {
-
-    return this.http.get<IRolePermission>(`${this.baseUrl}/SuperAdmin/AllPermessions`, {
-      params: {
-        roleId: roleID
+    return this.http.get<IRolePermission>(
+      `${this.baseUrl}/SuperAdmin/AllPermessions`,
+      {
+        params: {
+          roleId: roleID,
+        },
       }
-    });
+    );
   }
 
+  updateRolePermission(role: IRolePermission) {
+    return this.http.post(`${this.baseUrl}/SuperAdmin/AddPermission`, role);
+  }
 }

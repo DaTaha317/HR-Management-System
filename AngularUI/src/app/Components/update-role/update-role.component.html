@@ -1,11 +1,19 @@
 <div class="container mt-5">
-  <label for="role">Role</label>
-  <input
-    name="role"
-    type="text"
-    class="form-control"
-    [(ngModel)]="allPermissions.roleName"
-  />
+  <div class="d-flex align-items-center" *ngIf="selectedRole">
+    <input
+      type="search"
+      [(ngModel)]="selectedRole.name"
+      class="form-control me-2"
+      style="width: 150px"
+      placeholder="Search"
+    />
+    <button type="button" class="btn bgMain txtMain">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+
+  <hr />
+
   <table class="table">
     <thead class="bgMain txtMain">
       <tr>
@@ -64,7 +72,11 @@
     </tbody>
   </table>
 
-  <button type="button" class="btn bgMain txtMain d-block" (click)="addRole()">
-    Add
+  <button
+    type="button"
+    class="btn bgMain txtMain d-block"
+    (click)="updateRolePermission()"
+  >
+    Update
   </button>
 </div>

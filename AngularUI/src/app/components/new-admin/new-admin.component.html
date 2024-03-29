@@ -11,14 +11,16 @@
                 type="text"
                 class="form-control"
                 id="fullName"
-                placeholder="Enter Full Name" 
+                placeholder="Enter Full Name"
                 formControlName="fullname"
               />
-              <div [hidden]="fullname?.valid||fullname?.untouched">
-                <small [hidden]="fullname?.errors?.['requird']" class="text-danger m-3">
+              <div [hidden]="fullname?.valid || fullname?.untouched">
+                <small
+                  [hidden]="fullname?.errors?.['requird']"
+                  class="text-danger m-3"
+                >
                   this field requird
                 </small>
-    
               </div>
             </div>
 
@@ -27,15 +29,16 @@
               <input
                 type="text"
                 class="form-control"
-                
                 placeholder="Enter Username"
-                 formControlName="username"
+                formControlName="username"
               />
-              <div >
-                <small [hidden]="username?.valid||username?.untouched && ! username?.errors?.['requird']" class="text-danger m-3">
+              <div>
+                <small
+                  [hidden]="username?.valid||username?.untouched && ! username?.errors?.['requird']"
+                  class="text-danger m-3"
+                >
                   this field requird
                 </small>
-    
               </div>
             </div>
 
@@ -44,45 +47,60 @@
               <input
                 type="text"
                 class="form-control"
-              
                 placeholder="Enter Email"
-                 formControlName="email"
+                formControlName="email"
               />
-             
-                 <small [hidden]="email?.valid||email?.untouched && ! email?.errors?.['requird']" class="text-danger m-3">
-                  this field requird
-                </small>
-    
-              
+
+              <small
+                [hidden]="email?.valid||email?.untouched && ! email?.errors?.['requird']"
+                class="text-danger m-3"
+              >
+                this field requird
+              </small>
             </div>
 
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" 
-              placeholder="Enter Password" formControlName="password"
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="password"
               />
-             
-                <small  [hidden]="password?.valid||password?.untouched && ! password?.errors?.['requird']" class="text-danger m-3">
-                  this field requird
-                </small>
-    
-              
+
+              <small
+                [hidden]="password?.valid||password?.untouched && ! password?.errors?.['requird']"
+                class="text-danger m-3"
+              >
+                this field requird
+              </small>
             </div>
 
             <div class="mb-3">
               <label for="roles" class="form-label">Role</label>
               <select class="form-select" id="roles" formControlName="role">
                 <option selected>Choose a role...</option>
-                <option value="admin">Admin</option>
-                <option value="editor">Editor</option>
+                <ng-container *ngFor="let role of roles">
+                  <option [value]="role.id">{{ role.name }}</option>
+                </ng-container>
               </select>
-              <small  [hidden]="role?.valid||role?.untouched && ! role?.errors?.['requird']" class="text-danger m-3">
+              <small
+                [hidden]="role?.valid||role?.untouched && ! role?.errors?.['requird']"
+                class="text-danger m-3"
+              >
                 this field requird
               </small>
             </div>
 
             <div class="text-center">
-              <button type="submit" (click)="sucsess()" class="btn bgMain txtMain" [disabled]="validationAdmin.invalid">Register</button>
+              <button
+                type="submit"
+                (click)="sucsess()"
+                class="btn bgMain txtMain"
+                [disabled]="validationAdmin.invalid"
+              >
+                Register
+              </button>
             </div>
           </form>
         </div>

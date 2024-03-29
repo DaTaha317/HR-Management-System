@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IRole } from 'src/app/interfaces/IRole';
 import { IRolePermission } from 'src/app/interfaces/IRolePermission';
-import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-add-role',
@@ -10,34 +7,85 @@ import { RolesService } from 'src/app/services/roles.service';
   styleUrls: ['./add-role.component.css'],
 })
 export class AddRoleComponent implements OnInit {
-  allUserRoles: IRole[] | undefined;
-
-  pagesList: string[] = ['Employee', 'Settings', 'Attendance', 'Salary'];
-
-  selectedRole: IRole | undefined;
-
-  allPermissions: IRolePermission | undefined;
-
-  constructor(
-    private rolesServices: RolesService,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
-    const role = history.state.role;
-    if (role) {
-      this.selectedRole = role;
-      this.getRolePermission(this.selectedRole!.id);
-    }
+  allPermissions: IRolePermission;
+  constructor() {
+    this.allPermissions = {
+      roleId: '',
+      roleName: '',
+      roleClaims: [
+        {
+          displayValue: 'Permissions.Employees.View',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Employees.Create',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Employees.Edit',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Employees.Delete',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Settings.View',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Settings.Create',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Settings.Edit',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Settings.Delete',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Attendance.View',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Attendance.Create',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Attendance.Edit',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Attendance.Delete',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Salary.View',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Salary.Create',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Salary.Edit',
+          isSelected: false,
+        },
+        {
+          displayValue: 'Permissions.Salary.Delete',
+          isSelected: false,
+        },
+      ],
+    };
   }
 
-  getRolePermission(roleID: string) {
-    this.rolesServices.getRolePermission(roleID).subscribe({
-      next: (d: IRolePermission) => {
-        this.allPermissions = d;
-        console.log(d);
-      },
-      error: () => {},
-    });
+  ngOnInit() {
+    console.log(this.allPermissions);
+  }
+
+  addRole() {
+    console.log(this.allPermissions);
   }
 }
