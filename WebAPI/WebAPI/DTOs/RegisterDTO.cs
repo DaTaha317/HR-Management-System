@@ -14,5 +14,7 @@ namespace WebAPI.DTOs
         [Required]
         [Compare("Password", ErrorMessage = "Both Passwords are not matched..")]
         public string ConfirmPassword { get; set; }
+
+        public string RoleName { get; set; }
     }
 }
