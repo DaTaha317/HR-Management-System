@@ -32,6 +32,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptorInterceptor } from './_interceptors/loading-interceptor.interceptor';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { RolesComponent } from './components/roles/roles.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     OrganizationSettingsComponent,
     FilterPipe,
     AddAttendanceComponent,
+    RolesComponent,
   ],
   imports: [
     BrowserModule,
