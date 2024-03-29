@@ -14,6 +14,7 @@ import { AddAttendanceComponent } from './components/add-attendance/add-attendan
 import { AuthGuard } from './_guards/auth.guard';
 import { preventLoginGuard } from './_guards/prevent-login.guard';
 import { RolesComponent } from './components/roles/roles.component';
+import { AddRoleComponent } from './components/add-role/add-role.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'employee/display', component: DisplayEmployeeComponent },
       { path: 'attendance/add', component: AddAttendanceComponent },
       { path: 'roles', component: RolesComponent },
+      { path: 'roles/add', component: AddRoleComponent },
     ]
   }
 ];

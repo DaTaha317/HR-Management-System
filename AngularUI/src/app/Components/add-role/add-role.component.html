@@ -1,0 +1,67 @@
+<div class="container mt-5">
+
+
+  <div class="d-flex align-items-center" *ngIf="selectedRole">
+    <input type="search" [(ngModel)]="selectedRole.name" class="form-control me-2" style="width: 150px;"
+      placeholder="Search" />
+    <button type="button" class="btn bgMain txtMain">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+
+  <hr>
+
+  <table class="table">
+    <thead class="bgMain txtMain">
+      <tr>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col" class="text-center">Pages</th>
+        <th scope="col" class="text-center">Add</th>
+        <th scope="col" class="text-center">Delete</th>
+        <th scope="col" class="text-center">Edit</th>
+        <th scope="col" class="text-center">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let page of pagesList; let i = index" class="text-center">
+        <td>
+          <label>
+            <input type="checkbox" />
+          </label>
+        </td>
+        <td>
+          {{page}}
+        </td>
+        <td>
+          <label>
+            <input type="checkbox" />
+            {{i*4}} + 0
+          </label>
+        </td>
+        <td>
+          <label>
+            <input type="checkbox" />
+            {{i*4}} + 1
+          </label>
+        </td>
+        <td>
+          <label>
+            <input type="checkbox" />
+            {{i*4}} + 2
+          </label>
+        </td>
+        <td>
+          <label>
+            <input type="checkbox" />
+            {{i*4}} + 3
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="btn bgMain txtMain ms-auto d-block">
+    Add
+  </button>
+
+</div>

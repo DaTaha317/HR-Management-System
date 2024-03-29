@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IRole } from '../interfaces/IRole';
+import { IRolePermission } from '../interfaces/IRolePermission';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,15 @@ export class RolesService {
 
   getAllRoles(): Observable<IRole[]> {
     return this.http.get<IRole[]>(`${this.baseUrl}/SuperAdmin/AllRoles`);
+  }
+
+  getRolePermission(roleID: string): Observable<IRolePermission> {
+
+    return this.http.get<IRolePermission>(`${this.baseUrl}/SuperAdmin/AllPermessions`, {
+      params: {
+        roleId: roleID
+      }
+    });
   }
 
 }

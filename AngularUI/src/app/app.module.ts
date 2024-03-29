@@ -33,6 +33,7 @@ import { LoadingInterceptorInterceptor } from './_interceptors/loading-intercept
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { RolesComponent } from './components/roles/roles.component';
+import { AddRoleComponent } from './components/add-role/add-role.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { RolesComponent } from './components/roles/roles.component';
     FilterPipe,
     AddAttendanceComponent,
     RolesComponent,
+    AddRoleComponent,
   ],
   imports: [
     BrowserModule,
