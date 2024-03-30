@@ -41,20 +41,24 @@ namespace WebAPI.Controllers
             return Ok(usersWithRoles);
         }
 
-        [HttpPost("DeleteUser")]
+        [HttpDelete("DeleteUser")]
         public async Task<ActionResult> DeleteUser(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
             if (user == null)
                 return NotFound("User not found");
 
+            var isAdmin = await userManager.IsInRoleAsync(user, "admin");
+            var isSuper = await userManager.IsInRoleAsync(user, "super");
+            if (isAdmin || isSuper)
+                return BadRequest("Not Allowed to delete Admin or SuperAdmin");
             var result = await userManager.DeleteAsync(user);
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
             }
 
-            return RedirectToAction(nameof(GetUsers));
+            return NoContent();
         }
 
         [HttpGet("UserRoles")]
@@ -121,6 +125,11 @@ namespace WebAPI.Controllers
             var role = await roleManager.FindByNameAsync(roleName);
             if (role == null)
                 return NotFound("Role not found");
+
+            var isAdminRole = role.Name.Equals("ADMIN", StringComparison.OrdinalIgnoreCase);
+            var isSuperRole = role.Name.Equals("SUPERADMIN", StringComparison.OrdinalIgnoreCase);
+            if (isAdminRole || isSuperRole)
+                return BadRequest("Not Allowed to delete Role For Admin or SuperAdmin");
 
             await roleManager.DeleteAsync(role);
             return RedirectToAction(nameof(GetAllRoles));
