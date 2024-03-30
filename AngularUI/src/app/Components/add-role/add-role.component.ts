@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { IRole, IRoleName } from 'src/app/interfaces/IRole';
 import { IRolePermission } from 'src/app/interfaces/IRolePermission';
+import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-add-role',
@@ -8,7 +11,10 @@ import { IRolePermission } from 'src/app/interfaces/IRolePermission';
 })
 export class AddRoleComponent implements OnInit {
   allPermissions: IRolePermission;
-  constructor() {
+  constructor(
+    private roleService: RolesService,
+    private toastr: ToastrService
+  ) {
     this.allPermissions = {
       roleId: '',
       roleName: '',
@@ -85,7 +91,15 @@ export class AddRoleComponent implements OnInit {
     console.log(this.allPermissions);
   }
 
-  addRole() {
-    console.log(this.allPermissions);
+  addRole(roleName: string) {
+    let role = {} as IRoleName;
+    role.name = roleName;
+    this.roleService.addRole(role).subscribe((data: IRole) => {
+      this.allPermissions.roleId = data.id;
+      this.roleService.updateRolePermission(this.allPermissions).subscribe(
+        (data) => {},
+        (error) => {}
+      );
+    });
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IRole } from '../interfaces/IRole';
+import { IRole, IRoleName } from '../interfaces/IRole';
 import { IRolePermission } from '../interfaces/IRolePermission';
 
 @Injectable({
@@ -36,5 +36,12 @@ export class RolesService {
     return this.http.delete(`${this.baseUrl}/SuperAdmin/DeleteRole`, {
       params: { roleName },
     });
+  }
+
+  addRole(roleName: IRoleName): Observable<IRole> {
+    return this.http.post<IRole>(
+      `${this.baseUrl}/SuperAdmin/AddRole`,
+      roleName
+    );
   }
 }

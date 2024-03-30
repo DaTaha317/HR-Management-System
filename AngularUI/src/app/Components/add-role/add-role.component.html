@@ -1,11 +1,14 @@
 <div class="container mt-5">
-  <label for="role">Role</label>
-  <input
-    name="role"
-    type="text"
-    class="form-control"
-    [(ngModel)]="allPermissions.roleName"
-  />
+  <div class="d-flex align-items-center justify-content-center inputRole mb-3">
+    <label class="me-2" for="role">Role</label>
+    <input
+      name="role"
+      type="text"
+      class="form-control"
+      [(ngModel)]="allPermissions.roleName"
+    />
+  </div>
+
   <table class="table">
     <thead class="bgMain txtMain">
       <tr>
@@ -64,7 +67,11 @@
     </tbody>
   </table>
 
-  <button type="button" class="btn bgMain txtMain d-block" (click)="addRole()">
+  <button
+    type="button"
+    class="btn bgMain txtMain d-block mx-auto"
+    (click)="addRole(allPermissions.roleName)"
+  >
     Add
   </button>
 </div>
