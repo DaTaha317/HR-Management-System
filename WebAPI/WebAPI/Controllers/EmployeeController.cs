@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Constants;
 using WebAPI.DTOs;
@@ -14,11 +15,13 @@ namespace WebAPI.Controllers
         private IEmployeeRepo employeeRepo;
         private IDepartmentRepo departmentRepo;
         private IAuthorizationService authorizationService;
-        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo, IAuthorizationService authorizationService)
+        private IMapper mapper;
+        public EmployeeController(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo, IAuthorizationService authorizationService, IMapper mapper)
         {
             this.employeeRepo = employeeRepo;
             this.departmentRepo = departmentRepo;
             this.authorizationService = authorizationService;
+            this.mapper = mapper;
         }
         #region getall
         [Authorize(Permissions.Employees.view)]
@@ -33,22 +36,7 @@ namespace WebAPI.Controllers
             List<EmployeeDTO> employeeDTOs = new List<EmployeeDTO>();
             foreach (Employee employee in employees)
             {
-                EmployeeDTO employeesDTO = new EmployeeDTO()
-                {
-                    Id = employee.Id,
-                    SSN = employee.SSN,
-                    FullName = employee.FullName,
-                    Address = employee.Address,
-                    Arrival = employee.Arrival,
-                    Departure = employee.Departure,
-                    Gender = (int) employee.Gender,
-                    PhoneNumber = employee.PhoneNumber,
-                    BaseSalary = employee.BaseSalary,
-                    BirthDate=employee.BirthDate,
-                    ContractDate=employee.ContractDate,
-                    Nationality=employee.Nationality,
-                    departmentName = employee.Department != null ? employee.Department.Name : null
-                };
+                EmployeeDTO employeesDTO = mapper.Map<EmployeeDTO>(employee);
                 employeeDTOs.Add(employeesDTO);
             }
             return Ok(employeeDTOs);
@@ -64,20 +52,7 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            EmployeeDTO employeeDTO = new EmployeeDTO()
-            {
-                Id=employee.Id,
-                
-                SSN = employee.SSN,
-                FullName = employee.FullName,
-                Address = employee.Address,
-                Arrival = employee.Arrival,
-                Departure = employee.Departure,
-                Gender = (int)employee.Gender,
-                PhoneNumber = employee.PhoneNumber,
-                BaseSalary = employee.BaseSalary,
-                departmentName = employee.Department != null ? employee.Department.Name : null
-            };
+            EmployeeDTO employeeDTO = mapper.Map<EmployeeDTO>(employee);
             return Ok(employeeDTO);
         }
         #endregion
@@ -94,21 +69,7 @@ namespace WebAPI.Controllers
             {
                 return NotFound("Department not found");
             }
-            Employee employee = new Employee
-            {
-                FullName = employeeDTO.FullName,
-                Address = employeeDTO.Address,
-                Arrival = employeeDTO.Arrival,
-                Departure = employeeDTO.Departure,
-                Gender = (Gender)employeeDTO.Gender,
-                PhoneNumber = employeeDTO.PhoneNumber,
-                BaseSalary = employeeDTO.BaseSalary,
-                BirthDate = employeeDTO.BirthDate,
-                ContractDate = employeeDTO.ContractDate,
-                Nationality = employeeDTO.Nationality,
-                DeptId = department.Id,
-                SSN = employeeDTO.SSN,
-            };
+            Employee employee = mapper.Map<Employee>(employeeDTO);
             employeeRepo.Add(employee);
             employeeRepo.Save();
             return CreatedAtAction("GetById", new { id = employee.SSN }, employeeDTO);

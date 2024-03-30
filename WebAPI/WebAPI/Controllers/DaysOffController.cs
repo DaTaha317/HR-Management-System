@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.Interfaces;
@@ -12,10 +13,12 @@ namespace WebAPI.Controllers
     public class DaysOffController : ControllerBase
     {
         private IDaysOffRepo daysOffRepo;
+        private IMapper mapper;
 
-        public DaysOffController(IDaysOffRepo daysOffRepo)
+        public DaysOffController(IDaysOffRepo daysOffRepo, IMapper mapper)
         {
             this.daysOffRepo = daysOffRepo;
+            this.mapper = mapper;
         }
 
 
@@ -32,11 +35,7 @@ namespace WebAPI.Controllers
 
             foreach (var day in daysOff)
             {
-                DaysOffDTO dayDTO = new DaysOffDTO()
-                {
-                    Date = day.Date,
-                    Name = day.Name,
-                };
+                DaysOffDTO dayDTO = mapper.Map<DaysOffDTO>(day);
                 daysOffDTOs.Add(dayDTO);
             }
 
@@ -52,23 +51,14 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            DaysOffDTO dayDTO = new DaysOffDTO
-            {
-                Date = dayOff.Date,
-                Name = dayOff.Name,
-            };
-
+            DaysOffDTO dayDTO = mapper.Map<DaysOffDTO>(dayOff);
             return Ok(dayDTO);
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] DaysOffDTO daysOffDTO)
         {
-            DaysOff newDayOff = new DaysOff
-            {
-                Date = daysOffDTO.Date,
-                Name = daysOffDTO.Name,
-            };
+            DaysOff newDayOff = mapper.Map<DaysOff>(daysOffDTO);
 
             daysOffRepo.Add(newDayOff);
             daysOffRepo.Save();

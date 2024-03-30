@@ -33,6 +33,8 @@ namespace WebAPI.Models
 
             modelBuilder.Entity<Employee>().HasIndex(c => c.SSN).IsUnique();
 
+            modelBuilder.Entity<Employee>().HasIndex(c => c.PhoneNumber).IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
 

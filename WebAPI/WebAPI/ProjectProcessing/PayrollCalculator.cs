@@ -185,6 +185,9 @@ namespace WebAPI.ProjectProcessing
                 // calculate net salary
                 NetSalary = (BaseSalary + TotalAdditional) - TotalDeductions;
 
+                if(NetSalary < (BaseSalary/3))
+                    NetSalary = (BaseSalary/3);
+
                 // TODO: Fill your class here with data needed.
                 Payslip payslip = new Payslip()
                 {
