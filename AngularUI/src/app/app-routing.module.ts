@@ -16,6 +16,7 @@ import { preventLoginGuard } from './_guards/prevent-login.guard';
 import { RolesComponent } from './components/roles/roles.component';
 import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { AddRoleComponent } from './components/add-role/add-role.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -46,6 +47,7 @@ const routes: Routes = [
       { path: 'roles', component: RolesComponent },
       { path: 'roles/update', component: UpdateRoleComponent },
       { path: 'roles/add', component: AddRoleComponent },
+      { path: 'test', component: SidebarComponent },
     ],
   },
 ];

@@ -3,6 +3,11 @@
   --light: white;
   --dark: #155a7b;
   --medium: #a8d7ed;
+
+  /* sidebar */
+  --color-white: #fff;
+  --color-body: #e4e9f7;
+  --color-light: #e0e0e0;
 }
 
 .txtMain {
