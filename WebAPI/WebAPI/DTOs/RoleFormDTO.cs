@@ -6,5 +6,6 @@ namespace WebAPI.DTOs
     {
         [Required,StringLength(256)]
        public string Name { get; set; }
+
     }
 }
