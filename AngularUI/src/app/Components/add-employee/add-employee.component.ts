@@ -168,6 +168,7 @@ export class AddEmployeeComponent implements OnInit {
     }
 
 
+
     // Format clock in and clock out times
     this.employeeDTO.arrival = TimeUtility.formatTime(this.employeeDTO.arrival);
     this.employeeDTO.departure = TimeUtility.formatTime(

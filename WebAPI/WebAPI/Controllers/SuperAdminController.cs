@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetUsers")]
-        [Authorize(Roles = "SuperAdmin")]
+        
         public async Task<ActionResult> GetUsers()
         {
             var users = await userManager.Users
@@ -39,6 +39,22 @@ namespace WebAPI.Controllers
             }
 
             return Ok(usersWithRoles);
+        }
+
+        [HttpPost("DeleteUser")]
+        public async Task<ActionResult> DeleteUser(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound("User not found");
+
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return RedirectToAction(nameof(GetUsers));
         }
 
         [HttpGet("UserRoles")]
@@ -96,6 +112,31 @@ namespace WebAPI.Controllers
                 return RedirectToAction(nameof(GetAllRoles));
             }
             await roleManager.CreateAsync(new IdentityRole(model.Name.Trim()));
+            var role = await roleManager.FindByNameAsync(model.Name.Trim());
+
+            return CreatedAtAction("GetRoleById", role.Id, role);
+        }
+
+        [HttpGet("GetRoleById")]
+        public async Task<ActionResult> GetRoleById(string roleId)
+        {
+            var role = await roleManager.FindByIdAsync(roleId);
+            if(role == null)
+            {
+                return NotFound("No role found with this ID");
+            }
+
+            return Ok(role);
+        }
+
+        [HttpPost("DeleteRole")]
+        public async Task<ActionResult> DeleteRole(string roleName)
+        {
+            var role = await roleManager.FindByNameAsync(roleName);
+            if (role == null)
+                return NotFound("Role not found");
+
+            await roleManager.DeleteAsync(role);
             return RedirectToAction(nameof(GetAllRoles));
         }
 
@@ -129,13 +170,17 @@ namespace WebAPI.Controllers
             var role = await roleManager.FindByIdAsync(model.RoleId);
             if (role == null)
                 return NotFound("Role Not Found");
+
             var roleClaims =await roleManager.GetClaimsAsync(role);
+
             foreach(var roleClaim in roleClaims)
-            
                 await roleManager.RemoveClaimAsync(role, roleClaim);
+
             var selectedClaims = model.RoleClaims.Where(c => c.IsSelected).ToList();
+
             foreach (var claim in selectedClaims)
                 await roleManager.AddClaimAsync(role, new Claim("Permission", claim.DisplayValue));
+            
             return CreatedAtAction("ManagePermessions", role.Id);
         }
     }

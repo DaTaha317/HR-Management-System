@@ -34,6 +34,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("register")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> Registration(RegisterDTO account)
         {
             if (ModelState.IsValid)
@@ -48,9 +49,15 @@ namespace WebAPI.Controllers
                     UserName = account.Email
                 };
                 IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
+                if (!await roleManager.RoleExistsAsync(account.RoleName))
+                {
+                    return NotFound("Role not found");
+                }
                 if (result.Succeeded)
                 {
                     //await signInManager.SignInAsync(user, isPersistent: false);
+                    await userManager.AddToRoleAsync(user, account.RoleName);
+
                     return Created();
                 }
                 else

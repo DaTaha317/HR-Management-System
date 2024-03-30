@@ -28,7 +28,7 @@ export class DisplayEmployeeComponent implements OnInit {
   ) { }
   ngOnInit(): void {
 
-   
+
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as IEmployee[];
     });
@@ -38,12 +38,12 @@ export class DisplayEmployeeComponent implements OnInit {
   }
   deleteEmployee(id: number): void {
     this.modalRef?.hide();
-   
+
     this.employeeService.deleteEmployee(id).subscribe(() => {
       this.employees = this.employees.filter((emp) => emp.id !== id);
     });
 
-    
+
   }
   updateForm(employee: IEmployee) {
     this.router.navigate(['/employee/update'], { state: { employee } });
@@ -52,7 +52,7 @@ export class DisplayEmployeeComponent implements OnInit {
     return employee.id;
   }
 
-  
+
 
 
   decline(): void {
