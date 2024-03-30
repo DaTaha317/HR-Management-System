@@ -35,7 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 201:
-              this.toastr.success('Updated Succesfully');
+              this.toastr.success('Process succesful');
               break;
             case 401:
               this.toastr.error('Unauthorized', error.status);
