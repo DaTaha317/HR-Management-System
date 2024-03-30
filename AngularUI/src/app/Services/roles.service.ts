@@ -31,4 +31,10 @@ export class RolesService {
   updateRolePermission(role: IRolePermission) {
     return this.http.post(`${this.baseUrl}/SuperAdmin/AddPermission`, role);
   }
+
+  deleteRoleByName(roleName: string) {
+    return this.http.delete(`${this.baseUrl}/SuperAdmin/DeleteRole`, {
+      params: { roleName },
+    });
+  }
 }

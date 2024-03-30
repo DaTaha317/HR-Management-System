@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WebAPI.Constants;
@@ -129,7 +130,7 @@ namespace WebAPI.Controllers
             return Ok(role);
         }
 
-        [HttpPost("DeleteRole")]
+        [HttpDelete("DeleteRole")]
         public async Task<ActionResult> DeleteRole(string roleName)
         {
             var role = await roleManager.FindByNameAsync(roleName);
@@ -137,7 +138,7 @@ namespace WebAPI.Controllers
                 return NotFound("Role not found");
 
             await roleManager.DeleteAsync(role);
-            return RedirectToAction(nameof(GetAllRoles));
+            return NoContent();
         }
 
 

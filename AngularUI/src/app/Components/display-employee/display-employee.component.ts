@@ -4,8 +4,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-display-employee',
   templateUrl: './display-employee.component.html',
@@ -23,12 +21,9 @@ export class DisplayEmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmpServicesService,
     private router: Router,
-    private modalService: BsModalService,
-
-  ) { }
+    private modalService: BsModalService
+  ) {}
   ngOnInit(): void {
-
-
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as IEmployee[];
     });
@@ -42,8 +37,6 @@ export class DisplayEmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe(() => {
       this.employees = this.employees.filter((emp) => emp.id !== id);
     });
-
-
   }
   updateForm(employee: IEmployee) {
     this.router.navigate(['/employee/update'], { state: { employee } });
@@ -51,9 +44,6 @@ export class DisplayEmployeeComponent implements OnInit {
   trackByFn(index: number, employee: IEmployee) {
     return employee.id;
   }
-
-
-
 
   decline(): void {
     this.modalRef?.hide();
