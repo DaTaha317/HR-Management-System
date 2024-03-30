@@ -28,7 +28,10 @@
             <button class="btn bgMain txtMain" (click)="updateRole(role)">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger">
+            <button
+              class="btn btn-danger"
+              (click)="openModal(template, role.name)"
+            >
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
@@ -37,3 +40,21 @@
     </tbody>
   </table>
 </div>
+
+<!-- pop up to delete -->
+<br /><br />
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Do you want to confirm?</p>
+    <button
+      type="button"
+      class="btn btn-default btn-danger m-2"
+      (click)="deleteRole(toDeleteRole)"
+    >
+      Yes
+    </button>
+    <button type="button" class="btn btn-primary" (click)="decline()">
+      No
+    </button>
+  </div>
+</ng-template>
