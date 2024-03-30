@@ -41,6 +41,22 @@ namespace WebAPI.Controllers
             return Ok(usersWithRoles);
         }
 
+        [HttpPost("DeleteUser")]
+        public async Task<ActionResult> DeleteUser(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound("User not found");
+
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return RedirectToAction(nameof(GetUsers));
+        }
+
         [HttpGet("UserRoles")]
         public async Task<ActionResult> ManageRoles(string userId)
         {
@@ -96,6 +112,17 @@ namespace WebAPI.Controllers
                 return RedirectToAction(nameof(GetAllRoles));
             }
             await roleManager.CreateAsync(new IdentityRole(model.Name.Trim()));
+            return RedirectToAction(nameof(GetAllRoles));
+        }
+
+        [HttpPost("DeleteRole")]
+        public async Task<ActionResult> DeleteRole(string roleName)
+        {
+            var role = await roleManager.FindByNameAsync(roleName);
+            if (role == null)
+                return NotFound("Role not found");
+
+            await roleManager.DeleteAsync(role);
             return RedirectToAction(nameof(GetAllRoles));
         }
 
