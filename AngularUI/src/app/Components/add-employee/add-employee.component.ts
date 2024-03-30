@@ -18,17 +18,18 @@ import { IEmployee } from 'src/app/interfaces/IEmployee';
   styleUrls: ['./add-employee.component.css'],
 })
 export class AddEmployeeComponent implements OnInit {
- 
- 
+
+
   validationEmployee: FormGroup;
   modalRef?: BsModalRef; // this is a reference to bootstrap modal
   employeeDTO: any = {};
   selectedDepartment: string = '';
   departments: IDepartment[] = [];
   allCountries: string[] = [];
-  allPhones:any={}
-  allSSN:any={}
+  allPhones: any = {}
+  allSSN: any = {}
   employees: any = [];
+  isSubmitted: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private employeeService: EmpServicesService,
@@ -36,34 +37,34 @@ export class AddEmployeeComponent implements OnInit {
     private toastr: ToastrService,
 
     private modalService: BsModalService,
-    private router:Router
+    private router: Router
   ) {
     this.validationEmployee = formBuilder.group({
       ssn: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern('[0-9]{14}')]],
-      fullName: ["", [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
+      fullName: ["", [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       address: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required, this.validatePhoneNumber, Validators.pattern('[0-9]{11}')]],
       gender: ["", Validators.required],
       nationality: ["", Validators.required],
       birthDate: ["", [Validators.required, this.validateBirthDate]],
       contractDate: ["", [Validators.required, this.contractDateValidator]],
-      baseSalary: ["", [Validators.required, Validators.pattern('[0-9]*'),this.BasedSalaryValidation]],
+      baseSalary: ["", [Validators.required, Validators.pattern('[0-9]*'), this.BasedSalaryValidation]],
       arrival: ["", Validators.required],
       departmentName: ["", Validators.required],
       departure: ["", Validators.required],
-    }, { validator: minPeriodValidator(),
-     
-      
+    }, {
+      validator: minPeriodValidator(),
+
+
     })
   }
- 
+
   validatePhoneNumber(control: FormControl) {
-  
+
     const phoneNumber = control.value;
-   console.log(this.employees)
 
     // Return if the field is empty
-  
+
   }
 
   validateBirthDate(control: any) {
@@ -86,24 +87,24 @@ export class AddEmployeeComponent implements OnInit {
     }
     return null;
   }
-  
+
   contractDateValidator(control: any) {
 
     const startDate = new Date('2008-01-01');
     const currentDate = new Date();
     const contractDate = new Date(control.value);
 
-    if (contractDate < startDate||contractDate > currentDate) {
-    
+    if (contractDate < startDate || contractDate > currentDate) {
+
       return { 'invalidContractDate': true };
     }
-    
-    
+
+
 
 
     return null;
   };
- 
+
 
 
 
@@ -150,19 +151,22 @@ export class AddEmployeeComponent implements OnInit {
     });
     this.allCountries = this.employeeService.allCountriesList;
 
-     
+
     this.employeeService.getEmployees().subscribe((data) => {
-      this.employees = data 
-       console.log(this.employees)
-       });
-      
-   
-  
+      this.employees = data
+      console.log(this.employees)
+    });
+
+
+
   }
 
   onSubmit() {
-    
-   
+    this.isSubmitted = true;
+    if (!this.validationEmployee.valid) {
+      return;
+    }
+
 
     // Format clock in and clock out times
     this.employeeDTO.arrival = TimeUtility.formatTime(this.employeeDTO.arrival);
@@ -171,7 +175,7 @@ export class AddEmployeeComponent implements OnInit {
     );
     this.employeeDTO.departmentName = this.selectedDepartment;
     this.employeeService.addEmployee(this.employeeDTO).subscribe((data) => {
-    
+
       this.toastr.success('An Employee has been added');
       this.router.navigate(['/employee/display']);
       this.reset();

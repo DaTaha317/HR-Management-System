@@ -33,7 +33,7 @@
                   <small
                     *ngIf="(isSubmitted && !password?.valid && (password?.untouched)) || (password?.errors?.['required'] && (password?.touched))"
                     class="text-danger">
-                    *This field is required
+                    * This field is required
                   </small>
                   <small *ngIf="password?.errors?.['minlength'] && (password?.touched )" class="text-danger m-3">
                     * minimum must be 4 numbers

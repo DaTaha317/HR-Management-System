@@ -18,7 +18,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 })
 export class UpdateEmployeeComponent implements OnInit {
   allCountries: string[] = [];
-  validationUpdateEmployee:FormGroup;
+  validationUpdateEmployee: FormGroup;
   selectedEmployee = {} as IEmployee;
   employees: IEmployee[] = [];
   departments: IDepartment[] = [];
@@ -34,18 +34,18 @@ export class UpdateEmployeeComponent implements OnInit {
     private departmentServices: DeptServicesService,
     private toastr: ToastrService,
 
-    private formBuilder:FormBuilder
+    private formBuilder: FormBuilder
   ) {
-    this.validationUpdateEmployee=formBuilder.group({
+    this.validationUpdateEmployee = formBuilder.group({
       ssn: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14), Validators.pattern('[0-9]{14}')]],
-      fullName: ["", [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
+      fullName: ["", [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       address: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required, this.validatePhoneNumber, Validators.pattern('[0-9]{11}')]],
       gender: ["", Validators.required],
       nationality: ["", Validators.required],
       birthDate: ["", [Validators.required, this.validateBirthDate]],
       contractDate: ["", [Validators.required, this.contractDateValidator]],
-      baseSalary: ["", [Validators.required, Validators.pattern('[0-9]*'),this.BasedSalaryValidation]],
+      baseSalary: ["", [Validators.required, Validators.pattern('[0-9]*'), this.BasedSalaryValidation]],
       arrival: ["", Validators.required],
       departure: ["", Validators.required],
       departmentName: ["", Validators.required],
@@ -80,12 +80,12 @@ export class UpdateEmployeeComponent implements OnInit {
     const currentDate = new Date();
     const contractDate = new Date(control.value);
 
-    if (contractDate < startDate||contractDate > currentDate) {
-    
+    if (contractDate < startDate || contractDate > currentDate) {
+
       return { 'invalidContractDate': true };
     }
-    
-    
+
+
 
 
     return null;
@@ -156,19 +156,19 @@ export class UpdateEmployeeComponent implements OnInit {
       }
     );
   }
-  UpdateEmployeeBtn(emp:IEmployee){
+  UpdateEmployeeBtn(emp: IEmployee) {
 
-this.updateFormData=emp;
+    this.updateFormData = emp;
 
-this.update(this.updateFormData)
-this.modalRef?.hide();
+    this.update(this.updateFormData)
+    this.modalRef?.hide();
 
   }
   decline(): void {
     this.modalRef?.hide();
   }
-  openModal(template: TemplateRef<void>,emb:IEmployee) {
-    this.updateFormData=emb;
+  openModal(template: TemplateRef<void>, emb: IEmployee) {
+    this.updateFormData = emb;
 
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
