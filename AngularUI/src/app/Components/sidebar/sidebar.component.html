@@ -1,0 +1,72 @@
+<div class="sidebar">
+  <div class="logo_details">
+    <i><img src="assets/logo-white.png" alt="" /></i>
+    <div class="logo_name">Pioneers</div>
+    <i class="bx bx-menu" id="btn" (click)="toggleSidebar()"></i>
+  </div>
+  <ul class="nav-list">
+    <li>
+      <a routerLink="/employee/display" (click)="closeSidebar()">
+        <i class="bx bxs-user-detail"></i>
+        <span class="link_name">Employees</span>
+      </a>
+      <span class="tooltip">Employees</span>
+    </li>
+    <li>
+      <a routerLink="/attendance/report" (click)="closeSidebar()">
+        <i class="bx bx-calendar"></i>
+        <span class="link_name">Attendance</span>
+      </a>
+      <span class="tooltip">Attendance</span>
+    </li>
+    <li>
+      <a routerLink="/salary/report" (click)="closeSidebar()">
+        <i class="bx bxs-report"></i>
+        <span class="link_name">Salary Report</span>
+      </a>
+      <span class="tooltip">Salary Report</span>
+    </li>
+    <li>
+      <a routerLink="/daysoff" (click)="closeSidebar()">
+        <i class="bx bx-calendar-star"></i>
+        <span class="link_name">Holidays</span>
+      </a>
+      <span class="tooltip">Holidays</span>
+    </li>
+    <li>
+      <a routerLink="/roles" (click)="closeSidebar()">
+        <i class="bx bx-folder"></i>
+        <span class="link_name">Roles</span>
+      </a>
+      <span class="tooltip">Roles</span>
+    </li>
+    <li>
+      <a routerLink="/admin/add" (click)="closeSidebar()">
+        <i class="bx bxs-user-plus"></i>
+        <span class="link_name">Add User</span>
+      </a>
+      <span class="tooltip">Add User</span>
+    </li>
+    <li>
+      <a routerLink="/settings" (click)="closeSidebar()">
+        <i class="bx bx-cog"></i>
+        <span class="link_name">Settings</span>
+      </a>
+      <span class="tooltip">Settings</span>
+    </li>
+    <li class="profile">
+      <div class="profile_details">
+        <div class="profile_content">
+          <div class="name">A cookie is needed</div>
+          <div class="designation">Admin</div>
+        </div>
+      </div>
+      <i
+        class="bx bx-log-out"
+        id="log_out"
+        (click)="logout()"
+        style="cursor: pointer"
+      ></i>
+    </li>
+  </ul>
+</div>

@@ -24,7 +24,6 @@ import { OrganizationSettingsComponent } from './components/organization-setting
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FilterPipe } from './pipes/filter.pipe';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { AddAttendanceComponent } from './components/add-attendance/add-attendance.component';
@@ -35,12 +34,12 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { RolesComponent } from './components/roles/roles.component';
 import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { AddRoleComponent } from './components/add-role/add-role.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
-    NavbarComponent,
     LandingComponent,
     NewAdminComponent,
     AttendanceReportComponent,
@@ -55,6 +54,7 @@ import { AddRoleComponent } from './components/add-role/add-role.component';
     RolesComponent,
     UpdateRoleComponent,
     AddRoleComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +68,7 @@ import { AddRoleComponent } from './components/add-role/add-role.component';
     ToastrModule.forRoot({
       timeOut: 3000, // Toast disappears after 3 seconds
       progressBar: true,
-      positionClass: 'toast-bottom-right', //の位置 toast-top-right, toast-bottom-right, etc.
+      positionClass: 'toast-bottom-right',
     }),
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party',
