@@ -33,6 +33,17 @@ namespace WebAPI.Controllers
             DeductionDTO deductionDTO = organization.DeductionDTO;
             WeeklyDaysDTO weeklyDaysDTO = organization.WeeklyDaysDTO;
 
+            if (commissionDTO.Amount < 0 || commissionDTO.Hours < 0)
+                return BadRequest("Commission data has nagetive numbers");
+
+            if (deductionDTO.Amount < 0 || deductionDTO.Hours < 0)
+                return BadRequest("Deduction data has negative numbers");
+
+            foreach (int day in weeklyDaysDTO.days)
+                if (day < 0 || day > 6)
+                    return BadRequest("Bad day number");
+
+
             CommissionSettings oldCommission = commissionRepo.Get();
             DeductionSettings oldDeduction = deductionRepo.Get();
             WeeklyDaysOff oldDaysOff = weeklyDaysOffRepo.Get();

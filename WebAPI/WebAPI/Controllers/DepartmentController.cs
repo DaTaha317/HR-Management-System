@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
@@ -13,10 +14,12 @@ namespace WebAPI.Controllers
     public class DepartmentController : ControllerBase
     {
         private IDepartmentRepo departmentRepo;
+        private IMapper mapper;
 
-        public DepartmentController(IDepartmentRepo departmentRepo)
+        public DepartmentController(IDepartmentRepo departmentRepo, IMapper mapper)
         {
             this.departmentRepo = departmentRepo;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -32,11 +35,8 @@ namespace WebAPI.Controllers
 
             foreach (var dept in departments)
             {
-                DepartmentDTO deptDTO = new DepartmentDTO()
-                {
-                    Id = dept.Id,
-                    Name = dept.Name,
-                };
+                DepartmentDTO deptDTO = mapper.Map<DepartmentDTO>(dept);
+
                 departmentDTOs.Add(deptDTO);
             }
 
@@ -51,11 +51,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            DepartmentDTO departmentDTO = new DepartmentDTO()
-            {
-                Id = department.Id,
-                Name = department.Name
-            };
+            DepartmentDTO departmentDTO = mapper.Map<DepartmentDTO>(department);
 
             return Ok(departmentDTO);
         }

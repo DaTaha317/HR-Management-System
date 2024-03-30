@@ -27,6 +27,12 @@ namespace WebAPI.Helpers
             CreateMap<CommissionDTO, CommissionSettings>();
             CreateMap<DeductionDTO, DeductionSettings>();
             CreateMap<WeeklyDaysDTO, WeeklyDaysOff>();
+            CreateMap<DaysOff, DaysOffDTO>();
+            CreateMap<DaysOffDTO, DaysOff>();
+            CreateMap<Department, DepartmentDTO>();
+            CreateMap<DepartmentDTO, Department>();
+            CreateMap<Employee, EmployeeDTO>();
+            CreateMap<EmployeeDTO, Employee>();
 
         }
     }
