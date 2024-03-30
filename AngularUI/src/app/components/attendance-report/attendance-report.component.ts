@@ -39,7 +39,6 @@ export class AttendanceReportComponent implements OnInit {
   getAttendanceReport() {
     if (this.userParams) {
       this.attendanceService.userParams = this.userParams;
-      console.log(this.attendanceService.userParams);
       this.attendanceService.getAll(this.userParams).subscribe({
         next: (report) => {
           if (report) {
@@ -63,7 +62,7 @@ export class AttendanceReportComponent implements OnInit {
   }
 
   deleteRecord(id: number, date: Date): void {
-   
+
 
     this.attendanceService.deleteRecord(id, date).subscribe(() => {
       this.toastr.success('Deleted Successfully');
@@ -94,7 +93,7 @@ export class AttendanceReportComponent implements OnInit {
     this.modalRef?.hide();
   }
   openModal(template: TemplateRef<void>, id: number, date: Date) {
-    
+
 
     this.attendancedate = date;
     this.attendancedel = id;

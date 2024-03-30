@@ -29,6 +29,7 @@ export class AddEmployeeComponent implements OnInit {
   allPhones: any = {}
   allSSN: any = {}
   employees: any = [];
+  isSubmitted: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private employeeService: EmpServicesService,
@@ -161,6 +162,10 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isSubmitted = true;
+    if (!this.validationEmployee.valid) {
+      return;
+    }
 
 
 

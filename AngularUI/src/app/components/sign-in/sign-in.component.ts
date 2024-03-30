@@ -11,7 +11,9 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
+
   model: any = {};
+  isSubmitted = false;
 
   departments: IDepartment[] | undefined;
 
@@ -27,7 +29,6 @@ export class SignInComponent {
   }
 
   initializeForm(): void {
-
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -35,13 +36,14 @@ export class SignInComponent {
         Validators.minLength(4),
       ]), // array of validators
     });
-    
+
   }
 
   login() {
+    this.isSubmitted = true;
     let email = this.signInForm.value['email'];
     let password = this.signInForm.value['password'];
-    if (email === '' || password === '') {
+    if (!this.email?.valid || !this.password?.valid) {
       return;
     }
     this.accountService.login(email, password).subscribe({
@@ -49,16 +51,18 @@ export class SignInComponent {
         this.toastr.success("logged in successfully");
         this.router.navigate(['/home']);
       },
-
       error: () => {
         this.formError = true;
       },
     });
   }
-  get email(){
+
+  get email() {
     return this.signInForm.get("email")
   }
-  get password(){
+
+  get password() {
     return this.signInForm.get("password")
   }
+
 }

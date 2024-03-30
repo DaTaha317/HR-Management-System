@@ -15,13 +15,9 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="commissionType">Method</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    [(ngModel)]="settings.commissionDTO.type"
-                    [ngModelOptions]="{ standalone: true }"
-                    (change)="onComissionTypeChange()"
-                  >
+                  <select class="form-select" aria-label="Default select example"
+                    [(ngModel)]="settings.commissionDTO.type" [ngModelOptions]="{ standalone: true }"
+                    (change)="onComissionTypeChange()">
                     <option disabled>Select an option</option>
                     <option [value]="0">Hours</option>
                     <option [value]="1">Money</option>
@@ -29,25 +25,14 @@
                 </div>
                 <div *ngIf="isComissionHours" class="form-group">
                   <label for="commissionHours">Hours</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="commissionHours"
-                    name="commissionHours"
-                    [(ngModel)]="settings.commissionDTO.hours"
-                   
-                  />
-               
+                  <input type="number" class="form-control" id="commissionHours" name="commissionHours"
+                    [(ngModel)]="settings.commissionDTO.hours" />
+
                 </div>
                 <div *ngIf="!isComissionHours" class="form-group">
                   <label for="commissionAmount">Amount</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="commissionAmount"
-                    name="commissionAmount"
-                    [(ngModel)]="settings.commissionDTO.amount"
-                  />
+                  <input type="number" class="form-control" id="commissionAmount" name="commissionAmount"
+                    [(ngModel)]="settings.commissionDTO.amount" />
                 </div>
               </div>
             </div>
@@ -61,13 +46,9 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="deductionType">Method</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    [(ngModel)]="settings.deductionDTO.type"
-                    [ngModelOptions]="{ standalone: true }"
-                    (change)="onDeductionTypeChange()"
-                  >
+                  <select class="form-select" aria-label="Default select example"
+                    [(ngModel)]="settings.deductionDTO.type" [ngModelOptions]="{ standalone: true }"
+                    (change)="onDeductionTypeChange()">
                     <option disabled>Select an option</option>
                     <option [value]="0">Hours</option>
                     <option [value]="1">Money</option>
@@ -75,23 +56,13 @@
                 </div>
                 <div *ngIf="isDeductionHours" class="form-group">
                   <label for="deductionHours">Hours</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="deductionHours"
-                    name="deductionHours"
-                    [(ngModel)]="settings.deductionDTO.hours"
-                  />
+                  <input type="number" class="form-control" id="deductionHours" name="deductionHours"
+                    [(ngModel)]="settings.deductionDTO.hours" />
                 </div>
                 <div *ngIf="!isDeductionHours" class="form-group">
                   <label for="deductionAmount">Amount</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="deductionAmount"
-                    name="deductionAmount"
-                    [(ngModel)]="settings.deductionDTO.amount"
-                  />
+                  <input type="number" class="form-control" id="deductionAmount" name="deductionAmount"
+                    [(ngModel)]="settings.deductionDTO.amount" />
                 </div>
               </div>
             </div>
@@ -106,18 +77,10 @@
               </div>
               <div class="card-body">
                 <div class="row row-cols-1 row-cols-md-3">
-                  <div
-                    *ngFor="let day of daysOfWeek; trackBy: trackByIdx"
-                    class="col"
-                  >
+                  <div *ngFor="let day of daysOfWeek; trackBy: trackByIdx" class="col">
                     <label>
-                      <input
-                        type="checkbox"
-                        [value]="day.value"
-                        [(ngModel)]="day.state"
-                        [ngModelOptions]="{ standalone: true }"
-                        (change)="onCheckboxChange($event, day.value)"
-                      />
+                      <input type="checkbox" [value]="day.value" [(ngModel)]="day.state"
+                        [ngModelOptions]="{ standalone: true }" (change)="onCheckboxChange($event, day.value)" />
                       {{ day.name }}
                     </label>
                   </div>

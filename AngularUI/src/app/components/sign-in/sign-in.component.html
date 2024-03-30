@@ -7,59 +7,48 @@
         </div>
         <div class="card shadow-lg">
           <div class="card-body">
-            <form
-              [formGroup]="signInForm"
-              (ngSubmit)="login()"
-              autocomplete="off"
-            >
+            <form [formGroup]="signInForm" (ngSubmit)="login()" autocomplete="off">
               <h2 class="text-center txtSub">Pioneers</h2>
               <hr />
               <div class="mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="email"
-                  placeholder="Email"
-                />
-                 
-              <div [hidden]="email?.valid || (!email?.touched )">
-                <small *ngIf="email?.errors?.['required'] && (email?.touched )" class="text-danger m-3">
-                 * This field is required
-                </small>
-                <small *ngIf="email?.errors?.['email'] && (email?.touched )" class="text-danger m-3">
-                 * enter valid email
-                </small>
-              </div>
-              </div>
-            
-              <div class="mb-3">
-                <input
-                  type="password"
-                  class="form-control"
-                  formControlName="password"
-                  placeholder="Password"
-                /> 
-                <div [hidden]="password?.valid || (!password?.touched )">
-                  <small *ngIf="password?.errors?.['required'] && (password?.touched )" class="text-danger m-3">
-                    *This field is required
+                <input [ngClass]="(isSubmitted && !email?.valid) ? 'form-error' : ''" type="text" class="form-control"
+                  formControlName="email" placeholder="Email" />
+
+                <div>
+                  <small
+                    *ngIf="(!this.email?.valid && this.isSubmitted && (email?.untouched)) || (email?.errors?.['required'] && (email?.touched ))"
+                    class="text-danger">
+                    * This field is required
                   </small>
-                  <small *ngIf="password?.errors?.['minlength'] && (password?.touched )" class="text-danger m-3">
-                   * miumium  must be 4 numbers
+                  <small *ngIf="email?.errors?.['email'] && (email?.touched )" class="text-danger m-3">
+                    * enter valid email
                   </small>
                 </div>
               </div>
-              
-             
+
+              <div class="mb-3">
+                <input [ngClass]="(isSubmitted && !password?.valid) ? 'form-error' : ''" type="password"
+                  class="form-control" formControlName="password" placeholder="Password" />
+                <div>
+                  <small
+                    *ngIf="(isSubmitted && !password?.valid && (password?.untouched)) || (password?.errors?.['required'] && (password?.touched))"
+                    class="text-danger">
+                    * This field is required
+                  </small>
+                  <small *ngIf="password?.errors?.['minlength'] && (password?.touched )" class="text-danger m-3">
+                    * minimum must be 4 numbers
+                  </small>
+                </div>
+              </div>
+
+
               <div class="text-center">
                 <button class="btn me-2 bgMain txtMain " id="BTN" type="submit">
                   Sign in
                 </button>
               </div>
-              <label
-              class="invalid-feedback d-block mt-2 mb-2 ms-1 alert alert-danger text-center"
-              *ngIf="formError" 
-              >Wrong email or password</label
-            >
+              <label class="invalid-feedback d-block mt-2 mb-2 ms-1 alert alert-danger text-center"
+                *ngIf="formError">Wrong email or password</label>
             </form>
           </div>
         </div>
