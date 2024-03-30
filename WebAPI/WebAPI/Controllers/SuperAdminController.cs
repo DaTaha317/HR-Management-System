@@ -119,7 +119,7 @@ namespace WebAPI.Controllers
             return RedirectToAction(nameof(GetAllRoles));
         }
 
-        [HttpPost("DeleteRole")]
+        [HttpDelete("DeleteRole")]
         public async Task<ActionResult> DeleteRole(string roleName)
         {
             var role = await roleManager.FindByNameAsync(roleName);
