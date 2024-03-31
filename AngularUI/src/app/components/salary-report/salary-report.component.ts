@@ -16,9 +16,28 @@ export class SalaryReportComponent implements OnInit {
   totalLength: any;
   page: number = 1;
   searchText: any;
-  constructor(private salaryService: SalaryService) {}
+  years: number[] = [];
+  months: { value: number; name: string }[];
+  constructor(private salaryService: SalaryService) {
+    this.months = [
+      { value: 1, name: 'January' },
+      { value: 2, name: 'February' },
+      { value: 3, name: 'March' },
+      { value: 4, name: 'April' },
+      { value: 5, name: 'May' },
+      { value: 6, name: 'June' },
+      { value: 7, name: 'July' },
+      { value: 8, name: 'August' },
+      { value: 9, name: 'September' },
+      { value: 10, name: 'October' },
+      { value: 11, name: 'November' },
+      { value: 12, name: 'December' },
+    ];
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getYears();
+  }
 
   getSalaryReport(month: IMonth) {
     this.salaryService.getSalaryReport(month).subscribe((data) => {
@@ -36,5 +55,12 @@ export class SalaryReportComponent implements OnInit {
 
   isSalaryMonth(): boolean {
     return !this.month || !this.year;
+  }
+
+  getYears() {
+    const currentYear = new Date().getFullYear();
+    for (let year = 2008; year <= currentYear; year++) {
+      this.years.push(year);
+    }
   }
 }
