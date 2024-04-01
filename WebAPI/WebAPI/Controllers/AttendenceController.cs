@@ -67,9 +67,14 @@ namespace WebAPI.Controllers
 
             int employeeDepartureHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Departure.Hour;
             int employeeArrivalHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Arrival.Hour;
+
+
             Attendence attendence;
             if (attendanceDTO.Status == 0)
             {
+                if (attendanceDTO.Arrival?.Hour < employeeArrivalHour) 
+                    attendanceDTO.Arrival = employeeRepo.GetById(attendanceDTO.EmpId).Arrival;
+
                 attendence = mapper.Map<Attendence>(attendanceDTO);
                 var overtime = (int)attendanceDTO.Departure?.Hour - employeeDepartureHour;
 
