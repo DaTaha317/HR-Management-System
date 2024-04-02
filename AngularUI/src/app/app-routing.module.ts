@@ -17,6 +17,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { AddRoleComponent } from './components/add-role/add-role.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -32,7 +33,12 @@ const routes: Routes = [
     children: [
       { path: 'home', component: LandingComponent },
       {
-        path: 'admin/add',
+        path: 'users',
+        component: UsersComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'users/add',
         component: NewAdminComponent,
         canActivate: [AuthGuard],
       },
@@ -47,7 +53,6 @@ const routes: Routes = [
       { path: 'roles', component: RolesComponent },
       { path: 'roles/update', component: UpdateRoleComponent },
       { path: 'roles/add', component: AddRoleComponent },
-      { path: 'test', component: SidebarComponent },
     ],
   },
 ];
