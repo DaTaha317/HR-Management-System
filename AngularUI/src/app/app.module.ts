@@ -35,6 +35,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { AddRoleComponent } from './components/add-role/add-role.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     UpdateRoleComponent,
     AddRoleComponent,
     SidebarComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

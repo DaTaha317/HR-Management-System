@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { IRole } from 'src/app/interfaces/IRole';
 import { RolesService } from 'src/app/services/roles.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-new-admin',
@@ -12,19 +13,20 @@ import { RolesService } from 'src/app/services/roles.service';
 export class NewAdminComponent implements OnInit {
   validationAdmin: FormGroup;
   roles!: IRole[];
+  user = {};
   constructor(
     private formbuilder: FormBuilder,
     private toastr: ToastrService,
-    private roleService: RolesService
+    private roleService: RolesService,
+    private userService: UserService
   ) {
     this.validationAdmin = formbuilder.group({
       fullname: ['', Validators.required],
 
-      username: ['', Validators.required],
-
       email: ['', Validators.required],
 
       password: ['', [Validators.required]],
+      confirmedPassword: ['', [Validators.required]],
 
       role: ['', Validators.required],
     });
@@ -35,11 +37,13 @@ export class NewAdminComponent implements OnInit {
   get email() {
     return this.validationAdmin.get('email');
   }
-  get username() {
-    return this.validationAdmin.get('username');
-  }
+
   get password() {
     return this.validationAdmin.get('password');
+  }
+
+  get confirmedPassword() {
+    return this.validationAdmin.get('confirmedPassword');
   }
   get role() {
     return this.validationAdmin.get('role');
@@ -49,7 +53,7 @@ export class NewAdminComponent implements OnInit {
     this.getAllRoles();
   }
   sucsess() {
-    this.toastr.success('An new admin has been added');
+    this.toastr.success('User added Succesfully');
     this.reset();
     this.validationAdmin.reset();
   }
@@ -61,5 +65,12 @@ export class NewAdminComponent implements OnInit {
     this.roleService.getAllRoles().subscribe((data: IRole[]) => {
       this.roles = data;
     });
+  }
+
+  onSubmit() {
+    if (!this.validationAdmin.valid) {
+      return;
+    }
+    this.userService.addUser(this.user).subscribe((data) => {});
   }
 }

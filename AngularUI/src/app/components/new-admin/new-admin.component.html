@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h2 class="text-center mb-4 txtSub">Add new Admin</h2>
+  <h2 class="text-center mb-4 txtSub">New User</h2>
   <div class="row">
     <div class="col-md-8 col-lg-6 mx-auto">
       <div class="card shadow">
@@ -17,24 +17,6 @@
               <div [hidden]="fullname?.valid || fullname?.untouched">
                 <small
                   [hidden]="fullname?.errors?.['requird']"
-                  class="text-danger m-3"
-                >
-                  this field requird
-                </small>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter Username"
-                formControlName="username"
-              />
-              <div>
-                <small
-                  [hidden]="username?.valid||username?.untouched && ! username?.errors?.['requird']"
                   class="text-danger m-3"
                 >
                   this field requird
@@ -70,6 +52,25 @@
 
               <small
                 [hidden]="password?.valid||password?.untouched && ! password?.errors?.['requird']"
+                class="text-danger m-3"
+              >
+                this field requird
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmedPassword" class="form-label"
+                >Confirmed Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="confirmedPassword"
+              />
+
+              <small
+                [hidden]="confirmedPassword?.valid||confirmedPassword?.untouched && ! confirmedPassword?.errors?.['requird']"
                 class="text-danger m-3"
               >
                 this field requird

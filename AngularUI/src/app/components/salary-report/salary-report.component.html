@@ -10,10 +10,9 @@
           [ngModelOptions]="{ standalone: true }"
         >
           <option selected>Select Month</option>
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <!-- Add options for other months -->
+          <option *ngFor="let month of months" [value]="month.value">
+            {{ month.name }}
+          </option>
         </select>
       </div>
     </div>
@@ -27,9 +26,8 @@
           [ngModelOptions]="{ standalone: true }"
         >
           <option selected>Select Year</option>
-          <option value="2022">2022</option>
-          <option value="2024">2024</option>
-          <!-- Add options for other years -->
+
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
         </select>
       </div>
       <button
