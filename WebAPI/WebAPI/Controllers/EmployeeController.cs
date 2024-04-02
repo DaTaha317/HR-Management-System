@@ -70,6 +70,7 @@ namespace WebAPI.Controllers
                 return NotFound("Department not found");
             }
             Employee employee = mapper.Map<Employee>(employeeDTO);
+            employee.DeptId = department.Id;
             employeeRepo.Add(employee);
             employeeRepo.Save();
             return CreatedAtAction("GetById", new { id = employee.SSN }, employeeDTO);

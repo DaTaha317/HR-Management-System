@@ -31,7 +31,13 @@ namespace WebAPI.Helpers
             CreateMap<DaysOffDTO, DaysOff>();
             CreateMap<Department, DepartmentDTO>();
             CreateMap<DepartmentDTO, Department>();
-            CreateMap<Employee, EmployeeDTO>();
+
+            CreateMap<Employee, EmployeeDTO>().ForMember(
+                dist => dist.departmentName,
+                opt => opt.MapFrom(
+                    src => src.Department.Name
+                )
+            );
             CreateMap<EmployeeDTO, Employee>();
 
         }
