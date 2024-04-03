@@ -1,87 +1,111 @@
-* {box-sizing:border-box}
+/*
+COLORS:
 
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #777;
+  padding: 30px;
+}
+
+.header {
+  height: 100vh;
+  background-image: linear-gradient(
+      to right,
+      rgba(68, 180, 221, 0.7),
+      rgba(8, 28, 57, 0.8)
+    ),
+    url("../../../assets/Human-resources.jpg");
+
+  background-size: cover;
+  background-position: top;
   position: relative;
-  margin: auto;
 }
 
-/* Hide the images by default */
-.mySlides {
-  display: none;
+.logo-box {
+  display: inline;
 }
 
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
+.logo {
+  height: 100px;
+}
+
+.text-box {
   position: absolute;
-  top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
-/* Caption text */
-.text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
 }
 
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+
+  backface-visibility: hidden;
+  margin-bottom: 60px;
 }
 
-/* The dots/bullets/indicators */
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+.heading-primary-main {
+  display: block;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: 30px;
+
+  animation: moveInLeft 1.3s ease-out;
 }
 
-.active, .dot:hover {
-  background-color: #717171;
+.heading-primary-sub {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 15px;
+
+  animation: moveInRight 1.3s ease-out;
 }
 
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
 
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }

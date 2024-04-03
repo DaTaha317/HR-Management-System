@@ -1,13 +1,12 @@
-<div class="slideshow">
-  <div *ngFor="let image of images" class="mySlides fade">
-    <img [src]="image" style="width:100%">
+<header class="header">
+  <div class="text-box">
+    <h1 class="heading-primary">
+      <span class="heading-primary-main"
+        >Pioneers
+        <div class="logo-box">
+          <img src="assets/logo-white.png" alt="Logo" class="logo" /></div
+      ></span>
+      <span class="heading-primary-sub">Integrated programming solutions</span>
+    </h1>
   </div>
-
-  <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
-  <a class="next" (click)="plusSlides(1)">&#10095;</a>
-</div>
-<br>
-
-<div style="text-align:center">
-  <span *ngFor="let image of images; let i = index" class="dot" (click)="currentSlide(i+1)"></span>
-</div>
+</header>
