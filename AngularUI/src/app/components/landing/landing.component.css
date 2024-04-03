@@ -7,12 +7,6 @@ Dark green: #28b485
 
 */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: "Lato", sans-serif;
   font-weight: 400;
@@ -38,10 +32,12 @@ body {
 
 .logo-box {
   display: inline;
+  backface-visibility: hidden;
 }
 
 .logo {
-  height: 100px;
+  height: 200px;
+  animation: appear 2s ease-out;
 }
 
 .text-box {
@@ -107,5 +103,15 @@ body {
   100% {
     opacity: 1;
     transform: translate(0);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
