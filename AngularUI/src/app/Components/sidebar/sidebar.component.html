@@ -57,16 +57,11 @@
     <li class="profile">
       <div class="profile_details">
         <div class="profile_content">
-          <div class="name">A cookie is needed</div>
-          <div class="designation">Admin</div>
+          <div class="name">{{fullName}}</div>
+          <div class="designation">{{userRole}}</div>
         </div>
       </div>
-      <i
-        class="bx bx-log-out"
-        id="log_out"
-        (click)="logout()"
-        style="cursor: pointer"
-      ></i>
+      <i class="bx bx-log-out" id="log_out" (click)="logout()" style="cursor: pointer"></i>
     </li>
   </ul>
 </div>

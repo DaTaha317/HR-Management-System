@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   
+
     public class ApplicationUserController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -116,7 +116,9 @@ namespace WebAPI.Controllers
                     return Ok(new
                     {
                         token = new JwtSecurityTokenHandler().WriteToken(token),
-                        expiration = token.ValidTo
+                        expiration = token.ValidTo,
+                        fullName = user.FullName,
+                        role = roles[0] // return the first role of the list
                     });
                 }
             }

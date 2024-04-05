@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
+import { IUser } from 'src/app/interfaces/IUser';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,9 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private accountService: AccountService, private router: Router) {}
 
-  ngOnInit() {}
+  fullName: string = "";
+  userRole: string = "";
+
+  constructor(private accountService: AccountService, private router: Router) { }
+
+  ngOnInit() {
+    this.accountService.currentUser$.subscribe({
+      next: (user) => {
+        if (user) {
+          this.fullName = user.fullName;
+          this.userRole = user.role;
+        }
+      }
+    })
+  }
 
   logout() {
     this.accountService.logout();
