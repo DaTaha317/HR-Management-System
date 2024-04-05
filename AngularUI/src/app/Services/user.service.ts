@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IApplicationUser } from '../interfaces/IApplicationUser';
 import { Observable } from 'rxjs';
+import { IRegister } from '../interfaces/IRegister';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class UserService {
     );
   }
 
-  addUser(user: any): Observable<any> {
+  addUser(user: IRegister): Observable<any> {
     return this.http.post<any>(
       `${this.baseURL}/ApplicationUser/register`,
       user
