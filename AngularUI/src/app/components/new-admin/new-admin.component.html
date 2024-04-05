@@ -13,13 +13,19 @@
                 id="fullName"
                 placeholder="Enter Full Name"
                 formControlName="fullname"
+                [(ngModel)]="user.fullName"
               />
-              <div [hidden]="fullname?.valid || fullname?.untouched">
+              <div
+                [hidden]="
+                  validationAdmin.get('fullname')?.valid ||
+                  validationAdmin.get('fullname')?.untouched
+                "
+              >
                 <small
-                  [hidden]="fullname?.errors?.['requird']"
                   class="text-danger m-3"
+                  *ngIf="validationAdmin.get('fullname')?.errors?.['required']"
                 >
-                  this field requird
+                  Full Name is required.
                 </small>
               </div>
             </div>
@@ -27,18 +33,32 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input
-                type="text"
+                type="email"
                 class="form-control"
                 placeholder="Enter Email"
                 formControlName="email"
+                [(ngModel)]="user.email"
               />
 
-              <small
-                [hidden]="email?.valid||email?.untouched && ! email?.errors?.['requird']"
-                class="text-danger m-3"
+              <div
+                [hidden]="
+                  validationAdmin.get('email')?.valid ||
+                  validationAdmin.get('email')?.untouched
+                "
               >
-                this field requird
-              </small>
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('email')?.errors?.['required']"
+                >
+                  Email is required.
+                </small>
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('email')?.errors?.['email']"
+                >
+                  Invalid email format.
+                </small>
+              </div>
             </div>
 
             <div class="mb-3">
@@ -48,14 +68,22 @@
                 class="form-control"
                 placeholder="Enter Password"
                 formControlName="password"
+                [(ngModel)]="user.password"
               />
 
-              <small
-                [hidden]="password?.valid||password?.untouched && ! password?.errors?.['requird']"
-                class="text-danger m-3"
+              <div
+                [hidden]="
+                  validationAdmin.get('password')?.valid ||
+                  validationAdmin.get('password')?.untouched
+                "
               >
-                this field requird
-              </small>
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('password')?.errors?.['required']"
+                >
+                  Password is required.
+                </small>
+              </div>
             </div>
 
             <div class="mb-3">
@@ -67,30 +95,56 @@
                 class="form-control"
                 placeholder="Enter Password"
                 formControlName="confirmedPassword"
+                [(ngModel)]="user.confirmPassword"
               />
 
-              <small
-                [hidden]="confirmedPassword?.valid||confirmedPassword?.untouched && ! confirmedPassword?.errors?.['requird']"
-                class="text-danger m-3"
+              <div
+                [hidden]="
+                  validationAdmin.get('confirmedPassword')?.valid ||
+                  validationAdmin.get('confirmedPassword')?.untouched
+                "
               >
-                this field requird
-              </small>
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('confirmedPassword')?.errors?.['required']"
+                >
+                  Confirmed Password is required.
+                </small>
+                <small
+                  class="text-danger m-3"
+                  [hidden]="confirmedPassword?.valid||confirmedPassword?.untouched && ! confirmedPassword?.errors?.['requird']"
+                >
+                  Passwords do not match.
+                </small>
+              </div>
             </div>
 
             <div class="mb-3">
               <label for="roles" class="form-label">Role</label>
-              <select class="form-select" id="roles" formControlName="role">
+              <select
+                class="form-select"
+                id="roles"
+                formControlName="role"
+                [(ngModel)]="user.roleName"
+              >
                 <option selected>Choose a role...</option>
                 <ng-container *ngFor="let role of roles">
-                  <option [value]="role.id">{{ role.name }}</option>
+                  <option [value]="role.name">{{ role.name }}</option>
                 </ng-container>
               </select>
-              <small
-                [hidden]="role?.valid||role?.untouched && ! role?.errors?.['requird']"
-                class="text-danger m-3"
+              <div
+                [hidden]="
+                  validationAdmin.get('role')?.valid ||
+                  validationAdmin.get('role')?.untouched
+                "
               >
-                this field requird
-              </small>
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('role')?.errors?.['required']"
+                >
+                  Role is required.
+                </small>
+              </div>
             </div>
 
             <div class="text-center">
