@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WebAPI.Constants;
@@ -25,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetUsers")]
-        
+
         public async Task<ActionResult> GetUsers()
         {
             var users = await userManager.Users
@@ -49,14 +47,15 @@ namespace WebAPI.Controllers
             if (user == null)
                 return NotFound("User not found");
 
-            var isAdmin = await userManager.IsInRoleAsync(user, "admin");
-            var isSuper = await userManager.IsInRoleAsync(user, "super");
+            var isAdmin = await userManager.IsInRoleAsync(user, Roles.Admin.ToString());
+            var isSuper = await userManager.IsInRoleAsync(user, Roles.SuperAdmin.ToString());
+
             if (isSuper)
                 return BadRequest("Not Allowed to delete  SuperAdmin");
 
             if (isAdmin && User.IsInRole(Roles.Admin.ToString()))
             {
-                // Get the builtIn admin user with the role
+                // Get the builtIn admin with the role
                 if (user != null && user.FullName.Trim().ToLower() == "admin")
                 {
                     return BadRequest("Not Allowed to delete the built-in Admin user.");
@@ -92,7 +91,7 @@ namespace WebAPI.Controllers
             };
             return Ok(userRoleVM);
         }
-        
+
         [HttpPost("UpdateRoles")]
         public async Task<ActionResult> UpdateRoles(UserRolesDTO userRolesDTO)
         {
@@ -115,13 +114,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("AddRole")]
-        public async Task<ActionResult>Add(RoleFormDTO model)
+        public async Task<ActionResult> Add(RoleFormDTO model)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(GetAllRoles));
             }
-            if(await roleManager.RoleExistsAsync(model.Name))
+            if (await roleManager.RoleExistsAsync(model.Name))
             {
                 ModelState.AddModelError("Error", "Role already Exist");
                 return RedirectToAction(nameof(GetAllRoles));
@@ -136,7 +135,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> GetRoleById(string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
-            if(role == null)
+            if (role == null)
             {
                 return NotFound("No role found with this ID");
             }
@@ -169,7 +168,7 @@ namespace WebAPI.Controllers
             var roleClaims = roleManager.GetClaimsAsync(role).Result.Select(c => c.Value).ToList();
             var allClaims = Permissions.GenerateAllPermission();
             var allPermissions = allClaims.Select(p => new CheckBoxDTO { DisplayValue = p }).ToList();
-            foreach(var permission in allPermissions)
+            foreach (var permission in allPermissions)
             {
                 if (roleClaims.Any(c => c == permission.DisplayValue))
                     permission.IsSelected = true;
@@ -190,16 +189,16 @@ namespace WebAPI.Controllers
             if (role == null)
                 return NotFound("Role Not Found");
 
-            var roleClaims =await roleManager.GetClaimsAsync(role);
+            var roleClaims = await roleManager.GetClaimsAsync(role);
 
-            foreach(var roleClaim in roleClaims)
+            foreach (var roleClaim in roleClaims)
                 await roleManager.RemoveClaimAsync(role, roleClaim);
 
             var selectedClaims = model.RoleClaims.Where(c => c.IsSelected).ToList();
 
             foreach (var claim in selectedClaims)
                 await roleManager.AddClaimAsync(role, new Claim("Permission", claim.DisplayValue));
-            
+
             return CreatedAtAction("ManagePermessions", role.Id);
         }
     }
