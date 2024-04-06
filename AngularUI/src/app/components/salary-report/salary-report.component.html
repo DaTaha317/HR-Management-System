@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-start align-items-center mb-4">
     <div class="col-md-3 d-flex align-items-center me-2">
-      <label for="month" class="form-label me-2">Month</label>
+      <label for="month" class="form-label me-2 txtMain">Month</label>
       <div class="input-group">
         <select
           class="form-select"
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="col-md-3 d-flex align-items-center me-2">
-      <label for="year" class="form-label me-2">Year</label>
+      <label for="year" class="form-label me-2 txtMain">Year</label>
       <div class="input-group">
         <select
           class="form-select"
@@ -101,7 +101,7 @@
     </tbody>
   </table>
   <!-- Pagination -->
-  <div class="row mt-3 justify-content-end">
+  <div *ngIf="salaryReport.length != 0" class="row mt-3 justify-content-end">
     <div class="col-lg-6">
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>

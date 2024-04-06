@@ -108,3 +108,12 @@ img {
 input {
   border-color: var(--dark);
 }
+
+.login-form {
+  transform: translateX(7.5%);
+}
+
+.login-text {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}

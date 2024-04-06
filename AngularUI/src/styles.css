@@ -17,6 +17,23 @@
   --color-light: #e0e0e0;
 }
 
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+
+  background-image: linear-gradient(
+      to right,
+      rgba(68, 180, 221, 0.7),
+      rgba(8, 28, 57, 0.8)
+    ),
+    url("assets/Human-resources.jpg");
+
+  background-size: cover;
+  background-position: top;
+}
+
 .txtMain {
   color: var(--light) !important;
 }
@@ -40,5 +57,37 @@ thead th {
 
 tr:hover td,
 tr:hover th {
-  background-color: var(--medium);
+  background-color: #e1e3e4;
+}
+
+.card-header {
+  background-color: var(--dark);
+  color: white;
+  text-align: center;
+}
+
+.table {
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+  box-shadow: 0px 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  box-shadow: 0 0.8rem 0.8rem rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(0px);
+}
+
+a {
+  text-decoration: none;
+}
+
+button.bgMain {
+  border-color: rgba(255, 255, 255, 0.3);
 }

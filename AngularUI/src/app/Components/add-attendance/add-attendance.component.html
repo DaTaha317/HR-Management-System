@@ -4,7 +4,12 @@
       <div class="card">
         <div class="card-header">Employee Time Tracking</div>
         <div class="card-body">
-          <form #f="ngForm" (ngSubmit)="onSubmit()"  [formGroup]="validationAttendece" class="form-container">
+          <form
+            #f="ngForm"
+            (ngSubmit)="onSubmit()"
+            [formGroup]="validationAttendece"
+            class="form-container"
+          >
             <!-- Employee Select -->
             <div class="form-group">
               <label for="employee">Employee:</label>
@@ -20,12 +25,13 @@
                   {{ emp.fullName }}
                 </option>
               </select>
-              <div [hidden]="employee?.valid||employee?.untouched">
-                <small [hidden]="employee?.errors?.['requird']" class="text-danger m-3">
+              <div [hidden]="employee?.valid || employee?.untouched">
+                <small
+                  [hidden]="employee?.errors?.['requird']"
+                  class="text-danger m-3"
+                >
                   this field is requird
                 </small>
-
-  
               </div>
             </div>
             <div class="form-group">
@@ -42,12 +48,13 @@
                 <option value="0">Present</option>
                 <option value="1">Absent</option>
               </select>
-              <div [hidden]="status?.valid||status?.untouched">
-                <small [hidden]="status?.errors?.['requird']" class="text-danger m-3">
+              <div [hidden]="status?.valid || status?.untouched">
+                <small
+                  [hidden]="status?.errors?.['requird']"
+                  class="text-danger m-3"
+                >
                   this field is requird
                 </small>
-
-  
               </div>
             </div>
 
@@ -63,12 +70,13 @@
                   [(ngModel)]="attendance.arrival"
                   formControlName="arrival"
                 />
-                <div [hidden]="arrival?.valid||arrival?.untouched">
-                  <small [hidden]="arrival?.errors?.['requird']" class="text-danger m-3">
+                <div [hidden]="arrival?.valid || arrival?.untouched">
+                  <small
+                    [hidden]="arrival?.errors?.['requird']"
+                    class="text-danger m-3"
+                  >
                     this field is requird
                   </small>
-  
-    
                 </div>
               </div>
 
@@ -83,17 +91,18 @@
                   [(ngModel)]="attendance.departure"
                   formControlName="deprture"
                 />
-                <div [hidden]="deprture?.valid||deprture?.untouched">
-                  <small [hidden]="deprture?.errors?.['requird']" class="text-danger m-3">
+                <div [hidden]="deprture?.valid || deprture?.untouched">
+                  <small
+                    [hidden]="deprture?.errors?.['requird']"
+                    class="text-danger m-3"
+                  >
                     this field is requird
                   </small>
-  
-    
                 </div>
               </div>
             </div>
 
-            <button type="submit"   class="btn bgMain txtMain mt-3">
+            <button type="submit" class="btn bgMain txtMain mt-3">
               Submit
             </button>
           </form>
