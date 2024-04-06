@@ -98,6 +98,7 @@ img {
   height: 100%;
   position: relative;
   box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.4);
+  transition: all 1s;
 }
 
 .container-img .row:hover {
