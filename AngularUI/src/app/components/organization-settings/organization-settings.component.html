@@ -37,6 +37,7 @@
                         id="commissionHours"
                         name="commissionHours"
                         [(ngModel)]="settings.commissionDTO.hours"
+                        [ngModelOptions]="{ standalone: true }"
                       />
                     </div>
                     <div *ngIf="!isComissionHours" class="form-group">
@@ -47,6 +48,7 @@
                         id="commissionAmount"
                         name="commissionAmount"
                         [(ngModel)]="settings.commissionDTO.amount"
+                        [ngModelOptions]="{ standalone: true }"
                       />
                     </div>
                   </div>
@@ -81,6 +83,7 @@
                         id="deductionHours"
                         name="deductionHours"
                         [(ngModel)]="settings.deductionDTO.hours"
+                        [ngModelOptions]="{ standalone: true }"
                       />
                     </div>
                     <div *ngIf="!isDeductionHours" class="form-group">
@@ -91,6 +94,7 @@
                         id="deductionAmount"
                         name="deductionAmount"
                         [(ngModel)]="settings.deductionDTO.amount"
+                        [ngModelOptions]="{ standalone: true }"
                       />
                     </div>
                   </div>
