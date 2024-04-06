@@ -1,58 +1,84 @@
-<div class="signIn-pg my-5">
-  <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-6">
+<div class="signIn-pg">
+  <div class="container container-img">
+    <div class="row d-flex align-items-center">
+      <div class="col-md-5 mx-auto">
         <div class="text-center">
-          <img src="assets/logo.png" alt="" class="img-fluid" />
+          <img src="assets/logo-white.png" alt="" class="img-fluid" />
         </div>
-        <div class="card shadow-lg">
-          <div class="card-body">
-            <form [formGroup]="signInForm" (ngSubmit)="login()" autocomplete="off">
+        <div>
+          <div>
+            <form
+              [formGroup]="signInForm"
+              (ngSubmit)="login()"
+              autocomplete="off"
+            >
               <h2 class="text-center txtSub">Pioneers</h2>
-              <hr />
               <div class="mb-3">
-                <input [ngClass]="(isSubmitted && !email?.valid) ? 'form-error' : ''" type="text" class="form-control"
-                  formControlName="email" placeholder="Email" />
+                <input
+                  [ngClass]="isSubmitted && !email?.valid ? 'form-error' : ''"
+                  type="text"
+                  class="form-control"
+                  formControlName="email"
+                  placeholder="Email"
+                />
 
                 <div>
                   <small
                     *ngIf="(!this.email?.valid && this.isSubmitted && (email?.untouched)) || (email?.errors?.['required'] && (email?.touched ))"
-                    class="text-danger">
+                    class="text-danger"
+                  >
                     * This field is required
                   </small>
-                  <small *ngIf="email?.errors?.['email'] && (email?.touched )" class="text-danger m-3">
+                  <small
+                    *ngIf="email?.errors?.['email'] && (email?.touched )"
+                    class="text-danger m-3"
+                  >
                     * enter valid email
                   </small>
                 </div>
               </div>
 
               <div class="mb-3">
-                <input [ngClass]="(isSubmitted && !password?.valid) ? 'form-error' : ''" type="password"
-                  class="form-control" formControlName="password" placeholder="Password" />
+                <input
+                  [ngClass]="
+                    isSubmitted && !password?.valid ? 'form-error' : ''
+                  "
+                  type="password"
+                  class="form-control"
+                  formControlName="password"
+                  placeholder="Password"
+                />
                 <div>
                   <small
                     *ngIf="(isSubmitted && !password?.valid && (password?.untouched)) || (password?.errors?.['required'] && (password?.touched))"
-                    class="text-danger">
+                    class="text-danger"
+                  >
                     * This field is required
                   </small>
-                  <small *ngIf="password?.errors?.['minlength'] && (password?.touched )" class="text-danger m-3">
+                  <small
+                    *ngIf="password?.errors?.['minlength'] && (password?.touched )"
+                    class="text-danger m-3"
+                  >
                     * minimum must be 4 numbers
                   </small>
                 </div>
               </div>
 
-
               <div class="text-center">
-                <button class="btn me-2 bgMain txtMain " id="BTN" type="submit">
+                <button class="btn me-2 bgMain txtMain" id="BTN" type="submit">
                   Sign in
                 </button>
               </div>
-              <label class="invalid-feedback d-block mt-2 mb-2 ms-1 alert alert-danger text-center"
-                *ngIf="formError">Wrong email or password</label>
+              <label
+                class="invalid-feedback d-block mt-2 mb-2 ms-1 alert alert-danger text-center"
+                *ngIf="formError"
+                >Wrong email or password</label
+              >
             </form>
           </div>
         </div>
       </div>
+      <div class="col-md-7"></div>
     </div>
   </div>
 </div>
