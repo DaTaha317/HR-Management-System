@@ -1,7 +1,11 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-      <button type="button" routerLink="/attendance/add" class="btn bgMain txtMain me-2">
+      <button
+        type="button"
+        routerLink="/attendance/add"
+        class="btn bgMain txtMain me-2"
+      >
         Add
       </button>
       <button type="button" class="btn btn-success me-2">
@@ -11,8 +15,14 @@
     </div>
     <form #form="ngForm" (submit)="getFilteredDate()" *ngIf="userParams">
       <div class="d-flex align-items-center">
-        <input [(ngModel)]="userParams.queryString" name="queryString" type="text" class="form-control me-2"
-          placeholder="Search" aria-label="Search" />
+        <input
+          [(ngModel)]="userParams.queryString"
+          name="queryString"
+          type="text"
+          class="form-control me-2"
+          placeholder="Search"
+          aria-label="Search"
+        />
         <button type="button" class="btn bgMain txtMain" type="submit">
           <i class="fas fa-search"></i>
         </button>
@@ -20,26 +30,47 @@
     </form>
   </div>
   <form #form="ngForm" (submit)="getFilteredDate()" *ngIf="userParams">
-
     <div class="row mb-4">
       <div class="col-md-3 d-flex align-items-center">
-        <label for="fromDate" class="form-label me-2">From</label>
+        <label for="fromDate" class="form-label me-2 txtMain">From</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-          <input [(ngModel)]="userParams.startDate" name="startDate" type="date" class="form-control" id="fromDate" />
+          <span class="input-group-text"
+            ><i class="far fa-calendar-alt"></i
+          ></span>
+          <input
+            [(ngModel)]="userParams.startDate"
+            name="startDate"
+            type="date"
+            class="form-control"
+            id="fromDate"
+          />
         </div>
       </div>
       <div class="col-md-3 d-flex align-items-center">
-        <label for="toDate" class="form-label me-2">To</label>
+        <label for="toDate" class="form-label me-2 txtMain">To</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-          <input [(ngModel)]="userParams.endDate" name="endDate" type="date" class="form-control" id="toDate" />
+          <span class="input-group-text"
+            ><i class="far fa-calendar-alt"></i
+          ></span>
+          <input
+            [(ngModel)]="userParams.endDate"
+            name="endDate"
+            type="date"
+            class="form-control"
+            id="toDate"
+          />
         </div>
       </div>
       <div class="col-md-6 d-flex justify-content-between align-items-center">
         <div>
           <button type="submit" class="btn bgMain txtMain me-2">Show</button>
-          <button type="button" class="btn bgMain txtMain me-2" (click)="resetFilters()">Reset filters</button>
+          <button
+            type="button"
+            class="btn bgMain txtMain me-2"
+            (click)="resetFilters()"
+          >
+            Reset filters
+          </button>
         </div>
         <div>
           <button type="button" class="btn btn-danger me-2">
@@ -68,20 +99,29 @@
     </thead>
     <tbody>
       <tr *ngIf="!pagination && firstLoad == true">
-        <td class="text-center" colspan=" 7">Please, enter a valid employee name</td>
+        <td class="text-center" colspan=" 7">
+          Please, enter a valid employee name
+        </td>
       </tr>
-      <tr *ngFor="let record of attendanceReport" [ngClass]="{ absent: record.status === 1 }">
+      <tr
+        *ngFor="let record of attendanceReport"
+        [ngClass]="{ absent: record.status === 1 }"
+      >
         <td>{{ record.deptName }}</td>
         <td>{{ record.empName }}</td>
-        <td>{{ record.arrival==null?" -------":record.arrival }}</td>
-        <td>{{ record.arrival==null?" -------":record.departure }}</td>
+        <td>{{ record.arrival == null ? " -------" : record.arrival }}</td>
+        <td>{{ record.arrival == null ? " -------" : record.departure }}</td>
 
         <td>{{ record.day }}</td>
         <td>{{ record.status == 0 ? "Attended" : "Absent" }}</td>
         <td>
-          <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
-
-            <button class="btn btn-danger" (click)="openModal(template,record.empId,record.day)">
+          <div
+            class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
+          >
+            <button
+              class="btn btn-danger"
+              (click)="openModal(template, record.empId, record.day)"
+            >
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
@@ -90,21 +130,40 @@
     </tbody>
   </table>
 
-  <div class="d-flex justify-content-center" *ngIf="pagination && attendanceReport">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-      [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  <div
+    class="d-flex justify-content-center"
+    *ngIf="pagination && attendanceReport"
+  >
+    <pagination
+      [boundaryLinks]="true"
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [maxSize]="10"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;"
+    >
     </pagination>
-
   </div>
 
   <!-- pop up to delete -->
-  <br><br>
+  <br /><br />
   <ng-template #template>
     <div class="modal-body text-center">
       <p>Do you want to confirm?</p>
-      <button type="button" class="btn btn-default btn-danger m-2"
-        (click)="DeleteAttendence(attendancedel,attendancedate)">Yes</button>
-      <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+      <button
+        type="button"
+        class="btn btn-default btn-danger m-2"
+        (click)="DeleteAttendence(attendancedel, attendancedate)"
+      >
+        Yes
+      </button>
+      <button type="button" class="btn btn-primary" (click)="decline()">
+        No
+      </button>
     </div>
   </ng-template>
+</div>

@@ -1,7 +1,7 @@
 <div class="signIn-pg">
   <div class="container container-img">
     <div class="row d-flex align-items-center">
-      <div class="col-md-5 mx-auto">
+      <div class="col-md-5 mx-auto login-form">
         <div class="text-center">
           <img src="assets/logo-white.png" alt="" class="img-fluid" />
         </div>
@@ -12,7 +12,7 @@
               (ngSubmit)="login()"
               autocomplete="off"
             >
-              <h2 class="text-center txtSub">Pioneers</h2>
+              <h2 class="text-center txtSub login-text">Pioneers</h2>
               <div class="mb-3">
                 <input
                   [ngClass]="isSubmitted && !email?.valid ? 'form-error' : ''"

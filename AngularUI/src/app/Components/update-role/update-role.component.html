@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 text-center">
   <div class="d-flex align-items-center" *ngIf="selectedRole">
     <input
       type="search"
@@ -6,15 +6,11 @@
       class="form-control me-2"
       style="width: 150px"
       placeholder="Search"
+      disabled="true"
     />
-    <button type="button" class="btn bgMain txtMain">
-      <i class="fas fa-search"></i>
-    </button>
   </div>
 
-  <hr />
-
-  <table class="table">
+  <table class="table mt-3">
     <thead class="bgMain txtMain">
       <tr>
         <th scope="col" class="text-center">Pages</th>
@@ -74,9 +70,9 @@
 
   <button
     type="button"
-    class="btn bgMain txtMain d-block"
+    class="btn bgMain txtMain"
     (click)="updateRolePermission()"
   >
-    Update
+    Update Role
   </button>
 </div>

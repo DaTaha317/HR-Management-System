@@ -1,39 +1,57 @@
 <div class="container my-5">
   <div class="row">
     <!-- Input Fields Column -->
-    <div class="col-lg-4 px-4">
-      <form class="my-5" (submit)="onAddSubmit()" [formGroup]="validationHolidays">
-        <label for="Name">Name</label>
-        <input
-          id="Name"
-          name="name"
-          type="text"
-          placeholder="name"
-          class="form-control m-2"
-          [(ngModel)]="formDataAdd.name"
-       
-          formControlName="name"
-        />
-        <div [hidden]="name?.valid||name?.untouched">
-          <small class="text-danger" [hidden]="name?.errors?.['requird']">this field is requird</small>
-        </div>
-        <label for="date">Date</label>
-        <input
-          type="date"
-          name="date"
-          id="date"
-          placeholder="date"
-          class="form-control m-2"
-          [(ngModel)]="formDataAdd.date"
-          
-          formControlName="date"
-        />
-        <div [hidden]="date?.valid||date?.untouched">
-          <small class="text-danger m-3" [hidden]="date?.errors?.['requird']">this field is requird</small>
-        </div>
+    <div class="col-lg-4 px-4 text-center">
+      <div class="card shadow">
+        <div class="card-header"><div class="card-title">Holidays</div></div>
+        <div class="card-body">
+          <form
+            class="my-1"
+            (submit)="onAddSubmit()"
+            [formGroup]="validationHolidays"
+          >
+            <label for="Name">Name</label>
+            <input
+              id="Name"
+              name="name"
+              type="text"
+              placeholder="name"
+              class="form-control m-2"
+              [(ngModel)]="formDataAdd.name"
+              formControlName="name"
+            />
+            <div [hidden]="name?.valid || name?.untouched">
+              <small class="text-danger" [hidden]="name?.errors?.['requird']"
+                >this field is requird</small
+              >
+            </div>
+            <label for="date">Date</label>
+            <input
+              type="date"
+              name="date"
+              id="date"
+              placeholder="date"
+              class="form-control m-2"
+              [(ngModel)]="formDataAdd.date"
+              formControlName="date"
+            />
+            <div [hidden]="date?.valid || date?.untouched">
+              <small
+                class="text-danger m-3"
+                [hidden]="date?.errors?.['requird']"
+                >this field is requird</small
+              >
+            </div>
 
-        <input type="submit" value="Add" class="btn bgMain txtMain m-3" [disabled]="validationHolidays.invalid" />
-      </form>
+            <input
+              type="submit"
+              value="Add"
+              class="btn bgMain txtMain m-3"
+              [disabled]="validationHolidays.invalid"
+            />
+          </form>
+        </div>
+      </div>
     </div>
     <!-- Table Column -->
     <div class="col-lg-8">
@@ -84,7 +102,9 @@
                 <a class="btn bgMain txtMain" (click)="showUpdateForm(item)"
                   ><i class="fa-solid fa-pen"></i
                 ></a>
-                <a class="btn btn-danger" (click)="openModal(template,item.date)"
+                <a
+                  class="btn btn-danger"
+                  (click)="openModal(template, item.date)"
                   ><i class="fa-solid fa-trash"></i
                 ></a>
               </div>
@@ -95,10 +115,9 @@
     </div>
   </div>
 
-
   <!-- Pagination -->
-  <div class="row mt-3 justify-content-end">
-    <div class="col-lg-6">
+  <div *ngIf="daysOffList.length != 0" class="row mt-3 justify-content-end">
+    <div class="col-lg-5">
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
@@ -139,11 +158,19 @@
     </div>
   </form>
 </div>
-<br><br>
+<br /><br />
 <ng-template #template>
   <div class="modal-body text-center">
     <p>Do you want to confirm?</p>
-    <button type="button" class="btn btn-default btn-danger m-2" (click)="deleteDayOff(deletDay)">Yes</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    <button
+      type="button"
+      class="btn btn-default btn-danger m-2"
+      (click)="deleteDayOff(deletDay)"
+    >
+      Yes
+    </button>
+    <button type="button" class="btn btn-primary" (click)="decline()">
+      No
+    </button>
   </div>
 </ng-template>
