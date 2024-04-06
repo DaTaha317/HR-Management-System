@@ -51,8 +51,17 @@ namespace WebAPI.Controllers
 
             var isAdmin = await userManager.IsInRoleAsync(user, "admin");
             var isSuper = await userManager.IsInRoleAsync(user, "super");
-            if (isAdmin || isSuper)
-                return BadRequest("Not Allowed to delete Admin or SuperAdmin");
+            if (isSuper)
+                return BadRequest("Not Allowed to delete  SuperAdmin");
+
+            if (isAdmin && User.IsInRole(Roles.Admin.ToString()))
+            {
+                // Get the builtIn admin user with the role
+                if (user != null && user.FullName.Trim().ToLower() == "admin")
+                {
+                    return BadRequest("Not Allowed to delete the built-in Admin user.");
+                }
+            }
 
             var result = await userManager.DeleteAsync(user);
             if (!result.Succeeded)
@@ -142,8 +151,8 @@ namespace WebAPI.Controllers
             if (role == null)
                 return NotFound("Role not found");
 
-            var isAdminRole = role.Name.Equals("ADMIN", StringComparison.OrdinalIgnoreCase);
-            var isSuperRole = role.Name.Equals("SUPERADMIN", StringComparison.OrdinalIgnoreCase);
+            var isAdminRole = role.Name.Equals(Roles.Admin.ToString(), StringComparison.OrdinalIgnoreCase);
+            var isSuperRole = role.Name.Equals(Roles.SuperAdmin.ToString(), StringComparison.OrdinalIgnoreCase);
             if (isAdminRole || isSuperRole)
                 return BadRequest("Not Allowed to delete Role For Admin or SuperAdmin");
             await roleManager.DeleteAsync(role);
