@@ -58,6 +58,11 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] DaysOffDTO daysOffDTO)
         {
+            if(daysOffRepo.GetByDay(daysOffDTO.Date) != null)
+            {
+                return BadRequest("This day off already exists!");
+            }
+
             DaysOff newDayOff = mapper.Map<DaysOff>(daysOffDTO);
 
             daysOffRepo.Add(newDayOff);

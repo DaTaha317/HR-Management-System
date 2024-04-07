@@ -64,6 +64,9 @@ namespace WebAPI.Controllers
                 return BadRequest("This is a weekly day off");
             }
 
+            if (attendenceRepo.GetDayByEmpId(attendanceDTO.EmpId, attendanceDTO.Day) != null)
+                return BadRequest("Attendance for this employee already added!");
+
 
             int employeeDepartureHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Departure.Hour;
             int employeeArrivalHour = (int)employeeRepo.GetById(attendanceDTO.EmpId).Arrival.Hour;
