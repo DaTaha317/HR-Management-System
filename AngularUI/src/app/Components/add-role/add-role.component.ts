@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IRole, IRoleName } from 'src/app/interfaces/IRole';
 import { IRolePermission } from 'src/app/interfaces/IRolePermission';
@@ -13,7 +14,8 @@ export class AddRoleComponent implements OnInit {
   allPermissions: IRolePermission;
   constructor(
     private roleService: RolesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.allPermissions = {
       roleId: '',
@@ -87,9 +89,7 @@ export class AddRoleComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
-    console.log(this.allPermissions);
-  }
+  ngOnInit() {}
 
   addRole(roleName: string) {
     let role = {} as IRoleName;
@@ -100,6 +100,7 @@ export class AddRoleComponent implements OnInit {
         (data) => {},
         (error) => {}
       );
+      this.router.navigateByUrl('/roles');
     });
   }
 }

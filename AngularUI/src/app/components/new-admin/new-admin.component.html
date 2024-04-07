@@ -85,6 +85,12 @@
                 >
                   Password is required.
                 </small>
+                <small
+                  *ngIf="password?.errors?.['minlength'] && (password?.touched )"
+                  class="text-danger m-3"
+                >
+                  * minimum must be 4 numbers
+                </small>
               </div>
             </div>
 

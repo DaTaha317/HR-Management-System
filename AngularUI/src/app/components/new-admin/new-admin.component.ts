@@ -53,7 +53,7 @@ export class NewAdminComponent implements OnInit {
       {
         fullname: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required, Validators.minLength(4)],
+        password: ['', [Validators.required, Validators.minLength(4)]],
         confirmedPassword: ['', Validators.required],
         role: ['', Validators.required],
       },
