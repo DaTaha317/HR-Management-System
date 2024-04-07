@@ -1,12 +1,35 @@
 <div class="container mt-5">
-  <div class="d-flex align-items-center justify-content-center inputRole mb-3">
-    <label class="me-2 txtMain" for="role">Role</label>
-    <input
-      name="role"
-      type="text"
-      class="form-control"
-      [(ngModel)]="allPermissions.roleName"
-    />
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div
+          class="d-flex align-items-center justify-content-center inputRole mb-3"
+        >
+          <label class="me-2 txtMain" for="role">Role</label>
+          <input
+            name="role"
+            type="text"
+            class="form-control"
+            [(ngModel)]="allPermissions.roleName"
+            #roleInput="ngModel"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <!-- Validation message below the input field -->
+        <div class="txtMain text-center mb-3">
+          <div
+            *ngIf="roleInput.invalid && (roleInput.dirty || roleInput.touched)"
+          >
+            <div *ngIf="roleInput.errors?.['required']">Role is required.</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <table class="table">
@@ -71,6 +94,7 @@
     type="button"
     class="btn bgMain txtMain d-block mx-auto"
     (click)="addRole(allPermissions.roleName)"
+    [disabled]="allPermissions.roleName == ''"
   >
     Add Role
   </button>

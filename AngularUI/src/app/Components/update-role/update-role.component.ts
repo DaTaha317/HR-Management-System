@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IRole } from 'src/app/interfaces/IRole';
 import { IRolePermission } from 'src/app/interfaces/IRolePermission';
 import { RolesService } from 'src/app/services/roles.service';
@@ -20,7 +20,8 @@ export class UpdateRoleComponent implements OnInit {
 
   constructor(
     private rolesServices: RolesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class UpdateRoleComponent implements OnInit {
   updateRolePermission() {
     this.rolesServices.updateRolePermission(this.allPermissions).subscribe({
       next: (d) => {
-        console.log(d);
+        this.router.navigateByUrl('/roles');
       },
       error: (err) => {
         console.log(err);
