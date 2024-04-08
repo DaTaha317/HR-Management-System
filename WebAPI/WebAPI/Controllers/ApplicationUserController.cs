@@ -39,7 +39,12 @@ namespace WebAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(account.Password);
+
+                var existingUser = await userManager.FindByEmailAsync(account.Email);
+                if (existingUser != null)
+                {
+                    return BadRequest("User with this email already exists");
+                }
 
                 ApplicationUser user = new ApplicationUser()
                 {

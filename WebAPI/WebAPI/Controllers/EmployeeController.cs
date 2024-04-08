@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
         {
             if (employeeDTO == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid Employee Data");
             }
             Department department = departmentRepo.GetByName(employeeDTO.departmentName);
             if (department == null)
