@@ -87,9 +87,9 @@ namespace WebAPI.ProjectProcessing
         //    // TODO: set base salary here
         //}
 
-        private decimal CalculateSalaryPerDay() { return BaseSalary / TOTAL_WORKING_DAYS_PER_MONTH; }
+        private decimal CalculateSalaryPerDay() { return Math.Round(BaseSalary / TOTAL_WORKING_DAYS_PER_MONTH, 2); }
 
-        private decimal CalculateSalaryPerHour() { return SalaryPerDay / WorkingHours; }
+        private decimal CalculateSalaryPerHour() { return Math.Round(SalaryPerDay / WorkingHours, 2); }
 
         private int CalculateWorkingHours() { return (currentEmployee.Departure.Hour) - currentEmployee.Arrival.Hour; }
 
