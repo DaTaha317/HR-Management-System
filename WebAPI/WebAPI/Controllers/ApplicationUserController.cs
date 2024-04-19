@@ -53,11 +53,13 @@ namespace WebAPI.Controllers
                     PasswordHash = account.Password,
                     UserName = account.Email
                 };
+                
                 IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
                 if (!await roleManager.RoleExistsAsync(account.RoleName))
                 {
                     return NotFound("Role not found");
                 }
+               
                 if (result.Succeeded)
                 {
                     //await signInManager.SignInAsync(user, isPersistent: false);
